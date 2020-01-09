@@ -24,11 +24,23 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
 
 @implementation MADNativeFeedBaseTableViewCell
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.contentView.backgroundColor = [UIColor whiteColor];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self _setupUI];
+    }
+    return self;
+}
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.contentView.backgroundColor = [UIColor whiteColor];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self _setupUI];
     }
     return self;
@@ -65,7 +77,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     _nativeAdData = model;
     
     // send log
-    [MobAD sendAdLogWithState:MADStateWillExposured adObject:model error:nil];
+    [MobAD sendAdLogWithState:MADStateWillExposure adObject:model error:nil];
 }
 
 + (CGFloat)cellHeightWithModel:(MADNativeAdData *)model width:(CGFloat)width
@@ -102,10 +114,6 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
 - (void)refrashWithModel:(MADNativeAdData *)model
 {
     [super refrashWithModel:model];
-    
-    [model registerContainer:self withClickableViews:@[
-                                                       self.adImageView,
-                                                       ]];
     
     NSString *urlStr = model.mediaUrls.firstObject;
     CGFloat width = CGRectGetWidth([UIScreen mainScreen].bounds);
@@ -147,13 +155,18 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     CGFloat maxInfoWidth = width - imageWidth - 3 * margin;
     self.adDescLabel.frame = CGRectMake(x , y , maxInfoWidth, 30);
     self.adDescLabel.attributedText = [MADNativeFeedBaseTableViewCell subtitleAttributeText:model.adDesc];
+    
+    // 绑定数据(一定要在子控件frame确认之后)
+    CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
+    [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
 }
 
 + (CGFloat)cellHeightWithModel:(MADNativeAdData *)model width:(CGFloat)width
 {
     const CGFloat imageWidth = width * 0.4 - margin;
     const CGFloat imageHeight = imageWidth * (model.imgHeight / model.imgWidth);
-    return padding.top + imageHeight +padding.bottom;
+    CGFloat height = padding.top + imageHeight + padding.bottom;
+    return height;
 }
 
 @end
@@ -164,10 +177,6 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
 - (void)refrashWithModel:(MADNativeAdData *)model
 {
     [super refrashWithModel:model];
-    
-    [model registerContainer:self withClickableViews:@[
-                                                       self.adImageView,
-                                                       ]];
     
     CGFloat width = CGRectGetWidth([UIScreen mainScreen].bounds);
     
@@ -208,6 +217,10 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     CGFloat maxTitleWidth =  width - x - 2 * margin;
     self.adTitleLabel.frame = CGRectMake(x, y , maxTitleWidth, 20);
     self.adTitleLabel.text = model.adTitle;
+    
+    // 绑定数据(一定要在子控件frame确认之后)
+    CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
+    [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
 }
 
 + (CGFloat)cellHeightWithModel:(MADNativeAdData *)model width:(CGFloat)width
@@ -225,10 +238,6 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
 - (void)refrashWithModel:(MADNativeAdData *)model
 {
     [super refrashWithModel:model];
-    
-    [model registerContainer:self withClickableViews:@[
-                                                       self.adImageView,
-                                                       ]];
     
     CGFloat width = CGRectGetWidth([UIScreen mainScreen].bounds);
     
@@ -275,6 +284,10 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     CGFloat maxTitleWidth =  width - x - 2 * margin;
     self.adTitleLabel.frame = CGRectMake(x, y , maxTitleWidth, 20);
     self.adTitleLabel.text = model.adTitle;
+    
+    // 绑定数据(一定要在子控件frame确认之后)
+    CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
+    [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
 }
 
 + (CGFloat)cellHeightWithModel:(MADNativeAdData *)model width:(CGFloat)width
@@ -294,10 +307,6 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
 {
     [super refrashWithModel:model];
     
-    [model registerContainer:self withClickableViews:@[
-                                                       self.adImageView,
-                                                       ]];
-    
     CGFloat width = CGRectGetWidth([UIScreen mainScreen].bounds);
     
     // desc
@@ -312,9 +321,17 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     y += 30;
     const CGFloat imageWidth = width - padding.left - padding.right;
     const CGFloat imageHeight = imageWidth * (model.imgHeight / model.imgWidth);
-    [self.adImageView removeFromSuperview];
+    if (self.adImageView.superview) {
+        [self.adImageView removeFromSuperview];
+    }
     UIView *videoView = model.mediaView;
+    videoView.tag = 1999;
     videoView.frame = CGRectMake(x, y, imageWidth, imageHeight);
+    for (UIView *v in self.contentView.subviews) {
+        if (v.tag == 1999) {
+            [v removeFromSuperview];
+        }
+    }
     [self.contentView addSubview:videoView];
     
     // ad logo

@@ -25,11 +25,20 @@
     
     self.title = @"Interstitial广告";
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.view.backgroundColor = [UIColor darkGrayColor];
+        }
+    }
     
     UILabel *pidLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, [UIScreen mainScreen].bounds.size.height * 0.4 - 30, 0, 0)];
     pidLabel.text = @"广告位ID:";
     pidLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            pidLabel.textColor = [UIColor whiteColor];
+        }
+    }
     pidLabel.textAlignment = NSTextAlignmentLeft;
     [pidLabel sizeToFit];
     [self.view addSubview:pidLabel];
@@ -41,6 +50,11 @@
     pidField.borderStyle = UITextBorderStyleRoundedRect;
     pidField.placeholder = @"请输入广告位ID...";
     pidField.text = kSInterstitialPID;
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            pidField.backgroundColor = [UIColor whiteColor];
+        }
+    }
     pidField.textColor = [UIColor blackColor];
     pidField.delegate = self;
     [self.view addSubview:pidField];
@@ -72,28 +86,29 @@
 
 - (void)_processState:(MADState)state error:(NSError *)error
 {
-    DebugLog(@"=====> %lu", (unsigned long)state);
     switch (state) {
-        case MADStateDidReceived:
+        case MADStateDidLoad:
             DebugLog(@"MADStateDidReceived");
             break;
-        case MADStateFailReceived:
+        case MADStateFailLoad:
             DebugLog(@"MADStateFailReceived:%@",error);
             _refreshbutton.enabled = YES;
             [self _showErrorAlert:error];
             break;
-        case MADStateAdViewRenderSuccess:
+        case MADStateViewRenderSuccess:
             DebugLog(@"MADStateAdViewRenderSuccess");
             break;
-        case MADStateWillPresent:
-        case MADStateDidPresent:
-        case MADStateWillExposured:
-            DebugLog(@"MADStateWillPresent / MADStateDidPresent / MADStateWillExposured");
+        case MADStateWillPresentScreen:
+        case MADStateDidPresentScreen:
+        case MADStateWillExposure:
+        case MADStateWillVisible:
+            DebugLog(@"MADStateWillPresentScreen / MADStateDidPresentScreen / MADStateWillExposure / MADStateWillVisible");
             _refreshbutton.enabled = YES;
             break;
-        case MADStateDidClosed:
-        case MADStateDidDismiss:
+        case MADStateDidClose:
+        case MADStateDidDismissScreen:
             DebugLog(@"MADStateDidClosed / MADStateDidDismiss");
+            _refreshbutton.enabled = YES;
             break;
         case MADStateDidClick:
             DebugLog(@"MBADStateDidClick");

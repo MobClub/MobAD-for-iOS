@@ -66,7 +66,7 @@ static NSString *kMobADDrawBaseTableViewCellIdentifier = @"MobADDrawBaseTableVie
 //    }
     
     NSMutableArray *datas = [NSMutableArray array];
-    for (NSInteger i =0 ; i < 5; i++) {
+    for (NSInteger i =0 ; i < 3; i++) {
         [datas addObject:@"App tableViewcell"];
     }
     
@@ -74,10 +74,7 @@ static NSString *kMobADDrawBaseTableViewCellIdentifier = @"MobADDrawBaseTableVie
         NSUInteger index = rand() % datas.count;
         [datas insertObject:model atIndex:index];
     }
-//    weakSelf.dataSource = [dataSources copy];
     self.dataSource = [datas copy];
-    
-//    [self.tableView reloadData];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(13, 34, 30, 30);
@@ -90,41 +87,6 @@ static NSString *kMobADDrawBaseTableViewCellIdentifier = @"MobADDrawBaseTableVie
 }
 
 
-- (void)loadData
-{
-    __weak typeof(self) weakSelf = self;
-    [MobAD drawVideoFeedAdWithPlacementId:@"10" // mobSlotId = 10 对应Draw视频流
-                                  adCount:5
-                               adCallback:^(NSArray<MADNativeAdData *> *nativeAdDatas, NSError *error) {
-                                   if (!error)
-                                   {
-                                       NSMutableArray *dataSources = [weakSelf.dataSource mutableCopy];
-                                       for (MADNativeAdData *model in nativeAdDatas) {
-                                           NSUInteger index = rand() % dataSources.count;
-                                           [dataSources insertObject:model atIndex:index];
-                                       }
-                                       weakSelf.dataSource = [dataSources copy];
-                                       
-                                       [weakSelf.tableView reloadData];
-                                   }
-                                   else
-                                   {
-                                       [weakSelf _showErrorAlert:error];
-                                   }
-                                   
-                               }
-                            stateCallback:^(id adObject, MADState state, NSError *error) {
-                                [weakSelf _processState:state error:error];
-                            }
-                          dislikeCallback:^(id adObject, NSArray<MADDislikeReason *> *reasons) {
-                              NSMutableArray *mArr = [NSMutableArray array];
-                              for (MADDislikeReason *reason in reasons) {
-                                  [mArr addObject:reason.name];
-                              }
-                              DebugLog(@"%@",[mArr componentsJoinedByString:@","]);
-                          }];
-}
-
 - (void)closeVC
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -136,30 +98,6 @@ static NSString *kMobADDrawBaseTableViewCellIdentifier = @"MobADDrawBaseTableVie
     [self autoPlayVisibleVideo];
 //    [self performSelector:@selector(loadData) withObject:nil afterDelay:1.0];
 }
-
-
-- (void)_processState:(MADState)state error:(NSError *)error
-{
-    switch (state) {
-        case MADStateDidReceived:
-            DebugLog(@"MADStateDidReceived");
-            break;
-        case MADStateFailReceived:
-            DebugLog(@"MADStateFailReceived:%@",error);
-            [self _showErrorAlert:error];
-            break;
-        case MADStateDidClick:
-            DebugLog(@"MADStateDidClick");
-            break;
-        case MADStateDidClosed:
-            DebugLog(@"MADStateDidClosed");
-            break;
-            
-        default:
-            break;
-    }
-}
-
 
 
 - (void)autoPlayVisibleVideo
@@ -196,9 +134,7 @@ static NSString *kMobADDrawBaseTableViewCellIdentifier = @"MobADDrawBaseTableVie
         nativeAd.rootViewController = self;
         MobADDrawTableViewCell *cell = nil;
         cell = [tableView dequeueReusableCellWithIdentifier:kMobADDrawTableViewCellIdentifier forIndexPath:indexPath];
-        [model registerContainer:cell withClickableViews:@[cell.creativeButton,cell.titleLabel,cell.descriptionLabel,cell.headImg]];
         [cell refreshUIWithModel:nativeAd];
-
         return cell;
     }
     else

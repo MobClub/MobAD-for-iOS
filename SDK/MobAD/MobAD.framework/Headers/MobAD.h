@@ -10,13 +10,12 @@
 
 #import "MADTypeDefines.h"
 #import "MADNativeAdData.h"
-#import "MADDislikeReason.h"
 #import "MADNativeExpressAdView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- 广告 SDK 入口,以工厂方法形式提供各种接口
+ 广告 SDK 入口,提供各种接口
  */
 @interface MobAD : NSObject
 
@@ -65,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
                              onView:(UIView *)view
                      viewController:(UIViewController *)viewController
                      hideSkipButton:(BOOL)hideSkipButton
-                       stateChanged:(MADStateCallback)stateChanged __deprecated_msg("Deprecated from v2.0.2. Use 'showSplashAdWithPlacementId:onView:adFrame:viewController:customSkipView:adLifeTimeCallback:stateChanged:' instead!");
+                       stateChanged:(MADStateCallback)stateChanged __deprecated_msg("Deprecated from v2.0.2 Use 'showSplashAdWithPlacementId:onView:adFrame:viewController:customSkipView:adLifeTimeCallback:stateChanged:' instead!");
 
 
 /**
@@ -101,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param onView 广告视图的载体View
  @param viewController 用于跳转的控制器
  @param frame 广告视图frame
- @param eCPMCallback 用于获取广告eCPM, 部分广告不存在eCPM时回调值为 -1
+ @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
  @param stateChanged 广告状态回调
  */
 + (void)showInterstitialAdWithPlacementId:(NSString *)pid
@@ -119,6 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param size 广告大小
  @param edgeInsets 广告内容边距, 大图样式默认(0,0,0,0), 其他样式默认 (10,10,10,10), 仅 >= 0 时生效
  @param adViewsCallback 广告模版视图回调
+ @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
  @param stateCallback 广告状态回调
  @param dislikeCallback 广告不喜欢原因回调
  */
@@ -126,6 +126,7 @@ NS_ASSUME_NONNULL_BEGIN
                                 adSize:(CGSize)size
                             edgeInsets:(UIEdgeInsets)edgeInsets
                        adViewsCallback:(MADNativeExpressAdViewCallback)adViewsCallback
+                          eCPMCallback:(MADeCPMCallback)eCPMCallback
                          stateCallback:(MADStateCallback)stateCallback
                        dislikeCallback:(MADDislikeCallback)dislikeCallback;
 
@@ -135,12 +136,16 @@ NS_ASSUME_NONNULL_BEGIN
  原生自渲染信息流广告
  
  @param pid 广告配置项
+ @param viewController 用于跳转的控制器
  @param adsCallback 广告数据回调
+ @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
  @param stateCallback 广告状态回调
  @param dislikeCallback 广告不喜欢原因回调
  */
 + (void)nativeAdWithPlacementId:(NSString *)pid
+                 viewController:(UIViewController *)viewController
                     adsCallback:(MADNativeAdCallback)adsCallback
+                   eCPMCallback:(MADeCPMCallback)eCPMCallback
                   stateCallback:(MADStateCallback)stateCallback
                 dislikeCallback:(MADDislikeCallback)dislikeCallback;
 
@@ -163,12 +168,12 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param pid 广告位id
  @param viewController 用于 present 激励视频的 VC
- @param eCPMCallback 用于获取广告eCPM, 部分广告不存在eCPM时回调值为 -1
+ @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
  @param stateCallback 激励视频广告状态回调
  */
 + (void)showRewardVideoAdWithPlacementId:(NSString *)pid
                           viewController:(UIViewController *)viewController
-                                    eCPM:(MADeCPMCallback)eCPMCallback
+                            eCPMCallback:(MADeCPMCallback)eCPMCallback
                            stateCallback:(MADStateCallback)stateCallback;
 
 
@@ -177,12 +182,14 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param pid 广告位id
  @param count 广告个数
+ @param viewController 用于 present 视频的 VC
  @param callback Draw视频流广告回调
  @param stateCallback 广告状态回调
  @param dislikeCallback 广告不喜欢原因回调
  */
 + (void)drawVideoFeedAdWithPlacementId:(NSString *)pid
                                adCount:(NSInteger)count
+                        viewController:(UIViewController *)viewController
                             adCallback:(MADNativeAdCallback)callback
                          stateCallback:(MADStateCallback)stateCallback
                        dislikeCallback:(MADDislikeCallback)dislikeCallback;

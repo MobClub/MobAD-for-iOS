@@ -35,6 +35,11 @@
     
     self.title = @"原生模版广告";
     self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.view.backgroundColor = [UIColor darkGrayColor];
+        }
+    }
     
     [self setupViews];
 }
@@ -43,6 +48,11 @@
     UILabel *pidLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, NavigationBarHeight + 10, 0, 0)];
     pidLabel.text = @"广告位ID:";
     pidLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            pidLabel.textColor = [UIColor whiteColor];
+        }
+    }
     pidLabel.textAlignment = NSTextAlignmentLeft;
     [pidLabel sizeToFit];
     [self.view addSubview:pidLabel];
@@ -54,6 +64,11 @@
     pidField.borderStyle = UITextBorderStyleRoundedRect;
     pidField.placeholder = @"请输入广告位ID...";
     pidField.text = kSNativeExpressPID;
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            pidField.backgroundColor = [UIColor whiteColor];
+        }
+    }
     pidField.textColor = [UIColor blackColor];
     pidField.delegate = self;
     [self.view addSubview:pidField];
@@ -61,6 +76,11 @@
     UILabel *insetsLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(pidField.frame) + 15, 0, 0)];
     insetsLabel.text = @"图片边距:";
     insetsLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            insetsLabel.textColor = [UIColor whiteColor];
+        }
+    }
     insetsLabel.textAlignment = NSTextAlignmentLeft;
     [insetsLabel sizeToFit];
     [self.view addSubview:insetsLabel];
@@ -68,6 +88,11 @@
     UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(insetsLabel.frame) + 15, CGRectGetMaxY(pidField.frame) + 15, 0, 0)];
     topLabel.text = @"上:";
     topLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            topLabel.textColor = [UIColor whiteColor];
+        }
+    }
     topLabel.textAlignment = NSTextAlignmentLeft;
     [topLabel sizeToFit];
     [self.view addSubview:topLabel];
@@ -78,6 +103,11 @@
     topField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     topField.borderStyle = UITextBorderStyleRoundedRect;
     topField.text = @"10";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            topField.backgroundColor = [UIColor whiteColor];
+        }
+    }
     topField.textColor = [UIColor blackColor];
     topField.delegate = self;
     [self.view addSubview:topField];
@@ -85,6 +115,11 @@
     UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(topField.frame) + 15, topLabel.frame.origin.y, 0, 0)];
     bottomLabel.text = @"下:";
     bottomLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            bottomLabel.textColor = [UIColor whiteColor];
+        }
+    }
     bottomLabel.textAlignment = NSTextAlignmentLeft;
     [bottomLabel sizeToFit];
     [self.view addSubview:bottomLabel];
@@ -95,6 +130,11 @@
     bottomField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     bottomField.borderStyle = UITextBorderStyleRoundedRect;
     bottomField.text = @"10";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            bottomField.backgroundColor = [UIColor whiteColor];
+        }
+    }
     bottomField.textColor = [UIColor blackColor];
     bottomField.delegate = self;
     [self.view addSubview:bottomField];
@@ -103,6 +143,11 @@
     UILabel *leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(topLabel.frame.origin.x, CGRectGetMaxY(topLabel.frame) + 15, 0, 0)];
     leftLabel.text = @"左:";
     leftLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            leftLabel.textColor = [UIColor whiteColor];
+        }
+    }
     leftLabel.textAlignment = NSTextAlignmentLeft;
     [leftLabel sizeToFit];
     [self.view addSubview:leftLabel];
@@ -113,6 +158,11 @@
     leftField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     leftField.borderStyle = UITextBorderStyleRoundedRect;
     leftField.text = @"10";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            leftField.backgroundColor = [UIColor whiteColor];
+        }
+    }
     leftField.textColor = [UIColor blackColor];
     leftField.delegate = self;
     [self.view addSubview:leftField];
@@ -120,6 +170,11 @@
     UILabel *rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(leftField.frame) + 15, leftLabel.frame.origin.y, 0, 0)];
     rightLabel.text = @"右:";
     rightLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            rightLabel.textColor = [UIColor whiteColor];
+        }
+    }
     rightLabel.textAlignment = NSTextAlignmentLeft;
     [rightLabel sizeToFit];
     [self.view addSubview:rightLabel];
@@ -130,6 +185,11 @@
     rightField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     rightField.borderStyle = UITextBorderStyleRoundedRect;
     rightField.text = @"10";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            rightField.backgroundColor = [UIColor whiteColor];
+        }
+    }
     rightField.textColor = [UIColor blackColor];
     rightField.delegate = self;
     [self.view addSubview:rightField];
@@ -146,6 +206,11 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"MOBNativeExpressCell"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.tableView.backgroundColor = [UIColor grayColor];
+        }
+    }
     [self.view addSubview:self.tableView];
     
     if (@available(iOS 11.0, *)) {
@@ -205,17 +270,27 @@
                                   return;
                               }
                               [weakSelf.nativeExpressAdViews removeAllObjects];
-                              if (nativeExpressAdViews.count) {
+                              if (nativeExpressAdViews.count > 0) {
                                   [weakSelf.nativeExpressAdViews addObjectsFromArray:nativeExpressAdViews];
                                   for (MADNativeExpressAdView *expressView in weakSelf.nativeExpressAdViews) {
                                       expressView.controller = weakSelf;
+                                      // TODO: 临时隐藏关闭按钮方案
+//                                      NSArray *adViewSubViews = expressView.adView.subviews;
+//                                      for (UIView *sv in adViewSubViews) {
+//                                          if ([sv isKindOfClass:[UIButton class]] && sv.bounds.size.width == 16) {
+//                                              sv.hidden = YES;
+//                                          }
+//                                      }
                                       [expressView render];
                                   }
                               }
                               [weakSelf.tableView reloadData];
                           }
+                             eCPMCallback:^(NSInteger eCPM) {
+                                 NSLog(@"---> eCPM: %ld", (long)eCPM);
+                             }
                             stateCallback:^(id adObject, MADState state, NSError *error) {
-                                if (state == MADStateDidClosed) {
+                                if (state == MADStateDidClose) {
                                     for (int i = 0; i < weakSelf.nativeExpressAdViews.count; i++) {
                                         MADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
                                         if (mbV.adView == adObject) {
@@ -228,12 +303,8 @@
                                 }
                                 [weakSelf _processState:state error:error];
                             }
-                          dislikeCallback:^(id adObject, NSArray<MADDislikeReason *> *reasons) {
-                              NSMutableArray *mArr = [NSMutableArray array];
-                              for (MADDislikeReason *reason in reasons) {
-                                  [mArr addObject:reason.name];
-                              }
-                              DebugLog(@"%@",[mArr componentsJoinedByString:@","]);
+                          dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
+                              DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
                               
                               for (int i = 0; i < weakSelf.nativeExpressAdViews.count; i++) {
                                   MADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
@@ -275,6 +346,11 @@
     MADNativeExpressAdView *view = [self.nativeExpressAdViews objectAtIndex:indexPath.row];
     view.adView.tag = 1000;
     cell.contentView.backgroundColor = [UIColor cyanColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            cell.contentView.backgroundColor = [UIColor grayColor];
+        }
+    }
     [cell.contentView addSubview:view.adView];
     return cell;
 }
@@ -283,30 +359,27 @@
 - (void)_processState:(MADState)state error:(NSError *)error
 {
     switch (state) {
-        case MADStateDidReceived:
-            DebugLog(@"MADStateDidReceived");
+        case MADStateDidLoad:
+            DebugLog(@"MADStateDidLoad");
             break;
-        case MADStateFailReceived:
-            DebugLog(@"MADStateFailReceived");
+        case MADStateFailLoad:
+            DebugLog(@"MADStateFailLoad");
             break;
-        case MADStateAdViewRenderSuccess:
+        case MADStateViewRenderSuccess:
             DebugLog(@"MADStateViewRenderSuccess");
             [self.tableView reloadData];
             break;
-        case MADStateAdViewRenderFail:
-            DebugLog(@"MADStateAdViewRenderFail");
+        case MADStateViewRenderFail:
+            DebugLog(@"MADStateViewRenderFail");
             break;
-        case MADStateWillPresent:
-            DebugLog(@"MADStateWillPresent");
+        case MADStateWillPresentScreen:
+            DebugLog(@"MADStateWillPresentScreen");
             break;
         case MADStateDidClick:
             DebugLog(@"MADStateDidClick");
             break;
-        case MADStateDidClosed:
-            DebugLog(@"MADStateDidClosed");
-            break;
-        case MADStateWillPresentScreen:
-            DebugLog(@"MADStateWillPresentScreen");
+        case MADStateDidClose:
+            DebugLog(@"MADStateDidClose");
             break;
             
         default:

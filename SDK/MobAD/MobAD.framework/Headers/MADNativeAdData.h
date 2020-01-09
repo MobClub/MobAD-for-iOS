@@ -11,6 +11,11 @@
 @interface MADNativeAdData : NSObject
 
 /**
+ 自渲染相关视图
+ */
+@property (nonatomic, strong) UIView *adRelatedView;
+
+/**
  广告标题
  */
 @property (nonatomic, copy) NSString *adTitle;
@@ -80,7 +85,9 @@
 /**
  绑定广告点击事件
  */
-- (void)registerContainer:(__kindof UIView *)containerView withClickableViews:(NSArray<__kindof UIView *> *_Nullable)clickableViews;
+- (void)registerContainer:(__kindof UIView *)containerView
+           containerFrame:(CGRect)containerFrame
+       withClickableViews:(NSArray<__kindof UIView *> *)clickableViews;
 
 /**
  取消绑定

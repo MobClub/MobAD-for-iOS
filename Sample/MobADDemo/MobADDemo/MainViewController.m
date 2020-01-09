@@ -15,11 +15,14 @@
 #import "MADNativeExpressFeedViewController.h"
 #import "MADNativeFeedViewController.h"
 #import "MobADDrawVideoAdViewController.h"
+#import "MBProgressHUD.h"
 
 @interface MainViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *adTypes;
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) MBProgressHUD *hudView;
 
 @end
 
@@ -30,6 +33,11 @@
     
     self.title = @"MOBAD DEMO";
     self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.view.backgroundColor = [UIColor darkGrayColor];
+        }
+    }
     
     self.adTypes = @[
                      @"开屏广告:SplashAd",
@@ -44,32 +52,23 @@
     
     [self setupViews];
     
-//    [MobAD showSplashAdWithPlacementId:kSSplashPID
-//                                onView:[UIApplication sharedApplication].keyWindow
-//                        viewController:self
-//                        hideSkipButton:NO
-//                          stateChanged:^(id adObject, MADState state, NSError *error) {
-//                              NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
-//                          }];
+    // HUD
+    MBProgressHUD *hudV = [[MBProgressHUD alloc] initWithView:self.view];
+    self.hudView = hudV;
+    hudV.label.text = @"加载中...";
+    hudV.detailsLabel.text = @"请耐心等待";
+    [self.view addSubview:hudV];
 }
-
-//- (void)viewDidAppear:(BOOL)animated
-//{
-//    [super viewDidAppear:animated];
-//    
-//    [MobAD showSplashAdWithPlacementId:kSSplashPID
-//                                onView:[UIApplication sharedApplication].keyWindow
-//                        viewController:self
-//                        hideSkipButton:NO
-//                          stateChanged:^(id adObject, MADState state, NSError *error) {
-//                              NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
-//                          }];
-//}
 
 - (void)setupViews {
     
     CGFloat y = NavigationBarHeight;
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, y, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - y - 50) style:UITableViewStylePlain];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.tableView.backgroundColor = [UIColor grayColor];
+        }
+    }
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -85,7 +84,15 @@
     
     UILabel *versionLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, ScreenHeight - 45, ScreenWidth - 40, 30)];
     versionLabel.text = [NSString stringWithFormat:@"当前SDK版本: v%@", [MobAD version]];
-    versionLabel.textColor = [UIColor darkGrayColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            versionLabel.textColor = [UIColor whiteColor];
+        } else {
+            versionLabel.textColor = [UIColor darkGrayColor];
+        }
+    } else {
+        versionLabel.textColor = [UIColor darkGrayColor];
+    }
     versionLabel.font = [UIFont systemFontOfSize:14];
     versionLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:versionLabel];
@@ -112,7 +119,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MOBADMainCellIdentifier"];
     }
     cell.textLabel.text = self.adTypes[indexPath.row];
-    
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            cell.backgroundColor = [UIColor grayColor];
+        }
+    }
     return cell;
 }
 
@@ -174,18 +185,6 @@
 {
     MADSplashViewController *vc = [[MADSplashViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
-    
-//    __weak typeof(self) weakSelf = self;
-//    [MobAD showSplashAdWithPlacementId:kSSplashPID
-//                                onView:[UIApplication sharedApplication].keyWindow
-//                        viewController:self
-//                        hideSkipButton:NO
-//                          stateChanged:^(id adObject, MADState state, NSError *error) {
-//                              NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
-//                              if (error) {
-//                                  [weakSelf _showErrorAlert:error];
-//                              }
-//                          }];
 }
 
 
@@ -216,13 +215,18 @@
 
 - (void)_showFullScreenVideoAd
 {
+    [self.hudView showAnimated:YES];
     __weak typeof(self) weakSelf = self;
     [MobAD showFullScreenVideoAdWithPlacementId:kSFullScreenVideoPID
                                  viewController:self
                                ritSceneDescribe:@"xxxxx"
                                    stateChanged:^(id adObject, MADState state, NSError *error) {
                                        NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
+                                       if (state == MADStateVideoDidLoad) {
+                                           [weakSelf.hudView hideAnimated:YES];
+                                       }
                                        if (error) {
+                                           [weakSelf.hudView hideAnimated:YES];
                                            [weakSelf _showErrorAlert:error];
                                        }
                                    }];
@@ -230,15 +234,20 @@
 
 - (void)_showRewardVideoAd
 {
+    [self.hudView showAnimated:YES];
     __weak typeof(self) weakSelf = self;
     [MobAD showRewardVideoAdWithPlacementId:kSRewardVideoPID
                              viewController:self
-                                       eCPM:^(NSInteger eCPM) {
-                                           NSLog(@"---> eCPM: %ldd", (long)eCPM);
-                                       }
+                               eCPMCallback:^(NSInteger eCPM) {
+                                   NSLog(@"---> eCPM: %ldd", (long)eCPM);
+                               }
                               stateCallback:^(id adObject, MADState state, NSError *error) {
                                   NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
+                                  if (state == MADStateVideoDidLoad) {
+                                      [weakSelf.hudView hideAnimated:YES];
+                                  }
                                   if (error) {
+                                      [weakSelf.hudView hideAnimated:YES];
                                       [weakSelf _showErrorAlert:error];
                                   }
                               }];
@@ -246,10 +255,13 @@
 
 - (void)_showDrawVideoFeedAd
 {
+    [self.hudView showAnimated:YES];
     __weak typeof(self) weakSelf = self;
     [MobAD drawVideoFeedAdWithPlacementId:kSDrawVideoFeedPID
-                                  adCount:5
+                                  adCount:2
+                           viewController:weakSelf
                                adCallback:^(NSArray<MADNativeAdData *> *nativeAdDatas, NSError *error) {
+                                   [weakSelf.hudView hideAnimated:YES];
                                    if (!error)
                                    {
                                        MobADDrawVideoAdViewController *vc = [[MobADDrawVideoAdViewController alloc] init];
@@ -268,12 +280,8 @@
                                     [weakSelf _showErrorAlert:error];
                                 }
                             }
-                          dislikeCallback:^(id adObject, NSArray<MADDislikeReason *> *reasons) {
-                              NSMutableArray *mArr = [NSMutableArray array];
-                              for (MADDislikeReason *reason in reasons) {
-                                  [mArr addObject:reason.name];
-                              }
-                              DebugLog(@"%@",[mArr componentsJoinedByString:@","]);
+                          dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
+                              DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
                           }];
     
 }

@@ -27,10 +27,20 @@
     
     self.title = @"Banner广告";
     self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.view.backgroundColor = [UIColor darkGrayColor];
+        }
+    }
     
     UILabel *pidLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, [UIScreen mainScreen].bounds.size.height * 0.4 - 30, 0, 0)];
     pidLabel.text = @"广告位ID:";
     pidLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            pidLabel.textColor = [UIColor whiteColor];
+        }
+    }
     pidLabel.textAlignment = NSTextAlignmentLeft;
     [pidLabel sizeToFit];
     [self.view addSubview:pidLabel];
@@ -42,6 +52,11 @@
     pidField.borderStyle = UITextBorderStyleRoundedRect;
     pidField.placeholder = @"请输入广告位ID...";
     pidField.text = kSBannerPID;
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            pidField.backgroundColor = [UIColor whiteColor];
+        }
+    }
     pidField.textColor = [UIColor blackColor];
     pidField.delegate = self;
     [self.view addSubview:pidField];
@@ -79,40 +94,39 @@
                               weakSelf.bannerAdView = adObject;
                               [weakSelf _processState:state error:error];
                           }
-                       dislikeCallback:^(id adObject, NSArray<MADDislikeReason *> *reasons) {
-                           NSMutableArray *mArr = [NSMutableArray array];
-                           for (MADDislikeReason *reason in reasons) {
-                               [mArr addObject:reason.name];
-                           }
-                           DebugLog(@"%@",[mArr componentsJoinedByString:@","]);
+                       dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
+                           DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
+                           weakSelf.refreshbutton.enabled = YES;
                        }];
 }
 
 - (void)_processState:(MADState)state error:(NSError *)error
 {
     switch (state) {
-        case MADStateDidReceived:
+        case MADStateDidLoad:
             DebugLog(@"MADStateDidReceived");
             break;
-        case MADStateFailReceived:
+        case MADStateFailLoad:
             DebugLog(@"MADStateFailReceived:%@",error);
             _refreshbutton.enabled = YES;
             [self _showErrorAlert:error];
             break;
-        case MBADStateViewRenderSuccess:
-            DebugLog(@"MBADStateViewRenderSuccess");
-            break;
-        case MADStateWillPresent:
-        case MADStateWillExposured:
-            DebugLog(@"MADStateWillPresent / MADStateWillExposured");
+        case MADStateViewRenderSuccess:
+            DebugLog(@"MADStateViewRenderSuccess");
             _refreshbutton.enabled = YES;
             break;
-        case MADStateWillClosed:
+        case MADStateWillExposure:
+        case MADStateWillPresentScreen:
+            DebugLog(@"MADStateWillExposure / MADStateWillPresentScreen");
+            _refreshbutton.enabled = YES;
+            break;
+        case MADStateWillClose:
             DebugLog(@"MADStateWillClosed");
             _refreshbutton.enabled = YES;
             break;
         case MADStateDidClick:
             DebugLog(@"MADStateDidClick");
+            _refreshbutton.enabled = YES;
             break;
             
         default:

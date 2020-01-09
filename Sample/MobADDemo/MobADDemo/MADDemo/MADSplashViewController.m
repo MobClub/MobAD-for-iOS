@@ -28,10 +28,20 @@
     
     self.title = @"开屏广告";
     self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.view.backgroundColor = [UIColor darkGrayColor];
+        }
+    }
     
     UILabel *pidLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, NavigationBarHeight + 20, 0, 0)];
     pidLabel.text = @"广告位ID:";
     pidLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            pidLabel.textColor = [UIColor whiteColor];
+        }
+    }
     pidLabel.textAlignment = NSTextAlignmentLeft;
     [pidLabel sizeToFit];
     [self.view addSubview:pidLabel];
@@ -43,6 +53,11 @@
     pidField.borderStyle = UITextBorderStyleRoundedRect;
     pidField.placeholder = @"请输入广告位ID...";
     pidField.text = kSSplashPID;
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            pidField.backgroundColor = [UIColor whiteColor];
+        }
+    }
     pidField.textColor = [UIColor blackColor];
     pidField.delegate = self;
     [self.view addSubview:pidField];
@@ -51,6 +66,11 @@
     UILabel *customSkipLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(pidField.frame) + 30, 0, 0)];
     customSkipLabel.text = @"使用自定义跳过按钮:";
     customSkipLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            customSkipLabel.textColor = [UIColor whiteColor];
+        }
+    }
     [customSkipLabel sizeToFit];
     [self.view addSubview:customSkipLabel];
     
@@ -64,6 +84,11 @@
     UILabel *customBottomView = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(skipSwitch.frame) + 30, 0, 0)];
     customBottomView.text = @"使用自定义底部视图:";
     customBottomView.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            customBottomView.textColor = [UIColor whiteColor];
+        }
+    }
     [customBottomView sizeToFit];
     [self.view addSubview:customBottomView];
     
@@ -153,8 +178,12 @@
 }
 
 
+#pragma mark - Private
 
-
+- (void)dealloc
+{
+    DebugLog(@"---- MADSplashViewController ---- %s", __func__);
+}
 
 - (void)_showErrorAlert:(NSError *)error
 {

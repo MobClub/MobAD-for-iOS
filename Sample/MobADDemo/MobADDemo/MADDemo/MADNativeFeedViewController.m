@@ -36,6 +36,11 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
     
     self.title = @"原生自渲染广告";
     self.view.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.view.backgroundColor = [UIColor darkGrayColor];
+        }
+    }
     
     [self setupViews];
 }
@@ -45,6 +50,11 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
     UILabel *pidLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, NavigationBarHeight + 10, 0, 0)];
     pidLabel.text = @"广告位ID:";
     pidLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            pidLabel.textColor = [UIColor whiteColor];
+        }
+    }
     pidLabel.textAlignment = NSTextAlignmentLeft;
     [pidLabel sizeToFit];
     [self.view addSubview:pidLabel];
@@ -56,6 +66,11 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
     pidField.borderStyle = UITextBorderStyleRoundedRect;
     pidField.placeholder = @"请输入广告位ID...";
     pidField.text = kSNativePID;
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            pidField.backgroundColor = [UIColor whiteColor];
+        }
+    }
     pidField.textColor = [UIColor blackColor];
     pidField.delegate = self;
     [self.view addSubview:pidField];
@@ -76,6 +91,11 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
     [self.tableView registerClass:[MADNativeFeedVideoTableViewCell class] forCellReuseIdentifier:MADNativeFeedVideoTableViewCellIdentifier];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.tableView.backgroundColor = [UIColor grayColor];
+        }
+    }
     [self.view addSubview:self.tableView];
     
     if (@available(iOS 11.0, *)) {
@@ -91,6 +111,7 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
     _loadButton.enabled = NO;
     __weak typeof(self) weakSelf = self;
     [MobAD nativeAdWithPlacementId:self.pidField.text
+                    viewController:self
                        adsCallback:^(NSArray<MADNativeAdData *> *nativeAdDatas, NSError *error) {
                            weakSelf.loadButton.enabled = YES;
                            if (error) {
@@ -101,15 +122,14 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
                            [weakSelf.nativeAdDatas addObjectsFromArray:nativeAdDatas];
                            [weakSelf.tableView reloadData];
                        }
+                      eCPMCallback:^(NSInteger eCPM) {
+                          NSLog(@"---> eCPM: %ld", (long)eCPM);
+                      }
                      stateCallback:^(id adObject, MADState state, NSError *error) {
                          [weakSelf _processState:state error:error];
                      }
-                   dislikeCallback:^(id adObject, NSArray<MADDislikeReason *> *reasons) {
-                       NSMutableArray *mArr = [NSMutableArray array];
-                       for (MADDislikeReason *reason in reasons) {
-                           [mArr addObject:reason.name];
-                       }
-                       DebugLog(@"%@",[mArr componentsJoinedByString:@","]);
+                   dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
+                       DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
                    }];
 }
 
@@ -171,7 +191,11 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
             cell = [tableView dequeueReusableCellWithIdentifier:MADNativeFeedLeftTableViewCellIdentifier];
         }
     }
-    
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            cell.contentView.backgroundColor = [UIColor grayColor];
+        }
+    }
     [cell refrashWithModel:model];
     
     return cell;
@@ -181,27 +205,24 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
 - (void)_processState:(MADState)state error:(NSError *)error
 {
     switch (state) {
-        case MADStateDidReceived:
-            DebugLog(@"MADStateDidReceived");
+        case MADStateDidLoad:
+            DebugLog(@"MADStateDidLoad");
             break;
-        case MADStateFailReceived:
-            DebugLog(@"MADStateFailReceived");
+        case MADStateFailLoad:
+            DebugLog(@"MADStateFailLoad");
             break;
-        case MADStateAdViewRenderSuccess:
+        case MADStateViewRenderSuccess:
             DebugLog(@"MADStateViewRenderSuccess");
             [self.tableView reloadData];
             break;
-        case MADStateAdViewRenderFail:
-            DebugLog(@"MADStateAdViewRenderFail");
-            break;
-        case MADStateWillPresent:
-            DebugLog(@"MADStateWillPresent");
-            break;
-        case MADStateDidClick:
-            DebugLog(@"MADStateDidClick");
+        case MADStateViewRenderFail:
+            DebugLog(@"MADStateViewRenderFail");
             break;
         case MADStateWillPresentScreen:
             DebugLog(@"MADStateWillPresentScreen");
+            break;
+        case MADStateDidClick:
+            DebugLog(@"MADStateDidClick");
             break;
             
         default:

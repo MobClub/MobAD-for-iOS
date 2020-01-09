@@ -1,6 +1,6 @@
-# 广告SDK iOS使用文档（v2.0.2）
+# 广告SDK iOS使用文档（v2.0.5）
 
-本集成文档适用于 **MobAD iOS v2.0.2** 版本。
+本集成文档适用于 **MobAD iOS v2.0.5** 版本。
 
 [TOC]
 
@@ -12,10 +12,25 @@
 
 ### 1、使用CocoaPods自动集成
 
-在项目中的 **Podfile** 文件中添加 `pod ‘mob_adsdk’` ，然后执行 `pod install` 或 `pod update` ，如下图：
-
 ![pod-search](http://download.sdk.mob.com/2019/10/11/14/1570777004479/1948_498_100.45.png)
-![podspec](http://download.sdk.mob.com/2019/10/11/14/1570776910501/1642_598_103.7.png)
+
+在项目中的 **Podfile** 文件中添加 
+
+```
+# 主包
+pod 'mob_adsdk'
+# GDT包,可选,按需添加
+pod 'mob_adsdk/MobADPlat/GDT'
+# BUD包,可选,按需添加
+pod 'mob_adsdk/MobADPlat/BUD'
+# KS包,可选,按需添加
+pod 'mob_adsdk/MobADPlat/KS'
+```
+
+如下图：
+
+![podspec](http://download.sdk.mob.com/2019/11/13/15/1573630063608/1594_674_123.79.png)
+
 
 ### 2、手动集成  
 
@@ -27,7 +42,16 @@
 #### 2.2、添加依赖库
 
 ```
-libresolv.tbd
+Accelerate.framework
+CoreMotion.framework
+MobileCoreService.framework
+SystemConfiguration.framework
+StoreKit.framework
+AdSupport.framework
+CoreMedia.framework
+ImageIO.framework
+libsqlite3.tbd
+libresolv.9.tbd
 libxml2.tbd
 libc++.tbd
 libz.tbd
@@ -242,7 +266,7 @@ __weak typeof(self) weakSelf = self;
  @param onView 广告视图的载体View
  @param viewController 用于跳转的控制器
  @param frame 广告视图frame
- @param eCPMCallback 用于获取广告eCPM, 部分广告不存在eCPM时回调值为 -1
+ @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
  @param stateChanged 广告状态回调
  */
 + (void)showInterstitialAdWithPlacementId:(NSString *)pid
@@ -281,6 +305,7 @@ __weak typeof(self) weakSelf = self;
  @param size 广告大小
  @param edgeInsets 广告内容边距, 大图样式默认(0,0,0,0), 其他样式默认 (10,10,10,10), 仅 >= 0 时生效
  @param adViewsCallback 广告模版视图回调
+ @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
  @param stateCallback 广告状态回调
  @param dislikeCallback 广告不喜欢原因回调
  */
@@ -288,6 +313,7 @@ __weak typeof(self) weakSelf = self;
                                 adSize:(CGSize)size
                             edgeInsets:(UIEdgeInsets)edgeInsets
                        adViewsCallback:(MADNativeExpressAdViewCallback)adViewsCallback
+                          eCPMCallback:(MADeCPMCallback)eCPMCallback
                          stateCallback:(MADStateCallback)stateCallback
                        dislikeCallback:(MADDislikeCallback)dislikeCallback;
 ```
@@ -337,8 +363,11 @@ __weak typeof(self) weakSelf = self;
                               }
                               [weakSelf.tableView reloadData];
                           }
+                             eCPMCallback:^(NSInteger eCPM) {
+                                 NSLog(@"---> eCPM: %ld", (long)eCPM);
+                             }
                             stateCallback:^(id adObject, MADState state, NSError *error) {
-                                if (state == MADStateDidClosed) {
+                                if (state == MADStateDidClose) {
                                     for (int i = 0; i < weakSelf.nativeExpressAdViews.count; i++) {
                                         MADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
                                         if (mbV.adView == adObject) {
@@ -351,12 +380,8 @@ __weak typeof(self) weakSelf = self;
                                 }
                                 [weakSelf _processState:state error:error];
                             }
-                          dislikeCallback:^(id adObject, NSArray<MADDislikeReason *> *reasons) {
-                              NSMutableArray *mArr = [NSMutableArray array];
-                              for (MADDislikeReason *reason in reasons) {
-                                  [mArr addObject:reason.name];
-                              }
-                              DebugLog(@"%@",[mArr componentsJoinedByString:@","]);
+                          dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
+                              DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
                               
                               for (int i = 0; i < weakSelf.nativeExpressAdViews.count; i++) {
                                   MADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
@@ -410,12 +435,16 @@ __weak typeof(self) weakSelf = self;
  原生自渲染信息流广告
  
  @param pid 广告配置项
+ @param viewController 用于跳转的控制器
  @param adsCallback 广告数据回调
+ @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
  @param stateCallback 广告状态回调
  @param dislikeCallback 广告不喜欢原因回调
  */
 + (void)nativeAdWithPlacementId:(NSString *)pid
+                 viewController:(UIViewController *)viewController
                     adsCallback:(MADNativeAdCallback)adsCallback
+                   eCPMCallback:(MADeCPMCallback)eCPMCallback
                   stateCallback:(MADStateCallback)stateCallback
                 dislikeCallback:(MADDislikeCallback)dislikeCallback;
 ```
@@ -425,21 +454,28 @@ __weak typeof(self) weakSelf = self;
 ```objc
 - (void)loadData
 {
+    _loadButton.enabled = NO;
     __weak typeof(self) weakSelf = self;
-    [MobAD nativeAdWithPlacementId:kSNativePID
+    [MobAD nativeAdWithPlacementId:self.pidField.text
+                    viewController:self
                        adsCallback:^(NSArray<MADNativeAdData *> *nativeAdDatas, NSError *error) {
+                           weakSelf.loadButton.enabled = YES;
+                           if (error) {
+                               [weakSelf _showErrorAlert:error];
+                               return;
+                           }
+                           [weakSelf.nativeAdDatas removeAllObjects];
                            [weakSelf.nativeAdDatas addObjectsFromArray:nativeAdDatas];
                            [weakSelf.tableView reloadData];
                        }
+                      eCPMCallback:^(NSInteger eCPM) {
+                          NSLog(@"---> eCPM: %ld", (long)eCPM);
+                      }
                      stateCallback:^(id adObject, MADState state, NSError *error) {
                          [weakSelf _processState:state error:error];
                      }
-                   dislikeCallback:^(id adObject, NSArray<MADDislikeReason *> *reasons) {
-                       NSMutableArray *mArr = [NSMutableArray array];
-                       for (MADDislikeReason *reason in reasons) {
-                           [mArr addObject:reason.name];
-                       }
-                       DebugLog(@"%@",[mArr componentsJoinedByString:@","]);
+                   dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
+                       DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
                    }];
 }
 
@@ -508,6 +544,9 @@ __weak typeof(self) weakSelf = self;
 }
 ```
 
+> 注意：原生自渲染广告需要
+
+
 ### 6、全屏视频广告
 
 * 接口定义
@@ -548,7 +587,7 @@ __weak typeof(self) weakSelf = self;
  
  @param pid 广告位id
  @param viewController 用于 present 激励视频的 VC
- @param eCPMCallback 用于获取广告eCPM, 部分广告不存在eCPM时回调值为 -1
+ @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
  @param stateCallback 激励视频广告状态回调
  */
 + (void)showRewardVideoAdWithPlacementId:(NSString *)pid
@@ -580,12 +619,14 @@ __weak typeof(self) weakSelf = self;
 
  @param pid 广告位id
  @param count 广告个数
+ @param viewController 用于 present 视频的 VC
  @param callback Draw视频流广告回调
  @param stateCallback 广告状态回调
  @param dislikeCallback 广告不喜欢原因回调
  */
 + (void)drawVideoFeedAdWithPlacementId:(NSString *)pid
                                adCount:(NSInteger)count
+                        viewController:(UIViewController *)viewController
                             adCallback:(MADNativeAdCallback)callback
                          stateCallback:(MADStateCallback)stateCallback
                        dislikeCallback:(MADDislikeCallback)dislikeCallback;
@@ -599,6 +640,7 @@ __weak typeof(self) weakSelf = self;
     __weak typeof(self) weakSelf = self;
     [MobAD drawVideoFeedAdWithPlacementId:@"10" // mobSlotId = 10 对应Draw视频流
                                   adCount:5
+                           viewController:self
                                adCallback:^(NSArray<MADNativeAdData *> *nativeAdDatas, NSError *error) {
                                    if (!error)
                                    {
@@ -726,13 +768,6 @@ __weak typeof(self) weakSelf = self;
 }
 
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 #pragma mark - private
 
 - (void)_showErrorAlert:(NSError *)error
@@ -753,4 +788,3 @@ __weak typeof(self) weakSelf = self;
 -------
 
 > 以上示例代码仅为部分关键代码，具体详细使用方式请参考Demo源代码。
-

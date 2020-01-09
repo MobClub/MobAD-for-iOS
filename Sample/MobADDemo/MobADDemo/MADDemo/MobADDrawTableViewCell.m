@@ -133,7 +133,7 @@
 
 -(void)autoPlay {
     self.player = [self reuseInlinePlayer];
-    NSString *resourceName = [NSString stringWithFormat:@"drawLocal_11%u",arc4random()%8];
+    NSString *resourceName = [NSString stringWithFormat:@"drawLocal_11%u",arc4random()%3];
     NSString *loacUrl = [[NSBundle mainBundle] pathForResource:resourceName ofType:@"mov"];
     _player.contentURL = [NSURL fileURLWithPath:loacUrl];
     [_player play];
@@ -213,7 +213,7 @@
 -(void)refreshUIWithModel:(MADNativeAdData *)model
 {
     // send log
-    [MobAD sendAdLogWithState:MADStateWillExposured adObject:model error:nil];
+    [MobAD sendAdLogWithState:MADStateWillExposure adObject:model error:nil];
     
 //    for (UIView *v in self.contentView.subviews) {
 //        [v removeFromSuperview];
@@ -225,6 +225,8 @@
     
     model.mediaView.frame = CGRectMake(0, 0, GlobleWidth, GlobleHeight);
     [self.contentView insertSubview:model.mediaView atIndex:0];
+    
+    [model registerContainer:self.contentView containerFrame:[UIScreen mainScreen].bounds withClickableViews:@[self.creativeButton,self.titleLabel,self.descriptionLabel,self.headImg]];
 }
 
 #pragma mark addAccessibilityIdentifier
