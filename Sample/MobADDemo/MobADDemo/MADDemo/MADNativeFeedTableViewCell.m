@@ -17,7 +17,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
 
 @interface MADNativeFeedBaseTableViewCell()
 {
-    MADNativeAdData *_nativeAdData;
+    MOBADNativeAdData *_nativeAdData;
 }
 
 @end
@@ -72,7 +72,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     [self.contentView addSubview:self.adLogoImageView];
 }
 
-- (void)refrashWithModel:(MADNativeAdData *)model
+- (void)refrashWithModel:(MOBADNativeAdData *)model
 {
     _nativeAdData = model;
     
@@ -80,7 +80,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     [MobAD sendAdLogWithState:MADStateWillExposure adObject:model error:nil];
 }
 
-+ (CGFloat)cellHeightWithModel:(MADNativeAdData *)model width:(CGFloat)width
++ (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width
 {
     return UITableViewAutomaticDimension;
 }
@@ -111,7 +111,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
 
 @implementation MADNativeFeedLeftTableViewCell
 
-- (void)refrashWithModel:(MADNativeAdData *)model
+- (void)refrashWithModel:(MOBADNativeAdData *)model
 {
     [super refrashWithModel:model];
     
@@ -161,7 +161,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
 }
 
-+ (CGFloat)cellHeightWithModel:(MADNativeAdData *)model width:(CGFloat)width
++ (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width
 {
     const CGFloat imageWidth = width * 0.4 - margin;
     const CGFloat imageHeight = imageWidth * (model.imgHeight / model.imgWidth);
@@ -174,7 +174,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
 
 @implementation MADNativeFeedLargeTableViewCell
 
-- (void)refrashWithModel:(MADNativeAdData *)model
+- (void)refrashWithModel:(MOBADNativeAdData *)model
 {
     [super refrashWithModel:model];
     
@@ -223,7 +223,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
 }
 
-+ (CGFloat)cellHeightWithModel:(MADNativeAdData *)model width:(CGFloat)width
++ (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width
 {
     const CGFloat imageWidth = width - padding.left - padding.right;
     const CGFloat imageHeight = imageWidth * (model.imgHeight / model.imgWidth);
@@ -235,7 +235,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
 
 @implementation MADNativeFeedThreeTableViewCell
 
-- (void)refrashWithModel:(MADNativeAdData *)model
+- (void)refrashWithModel:(MOBADNativeAdData *)model
 {
     [super refrashWithModel:model];
     
@@ -290,7 +290,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
 }
 
-+ (CGFloat)cellHeightWithModel:(MADNativeAdData *)model width:(CGFloat)width
++ (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width
 {
     const CGFloat imageWidth = (width - padding.left - padding.right - 2*margin) / 3.0;
     const CGFloat imageHeight = imageWidth * (model.imgHeight / model.imgWidth);
@@ -303,7 +303,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
 @implementation MADNativeFeedVideoTableViewCell
 
 
-- (void)refrashWithModel:(MADNativeAdData *)model
+- (void)refrashWithModel:(MOBADNativeAdData *)model
 {
     [super refrashWithModel:model];
     
@@ -332,6 +332,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
             [v removeFromSuperview];
         }
     }
+    model.isMute = NO;
     [self.contentView addSubview:videoView];
     
     // ad logo
@@ -350,9 +351,13 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     CGFloat maxTitleWidth =  width - x - 2 * margin;
     self.adTitleLabel.frame = CGRectMake(x, y , maxTitleWidth, 20);
     self.adTitleLabel.text = model.adTitle;
+    
+    // 绑定数据(一定要在子控件frame确认之后)
+    CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
+    [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView,videoView]];
 }
 
-+ (CGFloat)cellHeightWithModel:(MADNativeAdData *)model width:(CGFloat)width
++ (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width
 {
     const CGFloat imageWidth = width - padding.left - padding.right;
     const CGFloat imageHeight = imageWidth * (model.imgHeight / model.imgWidth);

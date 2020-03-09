@@ -22,6 +22,7 @@
 #import "MBProgressHUD.h"
 #import <MOBFoundation/MOBFoundation.h>
 #import "UIImage+Color.h"
+#import <AdSupport/AdSupport.h>
 
 @interface DebugViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
@@ -41,6 +42,8 @@
 @property (nonatomic, strong) UIWindow *alertConfigWindow;
 
 @property (nonatomic, strong) UITextView *configDictTextView;
+
+@property (copy, nonatomic) NSString *idfa;
 
 @end
 
@@ -181,6 +184,35 @@
     [bundleIdButton setBackgroundImage:[UIImage imageWithColor:[UIColor grayColor]] forState:UIControlStateDisabled];
     [self.view addSubview:bundleIdButton];
     
+    //IDFA
+    UILabel *idfaLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(bundleIdLabel.frame) + 16
+                                                                       , 0, 0)];
+    idfaLabel.text = @"IDFA:";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            idfaLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    [idfaLabel sizeToFit];
+   // [self.view addSubview:idfaLabel];
+    
+    self.idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+
+    UILabel *idfaContentLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(idfaLabel.frame) + 5, CGRectGetMaxY(bundleIdLabel.frame) + 10, ScreenWidth - 85 - CGRectGetMaxX(idfaLabel.frame), 40)];
+    idfaContentLabel.numberOfLines = 0;
+    idfaContentLabel.text = self.idfa;
+    idfaContentLabel.font = [UIFont systemFontOfSize:15.f];
+    
+    //[self.view addSubview:idfaContentLabel];
+    
+    UIButton *idfaButton = [[UIButton alloc] initWithFrame:CGRectMake(ScreenWidth - 75, CGRectGetMaxY(bundleIdField.frame) + 10, 60, 34)];
+    //        self.bundleIdButton = bundleIdButton;
+    [idfaButton setTitle:@"复制" forState:UIControlStateNormal];
+    [idfaButton addTarget:self action:@selector(copyIDFAClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    [idfaButton setBackgroundImage:[UIImage gradientImageWithColors:@[[UIColor redColor], [UIColor magentaColor]]] forState:UIControlStateNormal];
+    [idfaButton setBackgroundImage:[UIImage imageWithColor:[UIColor grayColor]] forState:UIControlStateDisabled];
+   // [self.view addSubview:idfaButton];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(bundleIdField.frame) + 10, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - y - 200) style:UITableViewStylePlain];
     if (@available(iOS 12.0, *)) {
@@ -215,7 +247,6 @@
     versionLabel.font = [UIFont systemFontOfSize:14];
     versionLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:versionLabel];
-    
 }
 
 
@@ -278,6 +309,19 @@
     [self.view addSubview:hud];
 }
 
+-(void)copyIDFAClicked
+{
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = self.idfa;
+    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+    hud.label.text = @"复制成功！";
+    hud.mode = MBProgressHUDModeText;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud showAnimated:YES];
+    [hud hideAnimated:YES afterDelay:1];
+    [self.view addSubview:hud];
+}
+
 
 - (void)textFieldTextDidChange:(NSNotification *)noti
 {
@@ -290,7 +334,6 @@
         }
     }
 }
-
 
 #pragma mark - UITextFieldDelegate
 

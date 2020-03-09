@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@class MADNativeAdData;
+@class MOBADNativeAdData;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIButton *creativeButton;
 
-- (void)refreshUIWithModel:(MADNativeAdData *_Nonnull)model;
+- (void)refreshUIWithModel:(MOBADNativeAdData *_Nonnull)model;
 
 @end
 

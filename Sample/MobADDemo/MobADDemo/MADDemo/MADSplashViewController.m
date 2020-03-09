@@ -10,14 +10,19 @@
 #import <MobAD/MobAD.h>
 #import "MobADNormalButton.h"
 #import "Const.h"
+#import "HUDManager.h"
 
 @interface MADSplashViewController ()<UITextFieldDelegate>
 
-@property (nonatomic, strong) MobADNormalButton *refreshbutton;
+@property (nonatomic, strong) MobADNormalButton *loadADbutton;
+@property (nonatomic, strong) MobADNormalButton *showADbutton;
 
 @property (nonatomic, strong) UITextField *pidField;
 @property (nonatomic, strong) UISwitch *skipSwitch;
 @property (nonatomic, strong) UISwitch *bottomSwitch;
+
+@property (nonatomic, strong) id SplashAdCache;
+
 
 @end
 
@@ -100,16 +105,44 @@
     
     //refresh Button
     CGSize size = [UIScreen mainScreen].bounds.size;
-    _refreshbutton = [[MobADNormalButton alloc] initWithFrame:CGRectMake(0, size.height *0.5, 0, 0)];
-    _refreshbutton.showRefreshIncon = YES;
-    [_refreshbutton setTitle:@"展示开屏广告" forState:UIControlStateNormal];
-    [_refreshbutton addTarget:self action:@selector(refreshBanner) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_refreshbutton];
+    _loadADbutton = [[MobADNormalButton alloc] initWithFrame:CGRectMake(0, size.height *0.5, 0, 0)];
+    _loadADbutton.showRefreshIncon = YES;
+    [_loadADbutton setTitle:@"预加载广告数据" forState:UIControlStateNormal];
+    [_loadADbutton addTarget:self action:@selector(loadSplashADData) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:_loadADbutton];
+    
+    _showADbutton = [[MobADNormalButton alloc] initWithFrame:CGRectMake(0, size.height *0.5 + 60, 0, 0)];
+    _showADbutton.showRefreshIncon = YES;
+    [_showADbutton setTitle:@"展示开屏广告" forState:UIControlStateNormal];
+    [_showADbutton addTarget:self action:@selector(showAD) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_showADbutton];
     
 }
 
--  (void)refreshBanner {
-    _refreshbutton.enabled = NO;
+//-(void)loadSplashADData
+//{
+//    [HUDManager showLoading];
+//    __weak typeof(self) weakSelf = self;
+//    [MobAD loadSplashAdDataWithPlacementId:self.pidField.text stateChanged:^(id adObject, MADState state, NSError *error) {
+//        weakSelf.loadADbutton.enabled = YES;
+//        NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
+//        if(state == MADStateDidLoad)
+//        {
+//            [HUDManager showStateHud:@"缓存成功！" state:HUDStateTypeSuccess afterDelay:1.5f];
+//            self.SplashAdCache = adObject;
+//        }
+//        if(state == MADStateFailLoad)
+//        {
+//            [HUDManager showStateHud:@"缓存失败！" state:HUDStateTypeFail afterDelay:1.5f];
+//        }
+//        if (error) {
+//            [weakSelf _showErrorAlert:error];
+//        }
+//    }];
+//}
+
+-  (void)showAD {
+    _showADbutton.enabled = NO;
     
     // customSkipView
     UIButton *skipButton = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 80, 30, 60, 28)];
@@ -137,24 +170,16 @@
     [bottomView addSubview:bottomViewButton];
     
     __weak typeof(self) weakSelf = self;
-    [MobAD showSplashAdWithPlacementId:self.pidField.text
-                                onView:[UIApplication sharedApplication].windows.firstObject
-                               adFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height * 0.8)
-                        viewController:self
-                        customSkipView:self.skipSwitch.isOn ? skipButton : nil
-                      customBottomView:self.bottomSwitch.isOn ? bottomView : nil
-                       tolerateTimeout:30.0
-                    adLifeTimeCallback:^(NSInteger lifeTime) {
-                        NSLog(@"=====> splash ad life time: %zd <=====", lifeTime);
-                        [skipButton setTitle:[NSString stringWithFormat:@"跳过|%zds", lifeTime] forState:UIControlStateNormal];
-                    }
-                          stateChanged:^(id adObject, MADState state, NSError *error) {
-                              weakSelf.refreshbutton.enabled = YES;
-                              NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
-                              if (error) {
-                                  [weakSelf _showErrorAlert:error];
-                              }
-                          }];
+    [MobAD showSplashAdWithPlacementId:self.pidField.text onView:[UIApplication sharedApplication].windows.firstObject adFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height * 0.8) viewController:self customSkipView:self.skipSwitch.isOn ? skipButton : nil customBottomView:self.bottomSwitch.isOn ? bottomView : nil tolerateTimeout:30.0 adLifeTimeCallback:^(NSInteger lifeTime) {
+        NSLog(@"=====> splash ad life time: %zd <=====", lifeTime);
+        [skipButton setTitle:[NSString stringWithFormat:@"跳过|%zds", lifeTime] forState:UIControlStateNormal];
+    } stateChanged:^(id adObject, MADState state, NSError *error) {
+        weakSelf.showADbutton.enabled = YES;
+        NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
+        if (error) {
+            [weakSelf _showErrorAlert:error];
+        }
+    }];
 }
 
 

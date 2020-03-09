@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MADNativeAdData;
+@class MOBADNativeAdData;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,9 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *appIconImageView;
 @property (nonatomic, strong) UIImageView *adLogoImageView;
 
-- (void)refrashWithModel:(MADNativeAdData *)model;
+- (void)refrashWithModel:(MOBADNativeAdData *)model;
 
-+ (CGFloat)cellHeightWithModel:(MADNativeAdData *)model width:(CGFloat)width;
++ (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width;
 
 @end
 

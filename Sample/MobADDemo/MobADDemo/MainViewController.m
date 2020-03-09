@@ -260,7 +260,7 @@
     [MobAD drawVideoFeedAdWithPlacementId:kSDrawVideoFeedPID
                                   adCount:2
                            viewController:weakSelf
-                               adCallback:^(NSArray<MADNativeAdData *> *nativeAdDatas, NSError *error) {
+                               adCallback:^(NSArray<MOBADNativeAdData *> *nativeAdDatas, NSError *error) {
                                    [weakSelf.hudView hideAnimated:YES];
                                    if (!error)
                                    {

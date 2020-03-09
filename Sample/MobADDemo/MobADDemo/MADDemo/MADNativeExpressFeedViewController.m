@@ -20,7 +20,7 @@
 @property (nonatomic, strong) UITextField *bottomField;
 @property (nonatomic, strong) UITextField *rightField;
 
-@property (strong, nonatomic) NSMutableArray<__kindof MADNativeExpressAdView *> *nativeExpressAdViews;
+@property (strong, nonatomic) NSMutableArray<__kindof MOBADNativeExpressAdView *> *nativeExpressAdViews;
 
 @property (strong, nonatomic) UITableView *tableView;
 
@@ -263,7 +263,7 @@
     [MobAD nativeExpressAdWithPlacementId:self.pidField.text
                                    adSize:CGSizeMake(ScreenWidth, 0)
                                edgeInsets:UIEdgeInsetsMake(top, left, bottom, right)
-                          adViewsCallback:^(NSArray<MADNativeExpressAdView *> *nativeExpressAdViews, NSError *error) {
+                          adViewsCallback:^(NSArray<MOBADNativeExpressAdView *> *nativeExpressAdViews, NSError *error) {
                               weakSelf.loadButton.enabled = YES;
                               if (error) {
                                   [weakSelf _showErrorAlert:error];
@@ -272,7 +272,7 @@
                               [weakSelf.nativeExpressAdViews removeAllObjects];
                               if (nativeExpressAdViews.count > 0) {
                                   [weakSelf.nativeExpressAdViews addObjectsFromArray:nativeExpressAdViews];
-                                  for (MADNativeExpressAdView *expressView in weakSelf.nativeExpressAdViews) {
+                                  for (MOBADNativeExpressAdView *expressView in weakSelf.nativeExpressAdViews) {
                                       expressView.controller = weakSelf;
                                       // TODO: 临时隐藏关闭按钮方案
 //                                      NSArray *adViewSubViews = expressView.adView.subviews;
@@ -292,7 +292,7 @@
                             stateCallback:^(id adObject, MADState state, NSError *error) {
                                 if (state == MADStateDidClose) {
                                     for (int i = 0; i < weakSelf.nativeExpressAdViews.count; i++) {
-                                        MADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
+                                        MOBADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
                                         if (mbV.adView == adObject) {
                                             [weakSelf.nativeExpressAdViews removeObject:mbV];
                                             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
@@ -307,7 +307,7 @@
                               DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
                               
                               for (int i = 0; i < weakSelf.nativeExpressAdViews.count; i++) {
-                                  MADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
+                                  MOBADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
                                   if (mbV.adView == adObject) {
                                       [weakSelf.nativeExpressAdViews removeObject:mbV];
                                       NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
@@ -323,7 +323,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MADNativeExpressAdView *view = self.nativeExpressAdViews[indexPath.row];
+    MOBADNativeExpressAdView *view = self.nativeExpressAdViews[indexPath.row];
     return view.adView.bounds.size.height + 10;
 }
 
@@ -343,7 +343,7 @@
         [subView removeFromSuperview];
     }
     
-    MADNativeExpressAdView *view = [self.nativeExpressAdViews objectAtIndex:indexPath.row];
+    MOBADNativeExpressAdView *view = [self.nativeExpressAdViews objectAtIndex:indexPath.row];
     view.adView.tag = 1000;
     cell.contentView.backgroundColor = [UIColor cyanColor];
     if (@available(iOS 12.0, *)) {
@@ -389,7 +389,7 @@
 
 
 
-- (NSMutableArray<MADNativeExpressAdView *> *)nativeExpressAdViews
+- (NSMutableArray<MOBADNativeExpressAdView *> *)nativeExpressAdViews
 {
     if (!_nativeExpressAdViews) {
         _nativeExpressAdViews = [NSMutableArray array];

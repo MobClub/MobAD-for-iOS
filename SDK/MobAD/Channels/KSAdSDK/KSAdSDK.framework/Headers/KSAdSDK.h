@@ -28,7 +28,13 @@
 #import <KSAdSDK/KSNativeAdRelatedView.h>
 #import <KSAdSDK/KSVideoAdView.h>
 
+#import <KSAdSDK/KSFeedAd.h>
+#import <KSAdSDK/KSFeedAdsManager.h>
 
+#import <KSAdSDK/KSDrawAd.h>
+#import <KSAdSDK/KSDrawAdsManager.h>
+
+#import <KSAdSDK/KSAdPlayerView.h>
 
 
 #import <KSAdSDK/KSAdUserInfo.h>

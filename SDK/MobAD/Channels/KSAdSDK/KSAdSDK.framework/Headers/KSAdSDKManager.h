@@ -11,9 +11,9 @@
 
 typedef NS_ENUM(NSInteger, KSAdSDKLogLevel) {
     KSAdSDKLogLevelAll      =       0,
-    KSAdSDKLogLevelVerbose,
-    KSAdSDKLogLevelVerify,
+    KSAdSDKLogLevelVerbose,  // 此类别的日记不会记录到日志文件中
     KSAdSDKLogLevelDebug,
+    KSAdSDKLogLevelVerify,
     KSAdSDKLogLevelInfo,
     KSAdSDKLogLevelWarn,
     KSAdSDKLogLevelError,
@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 // optional
 + (void)setLoglevel:(KSAdSDKLogLevel)level;
+
++ (void)setAutoHideUIRemoteKeyboardWindow:(BOOL)autoHideUIRemoteKeyboardWindow;
 
 + (NSString *)appId;
 

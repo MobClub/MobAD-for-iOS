@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 #import "MADTypeDefines.h"
-#import "MADNativeAdData.h"
-#import "MADNativeExpressAdView.h"
+#import "MOBADNativeAdData.h"
+#import "MOBADNativeExpressAdView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
                        stateChanged:(MADStateCallback)stateChanged
                     dislikeCallback:(MADDislikeCallback)dislikeCallback;
 
-/**
+    /**
  关闭横幅广告
 
  @param adObject 横幅广告对象
@@ -203,7 +203,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param data 广告数据
  @param error 错误信息,可以传nil
  */
-+ (void)sendAdLogWithState:(MADState)state adObject:(MADNativeAdData *)data error:(NSError *_Nullable)error;
++ (void)sendAdLogWithState:(MADState)state adObject:(MOBADNativeAdData *)data error:(NSError *_Nullable)error;
 
 @end
 

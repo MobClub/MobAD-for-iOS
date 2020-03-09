@@ -77,7 +77,7 @@
     [MobAD drawVideoFeedAdWithPlacementId:self.pidField.text.length > 0 ? self.pidField.text : kSDrawVideoFeedPID
                                   adCount:2
                            viewController:weakSelf
-                               adCallback:^(NSArray<MADNativeAdData *> *nativeAdDatas, NSError *error) {
+                               adCallback:^(NSArray<MOBADNativeAdData *> *nativeAdDatas, NSError *error) {
         weakSelf.refreshbutton.enabled = YES;
         if (!error)
         {

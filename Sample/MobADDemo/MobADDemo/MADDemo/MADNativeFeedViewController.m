@@ -21,7 +21,7 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
 
 @property (nonatomic, strong) UITextField *pidField;
 
-@property (strong, nonatomic) NSMutableArray<__kindof MADNativeAdData *> *nativeAdDatas;
+@property (strong, nonatomic) NSMutableArray<__kindof MOBADNativeAdData *> *nativeAdDatas;
 
 @property (strong, nonatomic) UITableView *tableView;
 
@@ -45,8 +45,19 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
     [self setupViews];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if(self.nativeAdDatas.count > 0)
+    {
+        for(MOBADNativeAdData *data in self.nativeAdDatas)
+        {
+            [data unregisterView];
+        }
+    }
+}
+
 - (void)setupViews {
-    
     UILabel *pidLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, NavigationBarHeight + 10, 0, 0)];
     pidLabel.text = @"广告位ID:";
     pidLabel.textColor = [UIColor blackColor];
@@ -112,7 +123,7 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
     __weak typeof(self) weakSelf = self;
     [MobAD nativeAdWithPlacementId:self.pidField.text
                     viewController:self
-                       adsCallback:^(NSArray<MADNativeAdData *> *nativeAdDatas, NSError *error) {
+                       adsCallback:^(NSArray<MOBADNativeAdData *> *nativeAdDatas, NSError *error) {
                            weakSelf.loadButton.enabled = YES;
                            if (error) {
                                [weakSelf _showErrorAlert:error];
@@ -139,7 +150,7 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MADNativeAdData *model = self.nativeAdDatas[indexPath.row];
+    MOBADNativeAdData *model = self.nativeAdDatas[indexPath.row];
     CGFloat height = 0;
     if (model.isVideoAd)
     {
@@ -170,7 +181,7 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MADNativeAdData *model = self.nativeAdDatas[indexPath.row];
+    MOBADNativeAdData *model = self.nativeAdDatas[indexPath.row];
     model.rootViewController = self;
     MADNativeFeedBaseTableViewCell *cell = nil;
     if (model.isVideoAd)
@@ -230,7 +241,7 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
     }
 }
 
-- (NSMutableArray<MADNativeAdData *> *)nativeAdDatas
+- (NSMutableArray<MOBADNativeAdData *> *)nativeAdDatas
 {
     if (!_nativeAdDatas) {
         _nativeAdDatas = [NSMutableArray array];

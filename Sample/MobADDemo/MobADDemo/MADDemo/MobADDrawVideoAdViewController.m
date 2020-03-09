@@ -70,7 +70,7 @@ static NSString *kMobADDrawBaseTableViewCellIdentifier = @"MobADDrawBaseTableVie
         [datas addObject:@"App tableViewcell"];
     }
     
-    for (MADNativeAdData *model in self.ads) {
+    for (MOBADNativeAdData *model in self.ads) {
         NSUInteger index = rand() % datas.count;
         [datas insertObject:model atIndex:index];
     }
@@ -129,8 +129,8 @@ static NSString *kMobADDrawBaseTableViewCellIdentifier = @"MobADDrawBaseTableVie
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSUInteger index = indexPath.row;
     id model = self.dataSource[index];
-    if ([model isKindOfClass:[MADNativeAdData class]]) {
-        MADNativeAdData *nativeAd = (MADNativeAdData *)model;
+    if ([model isKindOfClass:[MOBADNativeAdData class]]) {
+        MOBADNativeAdData *nativeAd = (MOBADNativeAdData *)model;
         nativeAd.rootViewController = self;
         MobADDrawTableViewCell *cell = nil;
         cell = [tableView dequeueReusableCellWithIdentifier:kMobADDrawTableViewCellIdentifier forIndexPath:indexPath];

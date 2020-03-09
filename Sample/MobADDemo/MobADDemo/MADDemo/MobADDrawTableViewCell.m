@@ -210,7 +210,7 @@
     return _creativeButton;
 }
 
--(void)refreshUIWithModel:(MADNativeAdData *)model
+-(void)refreshUIWithModel:(MOBADNativeAdData *)model
 {
     // send log
     [MobAD sendAdLogWithState:MADStateWillExposure adObject:model error:nil];

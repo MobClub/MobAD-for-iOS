@@ -62,6 +62,8 @@
 		B16FB4FF23B4D9980072EDD6 /* MKADConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16FB4FE23B4D9980072EDD6 /* MKADConnector.framework */; };
 		B1D58ACC23AA28EB009EC29E /* libGDTMobSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D58AC723AA28EB009EC29E /* libGDTMobSDK.a */; };
 		B1D58ACD23AA28EB009EC29E /* MGADConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D58AC923AA28EB009EC29E /* MGADConnector.framework */; };
+		BF27838F2403BE89009C980C /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF27838C2403BE89009C980C /* MBProgressHUD.bundle */; };
+		BF2783902403BE89009C980C /* HUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF27838D2403BE89009C980C /* HUDManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,6 +181,9 @@
 		B1D58ACA23AA28EB009EC29E /* GDTUnifiedNativeAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTUnifiedNativeAd.h; sourceTree = "<group>"; };
 		B1D58ACB23AA28EB009EC29E /* GDTVideoConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTVideoConfig.h; sourceTree = "<group>"; };
 		B1DF65CB231995CF0075DB9B /* MOBAdsPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOBAdsPrefixHeader.pch; sourceTree = "<group>"; };
+		BF27838C2403BE89009C980C /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
+		BF27838D2403BE89009C980C /* HUDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDManager.m; sourceTree = "<group>"; };
+		BF27838E2403BE89009C980C /* HUDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -361,6 +366,9 @@
 		5E13D5A82384F709008C3DCC /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
+				BF27838E2403BE89009C980C /* HUDManager.h */,
+				BF27838D2403BE89009C980C /* HUDManager.m */,
+				BF27838C2403BE89009C980C /* MBProgressHUD.bundle */,
 				5E13D5AA2384F723008C3DCC /* MBProgressHUD.h */,
 				5E13D5A92384F723008C3DCC /* MBProgressHUD.m */,
 			);
@@ -558,6 +566,7 @@
 				5E70DD062340B48100AA29FA /* drawLocal_112.mov in Resources */,
 				5E94BC41237AB3B4005E512B /* launchPic.jpg in Resources */,
 				5E94BC49237AB3EA005E512B /* LaunchViewController.xib in Resources */,
+				BF27838F2403BE89009C980C /* MBProgressHUD.bundle in Resources */,
 				5E13D5922383DF56008C3DCC /* KSAdSDK.bundle in Resources */,
 				5E398FC2234F5FBC002AB597 /* Assets.xcassets in Resources */,
 			);
@@ -588,6 +597,7 @@
 				5E9D35DB2321338100F1A1B6 /* MobADDrawTableViewCell.m in Sources */,
 				5E9D3722232A512100F1A1B6 /* MainViewController.m in Sources */,
 				5E9D372C232F30C800F1A1B6 /* MADInterstitialViewController.m in Sources */,
+				BF2783902403BE89009C980C /* HUDManager.m in Sources */,
 				5E94BC48237AB3EA005E512B /* LaunchViewController.m in Sources */,
 				509777C322F023BE00FA588C /* AppDelegate.m in Sources */,
 				5E9D35D5232131B800F1A1B6 /* MobADDrawVideoAdViewController.m in Sources */,
@@ -670,7 +680,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -723,7 +733,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -737,7 +747,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20191227;
+				CURRENT_PROJECT_VERSION = 2.0.6.1;
 				DEVELOPMENT_TEAM = Q87QUX3533;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
@@ -751,7 +761,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
-				MARKETING_VERSION = 2.0.5;
+				MARKETING_VERSION = 2.0.6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mob.product.ad;
@@ -769,7 +779,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20191227;
+				CURRENT_PROJECT_VERSION = 2.0.6.1;
 				DEVELOPMENT_TEAM = LW5266U92D;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
@@ -783,7 +793,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
-				MARKETING_VERSION = 2.0.5;
+				MARKETING_VERSION = 2.0.6.1;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mob.product.ad;
@@ -799,8 +809,8 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LW5266U92D;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MobADDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -810,6 +820,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mob.product.ad.MobADDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MobADDemo.app/MobADDemo";
 			};

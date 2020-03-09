@@ -9,7 +9,7 @@
 #ifndef MADTypeDefines_h
 #define MADTypeDefines_h
 
-@class MADNativeExpressAdView, MADNativeAdData;
+@class MOBADNativeExpressAdView, MOBADNativeAdData;
 
 #pragma mark - 统一接口定义
 
@@ -100,11 +100,11 @@ typedef void(^MADeCPMCallback)(NSInteger eCPM);
 /**
  原生模版广告回调
  */
-typedef void(^MADNativeExpressAdViewCallback)(NSArray<MADNativeExpressAdView *> *nativeExpressAdViews, NSError *error);
+typedef void(^MADNativeExpressAdViewCallback)(NSArray<MOBADNativeExpressAdView *> *nativeExpressAdViews, NSError *error);
 
 /**
  原生广告回调
  */
-typedef void(^MADNativeAdCallback)(NSArray<MADNativeAdData *> *nativeAdDatas, NSError *error);
+typedef void(^MADNativeAdCallback)(NSArray<MOBADNativeAdData *> *nativeAdDatas, NSError *error);
 
 #endif /* MADTypeDefines_h */
