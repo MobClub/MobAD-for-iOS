@@ -10,6 +10,20 @@
 #import <UIKit/UIKit.h>
 #import "GDTVideoConfig.h"
 
+typedef NS_ENUM(NSInteger, GDTVastAdEventType) {
+    GDTVastAdEventTypeUnknow,
+    GDTVastAdEventTypeLoaded,
+    GDTVastAdEventTypeStarted,
+    GDTVastAdEventTypeFirstQuartile,
+    GDTVastAdEventTypeMidPoint,
+    GDTVastAdEventTypeThirdQuartile,
+    GDTVastAdEventTypeComplete,
+    GDTVastAdEventTypeAllAdsComplete,
+    GDTVastAdEventTypeExposed,
+    GDTVastAdEventTypeClicked,
+};
+
+
 @interface GDTUnifiedNativeAdDataObject : NSObject 
 
 /**
@@ -107,6 +121,26 @@
 @property (nonatomic, strong) GDTVideoConfig *videoConfig;
 
 /**
+ * 视频广告时长，单位 ms
+ */
+@property (nonatomic, readonly) CGFloat duration;
+
+/**
+ *  VAST Tag Url，可能为空。
+ */
+@property (nonatomic, copy, readonly) NSString *vastTagUrl;
+
+/**
+ * VAST Content，可能为空。
+ */
+@property (nonatomic, copy, readonly) NSString *vastContent;
+
+/**
+ * 是否为 VAST 广告
+ */
+@property (nonatomic, assign, readonly) BOOL isVastAd;
+
+/**
  判断两个自渲染2.0广告数据是否相等
 
  @param dataObject 需要对比的自渲染2.0广告数据对象
@@ -120,5 +154,6 @@
  上报时机：开发者自行渲染的视频广告封面图展示给用户时。
 */
 - (void)videoCoverExpose;
+
 
 @end

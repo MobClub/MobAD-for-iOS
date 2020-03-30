@@ -14,7 +14,6 @@
 		509777DB22F023C000FA588C /* MOBAdsDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 509777DA22F023C000FA588C /* MOBAdsDemoTests.m */; };
 		5097780F22F0390000FA588C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5097780E22F0390000FA588C /* libz.tbd */; };
 		5097781122F0391100FA588C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5097781022F0391100FA588C /* libc++.tbd */; };
-		50AB970722FBDDBC00F42548 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AB970222FBDDBC00F42548 /* MOBFoundation.framework */; };
 		5E13D5922383DF56008C3DCC /* KSAdSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5E13D5902383DF56008C3DCC /* KSAdSDK.bundle */; };
 		5E13D5932383DF56008C3DCC /* KSAdSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E13D5912383DF56008C3DCC /* KSAdSDK.framework */; };
 		5E13D5952383E0A9008C3DCC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E13D5942383E0A9008C3DCC /* CoreGraphics.framework */; };
@@ -62,8 +61,18 @@
 		B16FB4FF23B4D9980072EDD6 /* MKADConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16FB4FE23B4D9980072EDD6 /* MKADConnector.framework */; };
 		B1D58ACC23AA28EB009EC29E /* libGDTMobSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D58AC723AA28EB009EC29E /* libGDTMobSDK.a */; };
 		B1D58ACD23AA28EB009EC29E /* MGADConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D58AC923AA28EB009EC29E /* MGADConnector.framework */; };
-		BF27838F2403BE89009C980C /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF27838C2403BE89009C980C /* MBProgressHUD.bundle */; };
-		BF2783902403BE89009C980C /* HUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF27838D2403BE89009C980C /* HUDManager.m */; };
+		BF2783942403C124009C980C /* HUDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2783922403C123009C980C /* HUDManager.m */; };
+		BF2783952403C124009C980C /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF2783932403C123009C980C /* MBProgressHUD.bundle */; };
+		BF2783AC2403C491009C980C /* baidumobadsdk.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF2783AA2403C491009C980C /* baidumobadsdk.bundle */; };
+		BF2783AD2403C491009C980C /* BaiduMobAdSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF2783AB2403C491009C980C /* BaiduMobAdSDK.framework */; };
+		BF2783B12403CE7B009C980C /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF2783B02403CE7B009C980C /* SafariServices.framework */; };
+		BF2783B32403CE84009C980C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF2783B22403CE83009C980C /* MessageUI.framework */; };
+		BF2783B42403CEA1009C980C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7A13AD237B9EDF003E66C7 /* CoreLocation.framework */; };
+		BF2783B52403CEAE009C980C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506A801022F17138008A3653 /* AVFoundation.framework */; };
+		BF2783C12406241D009C980C /* MDADConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF2783C02406241D009C980C /* MDADConnector.framework */; };
+		BF5E2EB4242C513800C5B187 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF5E2EB3242C513800C5B187 /* WebKit.framework */; };
+		BFAB81C124247191004628A3 /* BUFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAB81C024247191004628A3 /* BUFoundation.framework */; };
+		BFAB81C624248C4E004628A3 /* FCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAB81C524248C4E004628A3 /* FCommon.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,7 +99,6 @@
 		509777DC22F023C000FA588C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5097780E22F0390000FA588C /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		5097781022F0391100FA588C /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		50AB970222FBDDBC00F42548 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		50C5882D2302633D00FB7A55 /* Const.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Const.h; sourceTree = "<group>"; };
 		5E13D5902383DF56008C3DCC /* KSAdSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = KSAdSDK.bundle; sourceTree = "<group>"; };
 		5E13D5912383DF56008C3DCC /* KSAdSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KSAdSDK.framework; sourceTree = "<group>"; };
@@ -181,9 +189,17 @@
 		B1D58ACA23AA28EB009EC29E /* GDTUnifiedNativeAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTUnifiedNativeAd.h; sourceTree = "<group>"; };
 		B1D58ACB23AA28EB009EC29E /* GDTVideoConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTVideoConfig.h; sourceTree = "<group>"; };
 		B1DF65CB231995CF0075DB9B /* MOBAdsPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOBAdsPrefixHeader.pch; sourceTree = "<group>"; };
-		BF27838C2403BE89009C980C /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
-		BF27838D2403BE89009C980C /* HUDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDManager.m; sourceTree = "<group>"; };
-		BF27838E2403BE89009C980C /* HUDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDManager.h; sourceTree = "<group>"; };
+		BF2783912403C123009C980C /* HUDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDManager.h; sourceTree = "<group>"; };
+		BF2783922403C123009C980C /* HUDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDManager.m; sourceTree = "<group>"; };
+		BF2783932403C123009C980C /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
+		BF2783AA2403C491009C980C /* baidumobadsdk.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = baidumobadsdk.bundle; sourceTree = "<group>"; };
+		BF2783AB2403C491009C980C /* BaiduMobAdSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMobAdSDK.framework; sourceTree = "<group>"; };
+		BF2783B02403CE7B009C980C /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		BF2783B22403CE83009C980C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		BF2783C02406241D009C980C /* MDADConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MDADConnector.framework; sourceTree = "<group>"; };
+		BF5E2EB3242C513800C5B187 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		BFAB81C024247191004628A3 /* BUFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BUFoundation.framework; sourceTree = "<group>"; };
+		BFAB81C524248C4E004628A3 /* FCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FCommon.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,30 +207,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E13D59A2383E0D2008C3DCC /* CoreData.framework in Frameworks */,
+				5E94BC0B23796B66005E512B /* ImageIO.framework in Frameworks */,
+				5E7A13B3237B9F5A003E66C7 /* CoreMotion.framework in Frameworks */,
+				5E7A13A2237B9E93003E66C7 /* AdSupport.framework in Frameworks */,
+				5E7A13B0237B9F30003E66C7 /* SystemConfiguration.framework in Frameworks */,
 				5E13D5982383E0C7008C3DCC /* CoreTelephony.framework in Frameworks */,
+				BF2783B52403CEAE009C980C /* AVFoundation.framework in Frameworks */,
+				BF2783B42403CEA1009C980C /* CoreLocation.framework in Frameworks */,
+				5E7A139D237B9E75003E66C7 /* CoreMedia.framework in Frameworks */,
+				5E7A139E237B9E75003E66C7 /* MediaPlayer.framework in Frameworks */,
+				BF5E2EB4242C513800C5B187 /* WebKit.framework in Frameworks */,
+				BFAB81C124247191004628A3 /* BUFoundation.framework in Frameworks */,
+				BF2783B32403CE84009C980C /* MessageUI.framework in Frameworks */,
+				BF2783B12403CE7B009C980C /* SafariServices.framework in Frameworks */,
+				5E13D59A2383E0D2008C3DCC /* CoreData.framework in Frameworks */,
 				5E183A7B238BC900004579CB /* MBADConnector.framework in Frameworks */,
 				5E183A79238BC900004579CB /* BUAdSDK.framework in Frameworks */,
 				5E13D5972383E0B5008C3DCC /* Security.framework in Frameworks */,
 				5E13D5952383E0A9008C3DCC /* CoreGraphics.framework in Frameworks */,
 				5E7A13B4237B9F62003E66C7 /* Accelerate.framework in Frameworks */,
-				5E7A13B3237B9F5A003E66C7 /* CoreMotion.framework in Frameworks */,
 				5E7A13B1237B9F3C003E66C7 /* MobileCoreServices.framework in Frameworks */,
-				5E7A13B0237B9F30003E66C7 /* SystemConfiguration.framework in Frameworks */,
-				5E7A13A2237B9E93003E66C7 /* AdSupport.framework in Frameworks */,
-				5E7A139D237B9E75003E66C7 /* CoreMedia.framework in Frameworks */,
-				5E7A139E237B9E75003E66C7 /* MediaPlayer.framework in Frameworks */,
 				B16FB4FF23B4D9980072EDD6 /* MKADConnector.framework in Frameworks */,
 				5E13D5932383DF56008C3DCC /* KSAdSDK.framework in Frameworks */,
 				5E7A139A237B9E56003E66C7 /* libsqlite3.tbd in Frameworks */,
 				5E94BC0F23796BD7005E512B /* libresolv.9.tbd in Frameworks */,
-				5E94BC0B23796B66005E512B /* ImageIO.framework in Frameworks */,
-				50AB970722FBDDBC00F42548 /* MOBFoundation.framework in Frameworks */,
+				BF2783AD2403C491009C980C /* BaiduMobAdSDK.framework in Frameworks */,
 				506A800D22F170A6008A3653 /* libxml2.tbd in Frameworks */,
 				5097781122F0391100FA588C /* libc++.tbd in Frameworks */,
 				5097780F22F0390000FA588C /* libz.tbd in Frameworks */,
 				5E183A74238BC8C8004579CB /* MobAD.framework in Frameworks */,
+				BFAB81C624248C4E004628A3 /* FCommon.framework in Frameworks */,
 				B1D58ACC23AA28EB009EC29E /* libGDTMobSDK.a in Frameworks */,
+				BF2783C12406241D009C980C /* MDADConnector.framework in Frameworks */,
 				B1D58ACD23AA28EB009EC29E /* MGADConnector.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +304,9 @@
 		5097780D22F038FF00FA588C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF5E2EB3242C513800C5B187 /* WebKit.framework */,
+				BF2783B22403CE83009C980C /* MessageUI.framework */,
+				BF2783B02403CE7B009C980C /* SafariServices.framework */,
 				5E13D5992383E0D2008C3DCC /* CoreData.framework */,
 				5E13D5962383E0B5008C3DCC /* Security.framework */,
 				5E13D5942383E0A9008C3DCC /* CoreGraphics.framework */,
@@ -326,6 +353,7 @@
 		50AB96E922FBDDBC00F42548 /* Channels */ = {
 			isa = PBXGroup;
 			children = (
+				BF2783A92403C491009C980C /* BQTAdSDK */,
 				B1D58AB423AA28EB009EC29E /* GDTMobSDK */,
 				5E183A75238BC900004579CB /* BUAdSDK */,
 				5E13D58F2383DF56008C3DCC /* KSAdSDK */,
@@ -336,7 +364,7 @@
 		50AB970122FBDDBC00F42548 /* Required */ = {
 			isa = PBXGroup;
 			children = (
-				50AB970222FBDDBC00F42548 /* MOBFoundation.framework */,
+				BFAB81C524248C4E004628A3 /* FCommon.framework */,
 			);
 			path = Required;
 			sourceTree = "<group>";
@@ -366,9 +394,9 @@
 		5E13D5A82384F709008C3DCC /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
-				BF27838E2403BE89009C980C /* HUDManager.h */,
-				BF27838D2403BE89009C980C /* HUDManager.m */,
-				BF27838C2403BE89009C980C /* MBProgressHUD.bundle */,
+				BF2783912403C123009C980C /* HUDManager.h */,
+				BF2783922403C123009C980C /* HUDManager.m */,
+				BF2783932403C123009C980C /* MBProgressHUD.bundle */,
 				5E13D5AA2384F723008C3DCC /* MBProgressHUD.h */,
 				5E13D5A92384F723008C3DCC /* MBProgressHUD.m */,
 			);
@@ -378,6 +406,7 @@
 		5E183A75238BC900004579CB /* BUAdSDK */ = {
 			isa = PBXGroup;
 			children = (
+				BFAB81C024247191004628A3 /* BUFoundation.framework */,
 				5E183A76238BC900004579CB /* BUAdSDK.framework */,
 				5E183A77238BC900004579CB /* BUAdSDK.bundle */,
 				5E183A78238BC900004579CB /* MBADConnector.framework */,
@@ -479,6 +508,16 @@
 			path = GDTMobSDK;
 			sourceTree = "<group>";
 		};
+		BF2783A92403C491009C980C /* BQTAdSDK */ = {
+			isa = PBXGroup;
+			children = (
+				BF2783C02406241D009C980C /* MDADConnector.framework */,
+				BF2783AA2403C491009C980C /* baidumobadsdk.bundle */,
+				BF2783AB2403C491009C980C /* BaiduMobAdSDK.framework */,
+			);
+			path = BQTAdSDK;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -561,12 +600,13 @@
 			files = (
 				0B159D7B233234C30038F086 /* MobAD.bundle in Resources */,
 				5E183A7A238BC900004579CB /* BUAdSDK.bundle in Resources */,
+				BF2783AC2403C491009C980C /* baidumobadsdk.bundle in Resources */,
 				5E70DD0C2340B48100AA29FA /* drawLocal_110.mov in Resources */,
 				5E70DD052340B48100AA29FA /* drawLocal_111.mov in Resources */,
 				5E70DD062340B48100AA29FA /* drawLocal_112.mov in Resources */,
 				5E94BC41237AB3B4005E512B /* launchPic.jpg in Resources */,
 				5E94BC49237AB3EA005E512B /* LaunchViewController.xib in Resources */,
-				BF27838F2403BE89009C980C /* MBProgressHUD.bundle in Resources */,
+				BF2783952403C124009C980C /* MBProgressHUD.bundle in Resources */,
 				5E13D5922383DF56008C3DCC /* KSAdSDK.bundle in Resources */,
 				5E398FC2234F5FBC002AB597 /* Assets.xcassets in Resources */,
 			);
@@ -597,7 +637,6 @@
 				5E9D35DB2321338100F1A1B6 /* MobADDrawTableViewCell.m in Sources */,
 				5E9D3722232A512100F1A1B6 /* MainViewController.m in Sources */,
 				5E9D372C232F30C800F1A1B6 /* MADInterstitialViewController.m in Sources */,
-				BF2783902403BE89009C980C /* HUDManager.m in Sources */,
 				5E94BC48237AB3EA005E512B /* LaunchViewController.m in Sources */,
 				509777C322F023BE00FA588C /* AppDelegate.m in Sources */,
 				5E9D35D5232131B800F1A1B6 /* MobADDrawVideoAdViewController.m in Sources */,
@@ -607,6 +646,7 @@
 				5EC25DC0238BD2F000438AB7 /* UIImage+Color.m in Sources */,
 				5E732C432332272E00BFB339 /* MADNativeFeedViewController.m in Sources */,
 				5E13D5AB2384F723008C3DCC /* MBProgressHUD.m in Sources */,
+				BF2783942403C124009C980C /* HUDManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,25 +787,25 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2.0.6.1;
+				CURRENT_PROJECT_VERSION = 20200325;
 				DEVELOPMENT_TEAM = Q87QUX3533;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
 				GCC_PREFIX_HEADER = "MobADDemo/Supporting Files/MOBAdsPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
 				INFOPLIST_FILE = "MobADDemo/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_GENERATE_MAP_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
-				MARKETING_VERSION = 2.0.6.1;
+				MARKETING_VERSION = 2.1.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mob.product.ad;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MobADDemo;
 				PROVISIONING_PROFILE_SPECIFIER = MobProvisioningProfiles;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
@@ -779,25 +819,25 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2.0.6.1;
+				CURRENT_PROJECT_VERSION = 20200325;
 				DEVELOPMENT_TEAM = LW5266U92D;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
 				GCC_PREFIX_HEADER = "MobADDemo/Supporting Files/MOBAdsPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
 				INFOPLIST_FILE = "MobADDemo/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_GENERATE_MAP_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
-				MARKETING_VERSION = 2.0.6.1;
+				MARKETING_VERSION = 2.1.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mob.product.ad;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MobADDemo;
 				PROVISIONING_PROFILE_SPECIFIER = ADProvision;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";

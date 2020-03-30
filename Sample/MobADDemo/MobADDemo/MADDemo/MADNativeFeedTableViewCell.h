@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *adImageView;
 @property (nonatomic, strong) UIImageView *appIconImageView;
 @property (nonatomic, strong) UIImageView *adLogoImageView;
+@property (nonatomic, strong) UIView *videoView;
 
 - (void)refrashWithModel:(MOBADNativeAdData *)model;
 

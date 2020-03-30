@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import <MOBFoundation/MOBFoundation.h>
+//#import <MOBFoundation/MOBFoundation.h>
+#import <FCommon/FCommon.h>
 #import <MobAD/MobAD.h>
 #import "Const.h"
 #import "LaunchViewController.h"
@@ -27,7 +28,7 @@
     // 监听网络变化
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_appNetworkReachabilityChanged:)
-                                                 name:kMOBFReachabilityChangedNotification
+                                                 name:kFCMNReachabilityChangedNotification
                                                object:nil];
     
     UIWindow *window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
@@ -36,40 +37,40 @@
     LaunchViewController *launchVC = [[LaunchViewController alloc] init];
     window.rootViewController = launchVC;
     // 替换window的rootVC
-//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
-//    window.rootViewController = nav;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+    window.rootViewController = nav;
 //    DebugViewController *debugVC = [[DebugViewController alloc] init];
 //    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:debugVC];
 //    window.rootViewController = nav;
     // 启动展示开屏广告
     __weak typeof(self) weakSelf = self;
-    [MobAD showSplashAdWithPlacementId:kSSplashPID
-                                onView:[UIApplication sharedApplication].windows.firstObject
-                               adFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height * 0.8)
-                        viewController:launchVC
-                        customSkipView:nil
-                      customBottomView:nil
-                       tolerateTimeout:30.0
-                    adLifeTimeCallback:^(NSInteger lifeTime) {
-                        NSLog(@"=====> splash ad life time: %zd <=====", lifeTime);
-                    }
-                          stateChanged:^(id adObject, MADState state, NSError *error) {
-                              NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
-                              if (state == MADStateDidLoad) {
-                                  [launchVC dismissSplashHUD];
-                              }
-                              if (state == MADStateWillClose || state == MADStateDidClose) {
-                                  // 替换window的rootVC
-                                  UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
-                                  window.rootViewController = nav;
-                              }
-                              if (error) {
-                                  // 替换window的rootVC
-                                  UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
-                                  window.rootViewController = nav;
-                                  [weakSelf _showErrorAlert:error];
-                              }
-                          }];
+//    [MobAD showSplashAdWithPlacementId:kSSplashPID
+//                                onView:[UIApplication sharedApplication].windows.firstObject
+//                               adFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height * 0.8)
+//                        viewController:launchVC
+//                        customSkipView:nil
+//                      customBottomView:nil
+//                       tolerateTimeout:30.0
+//                    adLifeTimeCallback:^(NSInteger lifeTime) {
+//                        NSLog(@"=====> splash ad life time: %zd <=====", lifeTime);
+//                    }
+//                          stateChanged:^(id adObject, MADState state, NSError *error) {
+//                              NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
+//                              if (state == MADStateDidLoad) {
+//                                  [launchVC dismissSplashHUD];
+//                              }
+//                              if (state == MADStateWillClose || state == MADStateDidClose) {
+//                                  // 替换window的rootVC
+//                                  UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+//                                  window.rootViewController = nav;
+//                              }
+//                              if (error) {
+//                                  // 替换window的rootVC
+//                                  UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+//                                  window.rootViewController = nav;
+//                          //        [weakSelf _showErrorAlert:error];
+//                              }
+//                          }];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -77,9 +78,9 @@
 
 - (void)_appNetworkReachabilityChanged:(NSNotification *)note
 {
-    MOBFNetworkType netStatus = [MOBFDevice currentNetworkType];
+    FCMNNetworkType netStatus = [FCMNDevice currentNetworkType];
     // 网络变化时如果本地配置信息为空则请求配置信息
-    NSString *info = netStatus != MOBFNetworkTypeNone ? @"网络链接成功！！" : @"网络链接断开, 请重新连接网络！！";
+    NSString *info = netStatus != FCMNNetworkTypeNone ? @"网络链接成功！！" : @"网络链接断开, 请重新连接网络！！";
     UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"提示" message:info preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *alertOKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [alertC addAction:alertOKAction];

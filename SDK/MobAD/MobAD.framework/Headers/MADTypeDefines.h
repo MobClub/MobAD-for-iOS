@@ -21,6 +21,19 @@ typedef NS_ENUM(NSInteger, MADPlat) {
     MADPlatGDT      = 4,
     MADPlatBUD      = 5,
     MADPlatKS       = 6,
+    MADPlatBQT      = 13,
+};
+
+//广告请求类型
+typedef NS_ENUM (NSUInteger,AdLoadType) {
+    LoadADDataType = 0,//加载缓存广告数据
+    ShowADType = 1, //展示广告
+};
+
+//请求平台类型
+typedef NS_ENUM (NSUInteger,RequestPlat) {
+    PlatA = 0,//三方
+    PlatB = 1, //Mob
 };
 
 

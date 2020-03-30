@@ -25,6 +25,7 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
 
 @property (strong, nonatomic) UITableView *tableView;
 
+
 @property (nonatomic, strong) MobADNormalButton *loadButton;
 
 @end
@@ -48,13 +49,13 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if(self.nativeAdDatas.count > 0)
-    {
-        for(MOBADNativeAdData *data in self.nativeAdDatas)
-        {
-            [data unregisterView];
-        }
-    }
+//    if(self.nativeAdDatas.count > 0)
+//    {
+//        for(MOBADNativeAdData *data in self.nativeAdDatas)
+//        {
+//            [data unregisterView];
+//        }
+//    }
 }
 
 - (void)setupViews {
@@ -119,6 +120,12 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
 
 - (void)loadData
 {
+        if(self.nativeAdDatas.count > 0)
+        {
+           [self.nativeAdDatas removeAllObjects];
+            [self.tableView reloadData];
+        }
+    
     _loadButton.enabled = NO;
     __weak typeof(self) weakSelf = self;
     [MobAD nativeAdWithPlacementId:self.pidField.text
@@ -126,7 +133,8 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
                        adsCallback:^(NSArray<MOBADNativeAdData *> *nativeAdDatas, NSError *error) {
                            weakSelf.loadButton.enabled = YES;
                            if (error) {
-                               [weakSelf _showErrorAlert:error];
+                              // [weakSelf _showErrorAlert:error];
+                            
                                return;
                            }
                            [weakSelf.nativeAdDatas removeAllObjects];
@@ -137,7 +145,15 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
                           NSLog(@"---> eCPM: %ld", (long)eCPM);
                       }
                      stateCallback:^(id adObject, MADState state, NSError *error) {
-                         [weakSelf _processState:state error:error];
+                         //[weakSelf _processState:state error:error];
+                        if(error)
+                        {
+                            [weakSelf _showErrorAlert:error];
+                            
+                        }
+        
+                    weakSelf.loadButton.enabled = YES;
+                        
                      }
                    dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
                        DebugLog(@"%@",[reasons componentsJoinedByString:@","]);

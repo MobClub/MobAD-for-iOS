@@ -96,7 +96,7 @@
  *  详解：拉取广告超时时间，开发者调用loadAd方法以后会立即展示backgroundImage，然后在该超时时间内，如果广告拉
  *  取成功，则立马展示开屏广告，否则放弃此次广告展示机会。
  */
-@property (nonatomic, assign) NSInteger fetchDelay;
+@property (nonatomic, assign) CGFloat fetchDelay;
 
 /**
  *  开屏广告的背景图片
@@ -164,5 +164,26 @@
  @param placementId 广告位ID
  */
 + (void)preloadSplashOrderWithAppId:(NSString *)appId placementId:(NSString *)placementId;
+
+#pragma mark - Parallel method
+
+/**
+ * 返回广告是否可展示
+ * 对于并行请求，在调用showAdInWindow前时需判断下
+ * @return 当广告已经加载完成且未曝光时，为YES，否则为NO
+ */
+- (BOOL)isAdValid;
+
+/**
+ *  发起拉取广告请求，只拉取不展示
+ *  详解：广告素材及广告图片拉取成功后会回调splashAdDidLoad方法，当拉取失败时会回调splashAdFailToPresent方法
+ */
+- (void)loadAd;
+
+/**
+ *  展示广告，调用此方法前需调用isAdValid方法判断广告素材是否有效
+ *  详解：广告展示成功时会回调splashAdSuccessPresentScreen方法，展示失败时会回调splashAdFailToPresent方法
+ */
+- (void)showAdInWindow:(UIWindow *)window withBottomView:(UIView *)bottomView skipView:(UIView *)skipView;
 
 @end

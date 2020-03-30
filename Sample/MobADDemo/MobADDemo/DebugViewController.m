@@ -20,7 +20,8 @@
 #import "MADRewardVideoAdViewController.h"
 #import "MADDrawVideoFeedViewController.h"
 #import "MBProgressHUD.h"
-#import <MOBFoundation/MOBFoundation.h>
+//#import <MOBFoundation/MOBFoundation.h>
+#import <FCommon/FCommon.h>
 #import "UIImage+Color.h"
 #import <AdSupport/AdSupport.h>
 
@@ -84,6 +85,50 @@
     [self.view addSubview:hudV];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSLog(@"%ld",(long)[MobAD privacyStatus]);
+//    [self showPrivacy];
+    if([MobAD privacyStatus] != 1)
+    {
+        [self showPrivacy];
+    }
+    
+}
+
+- (void)showPrivacy
+{
+    [MobAD getPrivacyCompletion:^(NSDictionary * _Nonnull data) {
+        NSLog(@"%@",data);
+        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Mob隐私协议"
+                                                                       message:data[@"privacy"]
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* agreeAction = [UIAlertAction actionWithTitle:@"同意" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+            [MobAD uploadPrivacyStatus:YES onResult:^(BOOL success) {
+                NSLog(@"%d",success);
+            }];
+        }];
+        UIAlertAction* denyAction = [UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action) {
+            [MobAD uploadPrivacyStatus:NO onResult:^(BOOL success) {
+                NSLog(@"%d",success);
+            }];
+        }];
+        
+        //        [alert setValue:conditionsAttributeStr forKey:@"attributedMessage"];
+        
+        [alert addAction:agreeAction];
+        [alert addAction:denyAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }];
+    
+}
+
 
 - (void)setupViews {
     CGFloat y = NavigationBarHeight;
@@ -124,7 +169,7 @@
     appkeyField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     appkeyField.borderStyle = UITextBorderStyleRoundedRect;
     appkeyField.placeholder = @"MobAppkey...";
-    appkeyField.text = [MobSDK appKey];
+    appkeyField.text = [FcmnSDK appKey];
     appkeyField.textColor = [UIColor blackColor];
     if (@available(iOS 12.0, *)) {
         if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
@@ -164,7 +209,7 @@
     bundleIdField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     bundleIdField.borderStyle = UITextBorderStyleRoundedRect;
     bundleIdField.placeholder = @"BundleId...";
-    bundleIdField.text = [MOBFApplication bundleId];
+    bundleIdField.text = [FCMNApplication bundleId];
     bundleIdField.textColor = [UIColor blackColor];
     if (@available(iOS 12.0, *)) {
         if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
@@ -263,12 +308,12 @@
     [self.appkeyTextField endEditing:YES];
     if (self.appkeyTextField.text.length > 0) {
         [self.hudView showAnimated:YES];
-        NSLog(@"---> before register: %@", [MobSDK appKey]);
-        [MobSDK registerAppKey:self.appkeyTextField.text appSecret:@"c7ce1d041b0ccf5e80dbac2f54e99d18"];
-        NSLog(@"---> after register: %@", [MobSDK appKey]);
+        NSLog(@"---> before register: %@", [FcmnSDK appKey]);
+        [FcmnSDK registerAppKey:self.appkeyTextField.text appSecret:@"c7ce1d041b0ccf5e80dbac2f54e99d18"];
+        NSLog(@"---> after register: %@", [FcmnSDK appKey]);
         
         __weak typeof(self) weakSelf = self;
-        [MobAD updateLocalConfigWithAppkey:[MobSDK appKey] onComplete:^(NSDictionary *configDict, NSError *error) {
+        [MobAD updateLocalConfigWithAppkey:[FcmnSDK appKey] onComplete:^(NSDictionary *configDict, NSError *error) {
             appkeyButton.enabled = YES;
             [weakSelf.hudView hideAnimated:YES];
             if (!error) {
@@ -283,13 +328,7 @@
                 [hud hideAnimated:YES afterDelay:1];
                 [weakSelf.alertConfigWindow addSubview:hud];
             } else {
-                MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
-                hud.label.text = [NSString stringWithFormat:@"设置失败: %@", error.localizedDescription];
-                hud.mode = MBProgressHUDModeText;
-                hud.removeFromSuperViewOnHide = YES;
-                [hud showAnimated:YES];
-                [hud hideAnimated:YES afterDelay:1];
-                [weakSelf.alertConfigWindow addSubview:hud];
+                [weakSelf _showErrorAlert:error];
             }
         }];
     }
@@ -402,8 +441,8 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // 网络检测
-    MOBFNetworkType netStatus = [MOBFDevice currentNetworkType];
-    if (netStatus == MOBFNetworkTypeNone)
+    FCMNNetworkType netStatus = [FCMNDevice currentNetworkType];
+    if (netStatus == FCMNNetworkTypeNone)
     {
         UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"错误信息" message:@"网络链接断开, 请重新连接网络！！" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *alertOKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];

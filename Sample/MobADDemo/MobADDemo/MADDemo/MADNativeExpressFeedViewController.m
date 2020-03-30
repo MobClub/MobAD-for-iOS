@@ -10,6 +10,7 @@
 #import <MobAD/MobAD.h>
 #import "MobADNormalButton.h"
 #import "Const.h"
+#import "HUDManager.h"
 
 @interface MADNativeExpressFeedViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
@@ -21,6 +22,8 @@
 @property (nonatomic, strong) UITextField *rightField;
 
 @property (strong, nonatomic) NSMutableArray<__kindof MOBADNativeExpressAdView *> *nativeExpressAdViews;
+
+@property (strong, nonatomic) UIView *nativeExpressView;
 
 @property (strong, nonatomic) UITableView *tableView;
 
@@ -202,6 +205,9 @@
     [loadBtn addTarget:self action:@selector(loadData) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:loadBtn];
     
+    self.nativeExpressView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loadBtn.frame) + 5, ScreenWidth, ScreenHeight - (CGRectGetMaxY(loadBtn.frame) + 5))];
+    [self.view addSubview:self.nativeExpressView];
+    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loadBtn.frame) + 5, ScreenWidth, ScreenHeight - (CGRectGetMaxY(loadBtn.frame) + 5)) style:UITableViewStylePlain];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"MOBNativeExpressCell"];
     self.tableView.delegate = self;
@@ -211,7 +217,7 @@
             self.tableView.backgroundColor = [UIColor grayColor];
         }
     }
-    [self.view addSubview:self.tableView];
+   // [self.view addSubview:self.tableView];
     
     if (@available(iOS 11.0, *)) {
         _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -239,6 +245,12 @@
 
 - (void)loadData
 {
+    if(self.nativeExpressAdViews.count > 0)
+    {
+        MOBADNativeExpressAdView *expressView = self.nativeExpressAdViews[0];
+        [expressView.adView removeFromSuperview];
+    }
+    
     _loadButton.enabled = NO;
     [self.view endEditing:YES];
     
@@ -264,9 +276,8 @@
                                    adSize:CGSizeMake(ScreenWidth, 0)
                                edgeInsets:UIEdgeInsetsMake(top, left, bottom, right)
                           adViewsCallback:^(NSArray<MOBADNativeExpressAdView *> *nativeExpressAdViews, NSError *error) {
-                              weakSelf.loadButton.enabled = YES;
                               if (error) {
-                                  [weakSelf _showErrorAlert:error];
+                                 // [weakSelf _showErrorAlert:error];
                                   return;
                               }
                               [weakSelf.nativeExpressAdViews removeAllObjects];
@@ -274,47 +285,47 @@
                                   [weakSelf.nativeExpressAdViews addObjectsFromArray:nativeExpressAdViews];
                                   for (MOBADNativeExpressAdView *expressView in weakSelf.nativeExpressAdViews) {
                                       expressView.controller = weakSelf;
-                                      // TODO: 临时隐藏关闭按钮方案
-//                                      NSArray *adViewSubViews = expressView.adView.subviews;
-//                                      for (UIView *sv in adViewSubViews) {
-//                                          if ([sv isKindOfClass:[UIButton class]] && sv.bounds.size.width == 16) {
-//                                              sv.hidden = YES;
-//                                          }
-//                                      }
                                       [expressView render];
                                   }
                               }
-                              [weakSelf.tableView reloadData];
+                              //[weakSelf.tableView reloadData];
+        MOBADNativeExpressAdView *expressView = weakSelf.nativeExpressAdViews[0];
+        [weakSelf.nativeExpressView addSubview:expressView.adView];
                           }
                              eCPMCallback:^(NSInteger eCPM) {
                                  NSLog(@"---> eCPM: %ld", (long)eCPM);
                              }
                             stateCallback:^(id adObject, MADState state, NSError *error) {
-                                if (state == MADStateDidClose) {
-                                    for (int i = 0; i < weakSelf.nativeExpressAdViews.count; i++) {
-                                        MOBADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
-                                        if (mbV.adView == adObject) {
-                                            [weakSelf.nativeExpressAdViews removeObject:mbV];
-                                            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-                                            [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                                            break;
-                                        }
-                                    }
+                                if(error)
+                                {
+                                    [HUDManager showTextHud:error.localizedDescription afterDelay:1.5f];
+                                     weakSelf.loadButton.enabled = YES;
                                 }
-                                [weakSelf _processState:state error:error];
+                                if (state == MADStateDidClose) {
+                                    MOBADNativeExpressAdView *expressView = weakSelf.nativeExpressAdViews[0];
+                                    [expressView.adView removeFromSuperview];
+
+                                }
+                                if(state == MADStateDidExposure || state == MADStateDidVisible || state == MADStateWillVisible)
+                                {
+                                    weakSelf.loadButton.enabled = YES;
+                                    NSLog(@"广电通原生button------Rocker");
+                                }
                             }
                           dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
                               DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
+        MOBADNativeExpressAdView *expressView = weakSelf.nativeExpressAdViews[0];
+        [expressView.adView removeFromSuperview];
                               
-                              for (int i = 0; i < weakSelf.nativeExpressAdViews.count; i++) {
-                                  MOBADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
-                                  if (mbV.adView == adObject) {
-                                      [weakSelf.nativeExpressAdViews removeObject:mbV];
-                                      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-                                      [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                                      break;
-                                  }
-                              }
+//                              for (int i = 0; i < weakSelf.nativeExpressAdViews.count; i++) {
+//                                  MOBADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
+//                                  if (mbV.adView == adObject) {
+//                                      [weakSelf.nativeExpressAdViews removeObject:mbV];
+//                                      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+//                                      [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//                                      break;
+//                                  }
+//                              }
                           }];
 }
 

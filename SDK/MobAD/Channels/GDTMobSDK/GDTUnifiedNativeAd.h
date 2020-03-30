@@ -26,7 +26,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<GDTUnifiedNativeAdDelegate> delegate;
 
 /**
- 请求视频的最大时长，有效值范围为[5,60]。
+ 请求视频的时长下限，视频时长有效值范围为[5,60]。
+ 以下两种情况会使用系统默认的最小值设置，1:不设置  2:minVideoDuration大于maxVideoDuration
+*/
+@property (nonatomic) NSInteger minVideoDuration;
+
+/**
+ 请求视频的最大时长，视频时长有效值范围为[5,60]。
  */
 @property (nonatomic) NSInteger maxVideoDuration;
 
@@ -79,5 +85,11 @@ NS_ASSUME_NONNULL_BEGIN
  @return 当使用流量分配功能时，用于区分广告平台；未使用时为空字符串
  */
 - (NSString *)adNetworkName;
+
+/**
+ * 当需要支持 VAST 广告时，需流量自行配置 adapter 的 vastClassName
+ */
+- (void)setVastClassName:(NSString *)vastClassName;
+
 @end
 NS_ASSUME_NONNULL_END

@@ -27,6 +27,32 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)version;
 
 /**
+ 获取隐私协议文本
+ */
++(void)getPrivacyCompletion:(void(^)(NSDictionary *data))result;
+
+/**
+ 上传隐私协议授权状态
+ @param isAgree 是否同意（用户授权后的结果）
+ */
+
++ (void)uploadPrivacyStatus:(BOOL)isAgree
+                   onResult:(void (^_Nullable)(BOOL success))handler;
+
+/**
+获取隐私协议授权状态
+@return 隐私协议授权状态（-1：未授权 0：拒绝 1：同意）
+*/
++ (NSInteger)privacyStatus;
+
+/**
+预先缓存开屏广告数据（可选）
+@param pid 广告位id
+@param stateChanged 返回缓存的状态，如果error为空，则预缓存成功
+*/
++ (void)loadSplashAdDataWithPlacementId:(NSString *)pid stateChanged:(nonnull MADStateCallback)stateChanged;
+
+/**
  展示开屏广告
 
  @param pid 广告位id
@@ -52,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- 展示开屏广告
+ 展示开屏广告（已弃用）
  
  @param pid 广告位id
  @param view 开屏广告的载体视图，建议传window
@@ -86,7 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
                        stateChanged:(MADStateCallback)stateChanged
                     dislikeCallback:(MADDislikeCallback)dislikeCallback;
 
-    /**
+/**
  关闭横幅广告
 
  @param adObject 横幅广告对象
@@ -164,6 +190,15 @@ NS_ASSUME_NONNULL_BEGIN
                                 stateChanged:(MADStateCallback)stateChanged;
 
 /**
+ 加载激励视频广告数据
+ 
+ @param pid 广告位id
+ @param stateCallback 加载激励视频广告状态回调
+ */
++ (void)loadRewardVideoDataWithPlacementId:(NSString *)pid
+                             stateCallback:(MADStateCallback)stateCallback;
+
+/**
  展示激励视频广告
  
  @param pid 广告位id
@@ -171,10 +206,26 @@ NS_ASSUME_NONNULL_BEGIN
  @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
  @param stateCallback 激励视频广告状态回调
  */
-+ (void)showRewardVideoAdWithPlacementId:(NSString *)pid
-                          viewController:(UIViewController *)viewController
-                            eCPMCallback:(MADeCPMCallback)eCPMCallback
-                           stateCallback:(MADStateCallback)stateCallback;
+//+ (void)showRewardVideoAdWithPlacementId:(NSString *)pid
+//                                loadType:(AdLoadType)loadType
+//                          viewController:(UIViewController *)viewController
+//                            eCPMCallback:(MADeCPMCallback)eCPMCallback
+//                           stateCallback:(MADStateCallback)stateCallback;
+
+
+/**
+展示激励视频广告
+@param pid 广告位id
+@param rootViewController 用于 present 激励视频的 VC
+@param rewardAd loadRewardVideoDataWithPlacementId 回调得来的缓存对象adObject
+@param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
+@param stateCallback 激励视频广告状态回调
+ */
++ (void)showRewardVideoWithPlacementId:(NSString *)pid
+                FromRootViewController:(UIViewController *)rootViewController
+                              rewardAd:(id)rewardAd
+                          eCPMCallback:(MADeCPMCallback)eCPMCallback
+                         stateCallback:(MADStateCallback)stateCallback;
 
 
 /**

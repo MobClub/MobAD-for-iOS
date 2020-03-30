@@ -15,6 +15,7 @@
 #import "MADNativeExpressFeedViewController.h"
 #import "MADNativeFeedViewController.h"
 #import "MobADDrawVideoAdViewController.h"
+#import "MADRewardVideoAdViewController.h"
 #import "MBProgressHUD.h"
 
 @interface MainViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -45,9 +46,9 @@
                      @"插屏广告:InterstitialAd",
                      @"原生模版广告:NativeExpressAd",
                      @"原生自渲染广告:NativeAd",
-                     @"全屏视频广告:FullScreenVideoAd",
+                     //@"全屏视频广告:FullScreenVideoAd",
                      @"激励视频广告:RewardVideoAd",
-                     @"Draw视频流:DrawVideoFeed",
+                    // @"Draw视频流:DrawVideoFeed",
                      ];
     
     [self setupViews];
@@ -60,6 +61,47 @@
     [self.view addSubview:hudV];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if([MobAD privacyStatus] != 1)
+    {
+        [self showPrivacy];
+    }
+    
+}
+
+- (void)showPrivacy
+{
+    [MobAD getPrivacyCompletion:^(NSDictionary * _Nonnull data) {
+        NSLog(@"%@",data);
+        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Mob隐私协议"
+                                                                       message:data[@"privacy"]
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* agreeAction = [UIAlertAction actionWithTitle:@"同意" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+            [MobAD uploadPrivacyStatus:YES onResult:^(BOOL success) {
+                NSLog(@"%d",success);
+            }];
+        }];
+        UIAlertAction* denyAction = [UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * action) {
+            [MobAD uploadPrivacyStatus:NO onResult:^(BOOL success) {
+                NSLog(@"%d",success);
+            }];
+        }];
+        
+        //        [alert setValue:conditionsAttributeStr forKey:@"attributedMessage"];
+        
+        [alert addAction:agreeAction];
+        [alert addAction:denyAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }];
+    
+}
 - (void)setupViews {
     
     CGFloat y = NavigationBarHeight;
@@ -133,8 +175,8 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     // 网络检测
-    MOBFNetworkType netStatus = [MOBFDevice currentNetworkType];
-    if (netStatus == MOBFNetworkTypeNone)
+    FCMNNetworkType netStatus = [FCMNDevice currentNetworkType];
+    if (netStatus == FCMNNetworkTypeNone)
     {
         UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"错误信息" message:@"网络链接断开, 请重新连接网络！！" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *alertOKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
@@ -164,16 +206,16 @@
             [self _showNativeAd];
             break;
             
-        case 5:
-            [self _showFullScreenVideoAd];
-            break;
+//        case 5:
+//            [self _showFullScreenVideoAd];
+//            break;
         
-        case 6:
+        case 5:
             [self _showRewardVideoAd];
             break;
-        case 7:
-            [self _showDrawVideoFeedAd];
-            break;
+//        case 7:
+//            [self _showDrawVideoFeedAd];
+//            break;
             
         default:
             break;
@@ -234,23 +276,26 @@
 
 - (void)_showRewardVideoAd
 {
-    [self.hudView showAnimated:YES];
-    __weak typeof(self) weakSelf = self;
-    [MobAD showRewardVideoAdWithPlacementId:kSRewardVideoPID
-                             viewController:self
-                               eCPMCallback:^(NSInteger eCPM) {
-                                   NSLog(@"---> eCPM: %ldd", (long)eCPM);
-                               }
-                              stateCallback:^(id adObject, MADState state, NSError *error) {
-                                  NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
-                                  if (state == MADStateVideoDidLoad) {
-                                      [weakSelf.hudView hideAnimated:YES];
-                                  }
-                                  if (error) {
-                                      [weakSelf.hudView hideAnimated:YES];
-                                      [weakSelf _showErrorAlert:error];
-                                  }
-                              }];
+    MADRewardVideoAdViewController *vc = [[MADRewardVideoAdViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+//    [self.hudView showAnimated:YES];
+//    __weak typeof(self) weakSelf = self;
+//    [MobAD showRewardVideoAdWithPlacementId:kSRewardVideoPID
+//                             viewController:self
+//                               eCPMCallback:^(NSInteger eCPM) {
+//                                   NSLog(@"---> eCPM: %ldd", (long)eCPM);
+//                               }
+//                              stateCallback:^(id adObject, MADState state, NSError *error) {
+//                                  NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
+//                                  if (state == MADStateVideoDidLoad) {
+//                                      [weakSelf.hudView hideAnimated:YES];
+//                                  }
+//                                  if (error) {
+//                                      [weakSelf.hudView hideAnimated:YES];
+//                                      [weakSelf _showErrorAlert:error];
+//                                  }
+//                              }];
 }
 
 - (void)_showDrawVideoFeedAd

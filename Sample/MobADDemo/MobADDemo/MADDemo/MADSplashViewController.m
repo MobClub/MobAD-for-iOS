@@ -21,8 +21,6 @@
 @property (nonatomic, strong) UISwitch *skipSwitch;
 @property (nonatomic, strong) UISwitch *bottomSwitch;
 
-@property (nonatomic, strong) id SplashAdCache;
-
 
 @end
 
@@ -109,7 +107,8 @@
     _loadADbutton.showRefreshIncon = YES;
     [_loadADbutton setTitle:@"预加载广告数据" forState:UIControlStateNormal];
     [_loadADbutton addTarget:self action:@selector(loadSplashADData) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:_loadADbutton];
+    [self.view addSubview:_loadADbutton];
+
     
     _showADbutton = [[MobADNormalButton alloc] initWithFrame:CGRectMake(0, size.height *0.5 + 60, 0, 0)];
     _showADbutton.showRefreshIncon = YES;
@@ -119,27 +118,23 @@
     
 }
 
-//-(void)loadSplashADData
-//{
-//    [HUDManager showLoading];
-//    __weak typeof(self) weakSelf = self;
-//    [MobAD loadSplashAdDataWithPlacementId:self.pidField.text stateChanged:^(id adObject, MADState state, NSError *error) {
-//        weakSelf.loadADbutton.enabled = YES;
-//        NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
-//        if(state == MADStateDidLoad)
-//        {
-//            [HUDManager showStateHud:@"缓存成功！" state:HUDStateTypeSuccess afterDelay:1.5f];
-//            self.SplashAdCache = adObject;
-//        }
-//        if(state == MADStateFailLoad)
-//        {
-//            [HUDManager showStateHud:@"缓存失败！" state:HUDStateTypeFail afterDelay:1.5f];
-//        }
-//        if (error) {
-//            [weakSelf _showErrorAlert:error];
-//        }
-//    }];
-//}
+-(void)loadSplashADData
+{
+    [HUDManager showLoading];
+    __weak typeof(self) weakSelf = self;
+    [MobAD loadSplashAdDataWithPlacementId:self.pidField.text stateChanged:^(id adObject, MADState state, NSError *error) {
+        if(error)
+        {
+            [HUDManager hidenHud];
+            [weakSelf _showErrorAlert:error];
+        }else
+        {
+            [HUDManager showTextHud:@"加载成功" afterDelay:1.5f];
+        }
+    }];
+    
+    
+}
 
 -  (void)showAD {
     _showADbutton.enabled = NO;
@@ -179,6 +174,7 @@
         if (error) {
             [weakSelf _showErrorAlert:error];
         }
+        
     }];
 }
 

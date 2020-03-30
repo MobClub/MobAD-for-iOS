@@ -70,11 +70,12 @@
     
     //refresh Button
     CGSize size = [UIScreen mainScreen].bounds.size;
-//    _loadDataButton = [[MobADNormalButton alloc] initWithFrame:CGRectMake(0, size.height * 0.5, 0, 0)];
-//    _loadDataButton.showRefreshIncon = YES;
-//    [_loadDataButton setTitle:@"缓存激励视频数据" forState:UIControlStateNormal];
-//    [_loadDataButton addTarget:self action:@selector(loadRewardData) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:_loadDataButton];
+    _loadDataButton = [[MobADNormalButton alloc] initWithFrame:CGRectMake(0, size.height * 0.5, 0, 0)];
+    _loadDataButton.showRefreshIncon = YES;
+    [_loadDataButton setTitle:@"缓存激励视频数据" forState:UIControlStateNormal];
+    [_loadDataButton addTarget:self action:@selector(loadRewardData) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_loadDataButton];
+
     
     
     _refreshbutton = [[MobADNormalButton alloc] initWithFrame:CGRectMake(0, size.height * 0.5 + 60, 0, 0)];
@@ -85,38 +86,31 @@
     
 }
 
-//-(void)loadRewardData
-//{
-//    [HUDManager showLoading];
-//
-//    _refreshbutton.enabled = NO;
-//    __weak typeof(self) weakSelf = self;
-//
-//    [MobAD showRewardVideoAdWithPlacementId:self.pidField.text.length > 0 ? self.pidField.text : kSRewardVideoPID viewController:self eCPMCallback:^(NSInteger eCPM) {
-//
-//    } stateCallback:^(id adObject, MADState state, NSError *error) {
-//
-//    }];
-//
-//    [MobAD loadRewardVideoDataWithPlacementId:self.pidField.text.length > 0 ? self.pidField.text : kSRewardVideoPID stateCallback:^(id adObject, MADState state, NSError *error) {
-//        NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
-//        weakSelf.refreshbutton.enabled = YES;
-//        if (error) {
-//            [HUDManager showStateHud:error.localizedDescription state:HUDStateTypeFail afterDelay:1.5f];
-////            [weakSelf _showErrorAlert:error];
-//        }
-//        //激励视频缓存成功
-//        if(state == MADStateVideoDidLoad)
-//        {
-//            [HUDManager showStateHud:@"缓存成功！" state:HUDStateTypeSuccess afterDelay:1.5f];
-//            self.rewardAD = adObject;
-//        }
-//        if(state == MADStateFailLoad)
-//        {
-//           [HUDManager showStateHud:@"缓存失败!" state:HUDStateTypeFail afterDelay:1.5f];
-//        }
-//    }];
-//}
+-(void)loadRewardData
+{
+    [HUDManager showLoading];
+    
+    _refreshbutton.enabled = NO;
+    __weak typeof(self) weakSelf = self;
+    
+    [MobAD loadRewardVideoDataWithPlacementId:self.pidField.text.length > 0 ? self.pidField.text : kSRewardVideoPID stateCallback:^(id adObject, MADState state, NSError *error) {
+        NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
+        weakSelf.refreshbutton.enabled = YES;
+        if (error) {
+            [HUDManager showStateHud:error.localizedDescription state:HUDStateTypeFail afterDelay:1.5f];
+        }
+        //激励视频缓存成功
+        if(state == MADStateVideoDidLoad)
+        {
+            [HUDManager showStateHud:@"缓存成功！" state:HUDStateTypeSuccess afterDelay:1.5f];
+            self.rewardAD = adObject;
+        }
+        if(state == MADStateFailLoad)
+        {
+           [HUDManager showStateHud:@"缓存失败!" state:HUDStateTypeFail afterDelay:1.5f];
+        }
+    }];
+}
 
 
 - (void)showRewardVideoAd
@@ -125,16 +119,16 @@
     _refreshbutton.enabled = NO;
     __weak typeof(self) weakSelf = self;
     
-    [MobAD showRewardVideoAdWithPlacementId:self.pidField.text.length > 0 ? self.pidField.text : kSRewardVideoPID viewController:self eCPMCallback:^(NSInteger eCPM) {
+    [MobAD showRewardVideoWithPlacementId:self.pidField.text.length > 0 ? self.pidField.text : kSRewardVideoPID FromRootViewController:self rewardAd:self.rewardAD eCPMCallback:^(NSInteger eCPM) {
         NSLog(@"---> eCPM: %ldd", (long)eCPM);
-
     } stateCallback:^(id adObject, MADState state, NSError *error) {
         [HUDManager hidenHud];
-               NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
-               weakSelf.refreshbutton.enabled = YES;
-               if (error) {
-                   [weakSelf _showErrorAlert:error];
-               }
+        NSLog(@"----> state: %lu  error:%@", (unsigned long)state, error.localizedDescription);
+        weakSelf.refreshbutton.enabled = YES;
+        if (error) {
+            [weakSelf _showErrorAlert:error];
+        }
+        
     }];
 }
 

@@ -70,6 +70,9 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     
     self.adLogoImageView = [[UIImageView alloc] init];
     [self.contentView addSubview:self.adLogoImageView];
+    
+    self.videoView = [[UIView alloc] init];
+    [self.contentView addSubview:self.videoView];
 }
 
 - (void)refrashWithModel:(MOBADNativeAdData *)model
@@ -124,15 +127,19 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     const CGFloat imageWidth = width * 0.4 - margin;
     const CGFloat imageHeight = imageWidth * (model.imgHeight / model.imgWidth);
     self.adImageView.frame = CGRectMake(x, y, imageWidth, imageHeight);
-    [[MOBFImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:urlStr] result:^(UIImage *image, NSError *error) {
+    [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:urlStr] result:^(UIImage *image, NSError *error) {
         self.adImageView.image = image;
+        // 绑定数据(一定要在子控件frame确认之后)
+           CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
+        UIImage *testImage = self.adImageView.image;
+           [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
     }];
     
     // appicon
     x = width * 0.4 + margin;
     if (model.iconUrl.length > 0) {
         self.appIconImageView.frame = CGRectMake(x, y, appIconSize.width, appIconSize.height);
-        [[MOBFImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:model.iconUrl] result:^(UIImage *image, NSError *error) {
+        [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:model.iconUrl] result:^(UIImage *image, NSError *error) {
             self.appIconImageView.image = image;
         }];
     }
@@ -156,9 +163,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     self.adDescLabel.frame = CGRectMake(x , y , maxInfoWidth, 30);
     self.adDescLabel.attributedText = [MADNativeFeedBaseTableViewCell subtitleAttributeText:model.adDesc];
     
-    // 绑定数据(一定要在子控件frame确认之后)
-    CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
-    [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
+   
 }
 
 + (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width
@@ -193,8 +198,11 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     const CGFloat imageWidth = width - padding.left - padding.right;
     const CGFloat imageHeight = imageWidth * (model.imgHeight / model.imgWidth);
     self.adImageView.frame = CGRectMake(x, y, imageWidth, imageHeight);
-    [[MOBFImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:urlStr] result:^(UIImage *image, NSError *error) {
+    [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:urlStr] result:^(UIImage *image, NSError *error) {
         self.adImageView.image = image;
+        // 绑定数据(一定要在子控件frame确认之后)
+        CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
+        [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
     }];
     
     // ad logo
@@ -205,7 +213,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     y = CGRectGetMaxY(self.adImageView.frame) + margin;
     if (model.iconUrl.length > 0) {
         self.appIconImageView.frame = CGRectMake(x, y, appIconSize.width, appIconSize.height);
-        [[MOBFImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:model.iconUrl] result:^(UIImage *image, NSError *error) {
+        [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:model.iconUrl] result:^(UIImage *image, NSError *error) {
             self.appIconImageView.image = image;
         }];
     }
@@ -218,9 +226,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     self.adTitleLabel.frame = CGRectMake(x, y , maxTitleWidth, 20);
     self.adTitleLabel.text = model.adTitle;
     
-    // 绑定数据(一定要在子控件frame确认之后)
-    CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
-    [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
+    
 }
 
 + (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width
@@ -262,7 +268,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     UIImageView *rImageV = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(midImageV.frame) + margin, y, imageWidth, imageHeight)];
     [self.contentView addSubview:rImageV];
     
-    [[MOBFImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:urlStr] result:^(UIImage *image, NSError *error) {
+    [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:urlStr] result:^(UIImage *image, NSError *error) {
         self.adImageView.image = image;
         midImageV.image = image;
         rImageV.image = image;
@@ -275,7 +281,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     // appicon
     y = CGRectGetMaxY(self.adImageView.frame) + margin;
     self.appIconImageView.frame = CGRectMake(x, y, appIconSize.width, appIconSize.height);
-    [[MOBFImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:model.iconUrl] result:^(UIImage *image, NSError *error) {
+    [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:model.iconUrl] result:^(UIImage *image, NSError *error) {
         self.appIconImageView.image = image;
     }];
     
@@ -324,25 +330,25 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     if (self.adImageView.superview) {
         [self.adImageView removeFromSuperview];
     }
-    UIView *videoView = model.mediaView;
-    videoView.tag = 1999;
-    videoView.frame = CGRectMake(x, y, imageWidth, imageHeight);
+    self.videoView = model.mediaView;
+    self.videoView.tag = 1999;
+    self.videoView.frame = CGRectMake(x, y, imageWidth, imageHeight);
     for (UIView *v in self.contentView.subviews) {
         if (v.tag == 1999) {
             [v removeFromSuperview];
         }
     }
     model.isMute = NO;
-    [self.contentView addSubview:videoView];
+    [self.contentView addSubview:self.videoView];
     
     // ad logo
-    self.adLogoImageView.frame = CGRectMake(CGRectGetMaxX(videoView.frame) - bigLogoSize.width, CGRectGetMaxY(videoView.frame) - bigLogoSize.height, bigLogoSize.width, bigLogoSize.height);
+    self.adLogoImageView.frame = CGRectMake(CGRectGetMaxX(self.videoView.frame) - bigLogoSize.width, CGRectGetMaxY(self.videoView.frame) - bigLogoSize.height, bigLogoSize.width, bigLogoSize.height);
     self.adLogoImageView.image = model.adLogoImage;
     
     // appicon
-    y = CGRectGetMaxY(videoView.frame) + margin;
+    y = CGRectGetMaxY(self.videoView.frame) + margin;
     self.appIconImageView.frame = CGRectMake(x, y, appIconSize.width, appIconSize.height);
-    [[MOBFImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:model.iconUrl] result:^(UIImage *image, NSError *error) {
+    [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:model.iconUrl] result:^(UIImage *image, NSError *error) {
         self.appIconImageView.image = image;
     }];
     
@@ -354,7 +360,8 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     
     // 绑定数据(一定要在子控件frame确认之后)
     CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
-    [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView,videoView]];
+    
+    [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView,self.appIconImageView]];
 }
 
 + (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width
