@@ -89,7 +89,7 @@
 		0B159D7A233234C30038F086 /* MobAD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MobAD.bundle; sourceTree = "<group>"; };
 		506A800C22F170A6008A3653 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		506A801022F17138008A3653 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		509777BE22F023BE00FA588C /* MobADDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MobADDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		509777BE22F023BE00FA588C /* MobAD2.1.2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = MobAD2.1.2.app; path = MobADDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		509777C122F023BE00FA588C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		509777C222F023BE00FA588C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		509777CF22F023BF00FA588C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -267,7 +267,7 @@
 		509777BF22F023BE00FA588C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				509777BE22F023BE00FA588C /* MobADDemo.app */,
+				509777BE22F023BE00FA588C /* MobAD2.1.2.app */,
 				509777D622F023C000FA588C /* MobADDemoTests.xctest */,
 			);
 			name = Products;
@@ -535,7 +535,7 @@
 			);
 			name = MobADDemo;
 			productName = MOBAdsDemo;
-			productReference = 509777BE22F023BE00FA588C /* MobADDemo.app */;
+			productReference = 509777BE22F023BE00FA588C /* MobAD2.1.2.app */;
 			productType = "com.apple.product-type.application";
 		};
 		509777D522F023C000FA588C /* MobADDemoTests */ = {
@@ -787,7 +787,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20200325;
+				CURRENT_PROJECT_VERSION = 20200327;
 				DEVELOPMENT_TEAM = Q87QUX3533;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
@@ -801,7 +801,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.1.2;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mob.product.ad;
@@ -819,7 +819,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20200325;
+				CURRENT_PROJECT_VERSION = 20200327;
 				DEVELOPMENT_TEAM = LW5266U92D;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
@@ -833,7 +833,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../SDK/**";
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.1.2;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mob.product.ad;

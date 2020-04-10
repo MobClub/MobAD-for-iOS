@@ -59,6 +59,8 @@
     hudV.label.text = @"加载中...";
     hudV.detailsLabel.text = @"请耐心等待";
     [self.view addSubview:hudV];
+    
+    self.modalPresentationStyle = UIModalPresentationPageSheet;
 }
 
 -(void)viewDidAppear:(BOOL)animated

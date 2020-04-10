@@ -165,6 +165,7 @@
     [bottomView addSubview:bottomViewButton];
     
     __weak typeof(self) weakSelf = self;
+
     [MobAD showSplashAdWithPlacementId:self.pidField.text onView:[UIApplication sharedApplication].windows.firstObject adFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height * 0.8) viewController:self customSkipView:self.skipSwitch.isOn ? skipButton : nil customBottomView:self.bottomSwitch.isOn ? bottomView : nil tolerateTimeout:30.0 adLifeTimeCallback:^(NSInteger lifeTime) {
         NSLog(@"=====> splash ad life time: %zd <=====", lifeTime);
         [skipButton setTitle:[NSString stringWithFormat:@"跳过|%zds", lifeTime] forState:UIControlStateNormal];

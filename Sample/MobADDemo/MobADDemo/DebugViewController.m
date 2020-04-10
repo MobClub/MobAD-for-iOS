@@ -70,9 +70,9 @@
                      @"插屏广告:InterstitialAd",
                      @"原生模版广告:NativeExpressAd",
                      @"原生自渲染广告:NativeAd",
-                     @"全屏视频广告:FullScreenVideoAd",
+//                     @"全屏视频广告:FullScreenVideoAd",
                      @"激励视频广告:RewardVideoAd",
-                     @"Draw视频流:DrawVideoFeed",
+//                     @"Draw视频流:DrawVideoFeed",
                      ];
     
     [self setupViews];
@@ -472,16 +472,16 @@
             [self _showNativeAd];
             break;
             
-        case 5:
-            [self _showFullScreenVideoAd];
-            break;
+//        case 5:
+//            [self _showFullScreenVideoAd];
+//            break;
             
-        case 6:
+        case 5:
             [self _showRewardVideoAd];
             break;
-        case 7:
-            [self _showDrawVideoFeedAd];
-            break;
+//        case 7:
+//            [self _showDrawVideoFeedAd];
+//            break;
             
         default:
             break;

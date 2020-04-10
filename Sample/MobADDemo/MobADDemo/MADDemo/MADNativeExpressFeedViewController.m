@@ -208,6 +208,12 @@
     self.nativeExpressView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loadBtn.frame) + 5, ScreenWidth, ScreenHeight - (CGRectGetMaxY(loadBtn.frame) + 5))];
     [self.view addSubview:self.nativeExpressView];
     
+    UIButton *testButton = [[UIButton alloc] initWithFrame:CGRectMake(20, ScreenHeight - 200, 200, 50)];
+    [testButton setTitle:@"test" forState:UIControlStateNormal];
+    [testButton setBackgroundColor:[UIColor redColor]];
+    [testButton addTarget:self action:@selector(testAction) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:testButton];
+    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loadBtn.frame) + 5, ScreenWidth, ScreenHeight - (CGRectGetMaxY(loadBtn.frame) + 5)) style:UITableViewStylePlain];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"MOBNativeExpressCell"];
     self.tableView.delegate = self;
@@ -277,7 +283,12 @@
                                edgeInsets:UIEdgeInsetsMake(top, left, bottom, right)
                           adViewsCallback:^(NSArray<MOBADNativeExpressAdView *> *nativeExpressAdViews, NSError *error) {
                               if (error) {
-                                 // [weakSelf _showErrorAlert:error];
+                                  if(error.code == 233)
+                                  {
+                                      //[weakSelf _showErrorAlert:error];
+                                       [HUDManager showTextHud:error.localizedDescription afterDelay:1.5f];
+                                  }
+                                 //
                                   return;
                               }
                               [weakSelf.nativeExpressAdViews removeAllObjects];
@@ -309,7 +320,6 @@
                                 if(state == MADStateDidExposure || state == MADStateDidVisible || state == MADStateWillVisible)
                                 {
                                     weakSelf.loadButton.enabled = YES;
-                                    NSLog(@"广电通原生button------Rocker");
                                 }
                             }
                           dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
@@ -421,6 +431,12 @@
 - (void)dealloc
 {
     DebugLog(@"---- MADNativeExpressFeedViewController ---- %s", __func__);
+}
+
+-(void)testAction
+{
+    MOBADNativeExpressAdView *expressView = self.nativeExpressAdViews[0];
+    [self.nativeExpressView addSubview:expressView.adView];
 }
 
 @end

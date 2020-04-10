@@ -1,15 +1,15 @@
 Pod::Spec.new do |s|
   s.name         = 'mob_adsdk'
-  s.version      = '2.1.0'
+  s.version      = '2.1.2'
   s.summary      = 'A powerful ad sdk from MobTech.'
   s.homepage     = 'http://www.mob.com/'
   s.license      = 'MIT'
   s.author       = { 'lishzh' => 'lishzh@yoozoo.com' }
   s.platform     = :ios
   s.ios.deployment_target = '9.0'
-  s.source       = { :http => 'http://dev.ios.mob.com/files/download/mobad/MobAD_For_iOS_v2.1.0.zip' }
+  s.source       = { :http => 'http://dev.ios.mob.com/files/download/mobad/MobAD_For_iOS_v2.1.2.zip' }
   
-  s.frameworks = 'CoreData','ImageIO', 'MediaPlayer', 'CoreLocation', 'AdSupport', 'CoreMedia', 'AVFoundation', 'CoreTelephony', 'StoreKit', 'SystemConfiguration', 'MobileCoreServices', 'CoreMotion', 'Accelerate'
+  s.frameworks = 'CoreData','ImageIO', 'MediaPlayer', 'CoreLocation', 'AdSupport', 'CoreMedia', 'AVFoundation', 'CoreTelephony', 'StoreKit', 'SystemConfiguration', 'MobileCoreServices', 'CoreMotion', 'Accelerate', 'MessageUI'
   s.libraries = 'xml2', 'c++', 'resolv', 'z', 'sqlite3'
   s.default_subspecs = 'MobAD'
   # s.dependency 'FCommon'

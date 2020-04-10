@@ -19,22 +19,22 @@ static NSString *kSBannerPID = @"1194166061135904770";
 static NSString *kSInterstitialPID = @"1193850332511576066";
 static NSString *kSNativeExpressPID = @"1194166321325359105";
 
-static NSString *kSNativePID = @"1194166367437537282";
+static NSString *kSNativePID = @"1225786627827527681";
 static NSString *kSFullScreenVideoPID = @"1194166204300083201";
 static NSString *kSRewardVideoPID = @"1202807702073372674";
 static NSString *kSDrawVideoFeedPID = @"1194166159697854465";
 
-#else
+#else   
 
 // 测试广告位id
-static NSString *kSSplashPID = @"1233300399330377730"; //@"1004462";
-static NSString *kSBannerPID = @"1233300110194339842"; //@"1004463";
-static NSString *kSInterstitialPID = @"1233300232252780545"; //@"1004464";
-static NSString *kSNativeExpressPID = @"1233300796124119042"; // 原生模版  1242371519500181505
-static NSString *kSNativePID = @"1233300460410335234"; //@"100424036"; // 原生自渲染
-static NSString *kSFullScreenVideoPID = @"1194192692676878337"; //@"9";
-static NSString *kSRewardVideoPID = @"1233300614250708993"; //@"8";1227841137979355137
-static NSString *kSDrawVideoFeedPID = @"1194192651434287105"; //@"10";
+static NSString *kSSplashPID = @"1242703062404837378"; //@"1233300399330377730" ;
+static NSString *kSBannerPID = @"1242702398656229378";//@"";
+static NSString *kSInterstitialPID = @"1240213745090629634";//@"";
+static NSString *kSNativeExpressPID = @"1242704944313544705";//@""; // 原生模版
+static NSString *kSNativePID = @"1242705102958899201";//@"";  // 原生自渲染
+static NSString *kSFullScreenVideoPID = @"1194192692676878337";
+static NSString *kSRewardVideoPID = @"1242704312670707714"; //@"";
+static NSString *kSDrawVideoFeedPID = @"1194192651434287105";
 
 #endif
 

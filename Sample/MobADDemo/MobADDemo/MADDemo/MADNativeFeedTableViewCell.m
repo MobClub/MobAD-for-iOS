@@ -123,17 +123,10 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     CGFloat x = padding.left;
     CGFloat y = padding.top;
     
-    // 主图
+   // 主图
     const CGFloat imageWidth = width * 0.4 - margin;
     const CGFloat imageHeight = imageWidth * (model.imgHeight / model.imgWidth);
     self.adImageView.frame = CGRectMake(x, y, imageWidth, imageHeight);
-    [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:urlStr] result:^(UIImage *image, NSError *error) {
-        self.adImageView.image = image;
-        // 绑定数据(一定要在子控件frame确认之后)
-           CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
-        UIImage *testImage = self.adImageView.image;
-           [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView]];
-    }];
     
     // appicon
     x = width * 0.4 + margin;
@@ -143,6 +136,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
             self.appIconImageView.image = image;
         }];
     }
+    
     
     // ad logo
     self.adLogoImageView.frame = CGRectMake(CGRectGetMaxX(self.adImageView.frame) - logoSize.width, CGRectGetMaxY(self.adImageView.frame) - logoSize.height, logoSize.width, logoSize.height);
@@ -163,6 +157,14 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     self.adDescLabel.frame = CGRectMake(x , y , maxInfoWidth, 30);
     self.adDescLabel.attributedText = [MADNativeFeedBaseTableViewCell subtitleAttributeText:model.adDesc];
     
+    
+    [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:urlStr] result:^(UIImage *image, NSError *error) {
+        self.adImageView.image = image;
+        // 绑定数据(一定要在子控件frame确认之后)
+        CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
+        UIImage *testImage = self.adImageView.image;
+        [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView,self.adTitleLabel,self.adDescLabel]];
+    }];
    
 }
 
@@ -361,7 +363,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     // 绑定数据(一定要在子控件frame确认之后)
     CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
     
-    [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView,self.appIconImageView]];
+    [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView,self.appIconImageView,self.videoView,self.adTitleLabel]];
 }
 
 + (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width

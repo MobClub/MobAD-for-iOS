@@ -55,4 +55,11 @@
 
 + (void)setSDKType:(NSInteger)type;
 
+/**
+ 在播放音频时是否使用SDK内部对AVAudioSession设置的category及options，默认使用，若不使用，SDK内部不做任何处理，由调用方在展示广告时自行设置；
+ SDK设置的category为AVAudioSessionCategoryAmbient，options为AVAudioSessionCategoryOptionDuckOthers
+ */
++ (void)enableDefaultAudioSessionSetting:(BOOL)enabled;
+
 @end
+

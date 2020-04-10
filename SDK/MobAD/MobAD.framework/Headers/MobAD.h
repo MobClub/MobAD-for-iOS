@@ -138,6 +138,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
+ 展示插屏全屏视频广告
+ 
+ @param pid 广告位id
+ @param viewController 用于跳转的控制器
+ @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
+ @param stateChanged 广告状态回调
+ */
++ (void)showInterstitialFullScreenVideoAdWithPlacementId:(NSString *)pid
+                                          viewController:(UIViewController *)viewController
+                                            eCPMCallback:(MADeCPMCallback)eCPMCallback
+                                            stateChanged:(MADStateCallback)stateChanged;
+
+/**
  原生模版信息流广告
  
  @param pid 广告配置项

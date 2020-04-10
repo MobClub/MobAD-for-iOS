@@ -11,6 +11,7 @@
 #import "Const.h"
 #import "MobADNormalButton.h"
 #import "MADNativeFeedTableViewCell.h"
+#import "HUDManager.h"
 
 static NSString *MADNativeFeedLeftTableViewCellIdentifier = @"MADNativeFeedLeftTableViewCell";
 static NSString *MADNativeFeedLargeTableViewCellIdentifier = @"MADNativeFeedLargeTableViewCell";
@@ -120,44 +121,48 @@ static NSString *MADNativeFeedVideoTableViewCellIdentifier = @"MADNativeFeedVide
 
 - (void)loadData
 {
-        if(self.nativeAdDatas.count > 0)
-        {
-           [self.nativeAdDatas removeAllObjects];
-            [self.tableView reloadData];
-        }
+    if(self.nativeAdDatas.count > 0)
+    {
+        [self.nativeAdDatas removeAllObjects];
+        [self.tableView reloadData];
+    }
     
     _loadButton.enabled = NO;
     __weak typeof(self) weakSelf = self;
     [MobAD nativeAdWithPlacementId:self.pidField.text
                     viewController:self
                        adsCallback:^(NSArray<MOBADNativeAdData *> *nativeAdDatas, NSError *error) {
-                           weakSelf.loadButton.enabled = YES;
-                           if (error) {
-                              // [weakSelf _showErrorAlert:error];
-                            
-                               return;
-                           }
-                           [weakSelf.nativeAdDatas removeAllObjects];
-                           [weakSelf.nativeAdDatas addObjectsFromArray:nativeAdDatas];
-                           [weakSelf.tableView reloadData];
-                       }
+        weakSelf.loadButton.enabled = YES;
+        if (error) {
+            if(error.code == 233)
+            {
+                //[weakSelf _showErrorAlert:error];
+                 [HUDManager showTextHud:error.localizedDescription afterDelay:1.5f];
+            }
+            return;
+        }
+        [weakSelf.nativeAdDatas removeAllObjects];
+        [weakSelf.nativeAdDatas addObjectsFromArray:nativeAdDatas];
+        [weakSelf.tableView reloadData];
+    }
                       eCPMCallback:^(NSInteger eCPM) {
-                          NSLog(@"---> eCPM: %ld", (long)eCPM);
-                      }
+        NSLog(@"---> eCPM: %ld", (long)eCPM);
+    }
                      stateCallback:^(id adObject, MADState state, NSError *error) {
-                         //[weakSelf _processState:state error:error];
-                        if(error)
-                        {
-                            [weakSelf _showErrorAlert:error];
-                            
-                        }
+        //[weakSelf _processState:state error:error];
+        if(error)
+        {
+//            [weakSelf _showErrorAlert:error];
+             [HUDManager showTextHud:error.localizedDescription afterDelay:1.5f];
+            
+        }
         
-                    weakSelf.loadButton.enabled = YES;
-                        
-                     }
+        weakSelf.loadButton.enabled = YES;
+        
+    }
                    dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
-                       DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
-                   }];
+        DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
+    }];
 }
 
 
