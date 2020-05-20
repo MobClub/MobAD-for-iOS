@@ -213,7 +213,7 @@
 -(void)refreshUIWithModel:(MOBADNativeAdData *)model
 {
     // send log
-    [MobAD sendAdLogWithState:MADStateWillExposure adObject:model error:nil];
+   // [MobAD sendAdLogWithState:MADStateWillExposure adObject:model error:nil];
     
 //    for (UIView *v in self.contentView.subviews) {
 //        [v removeFromSuperview];

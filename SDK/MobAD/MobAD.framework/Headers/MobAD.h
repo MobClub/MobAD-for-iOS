@@ -75,24 +75,6 @@ NS_ASSUME_NONNULL_BEGIN
                  adLifeTimeCallback:(MADSplashAdLifeTimeCallback)lifeTimeCallback
                        stateChanged:(MADStateCallback)stateChanged;
 
-
-
-/**
- 展示开屏广告（已弃用）
- 
- @param pid 广告位id
- @param view 开屏广告的载体视图，建议传window
- @param viewController 用于跳转的控制器
- @param hideSkipButton 是否隐藏跳过按钮
- @param stateChanged 广告状态回调
- */
-+ (void)showSplashAdWithPlacementId:(NSString *)pid
-                             onView:(UIView *)view
-                     viewController:(UIViewController *)viewController
-                     hideSkipButton:(BOOL)hideSkipButton
-                       stateChanged:(MADStateCallback)stateChanged __deprecated_msg("Deprecated from v2.0.2 Use 'showSplashAdWithPlacementId:onView:adFrame:viewController:customSkipView:adLifeTimeCallback:stateChanged:' instead!");
-
-
 /**
  展示横幅广告
  
@@ -156,6 +138,16 @@ NS_ASSUME_NONNULL_BEGIN
  @param pid 广告配置项
  @param size 广告大小
  @param edgeInsets 广告内容边距, 大图样式默认(0,0,0,0), 其他样式默认 (10,10,10,10), 仅 >= 0 时生效
+ @param backColor 广告返回的view背景色，不需自定义时传nil
+ @param titleFont 标题字体样式，不需自定义时传nil
+ @param titleColor 标题字体颜色，不需自定义时传nil
+ @param contentFont 内容描述的字体样式，不需自定义时传nil
+ @param contentColor 内容描述的字体颜色，不需自定义时传nil
+ @param tipFont 广告logo文字的字体样式，不需自定义时传nil
+ @param tipColor 广告logo文字的字体颜色，不需自定义时传nil
+ @param radius 图片圆角，不需自定义时传0
+ @param hideClose 是否隐藏关闭按钮  YES：隐藏   NO：不隐藏
+ @param adiconsize 广告logo图标的大小 推荐 38 * 14
  @param adViewsCallback 广告模版视图回调
  @param eCPMCallback 用于获取广告eCPM,不回调或回调-1则表示无eCPM
  @param stateCallback 广告状态回调
@@ -164,11 +156,20 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)nativeExpressAdWithPlacementId:(NSString *)pid
                                 adSize:(CGSize)size
                             edgeInsets:(UIEdgeInsets)edgeInsets
+                       backgroundColor:(UIColor *)backColor
+                             titleFont:(UIFont *)titleFont
+                            titleColor:(UIColor *)titleColor
+                           contentFont:(UIFont *)contentFont
+                          contentColor:(UIColor *)contentColor
+                               tipFont:(UIFont *)tipFont
+                              tipColor:(UIColor *)tipColor
+                 imageViewCornerRadius:(CGFloat)radius
+                       hideCloseButton:(BOOL)hideClose
+                            adIconSize:(CGSize)adiconsize
                        adViewsCallback:(MADNativeExpressAdViewCallback)adViewsCallback
                           eCPMCallback:(MADeCPMCallback)eCPMCallback
                          stateCallback:(MADStateCallback)stateCallback
                        dislikeCallback:(MADDislikeCallback)dislikeCallback;
-
 
 
 /**
@@ -258,16 +259,6 @@ NS_ASSUME_NONNULL_BEGIN
                          stateCallback:(MADStateCallback)stateCallback
                        dislikeCallback:(MADDislikeCallback)dislikeCallback;
 
-#pragma mark - 广告日志
-
-/**
- 发送广告状态日志(主要用于自渲染等类型广告)
-
- @param state 广告状态
- @param data 广告数据
- @param error 错误信息,可以传nil
- */
-+ (void)sendAdLogWithState:(MADState)state adObject:(MOBADNativeAdData *)data error:(NSError *_Nullable)error;
 
 @end
 

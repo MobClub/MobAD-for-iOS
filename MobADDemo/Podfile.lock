@@ -1,0 +1,24 @@
+PODS:
+  - mob_adsdk (2.1.5):
+    - mob_adsdk/MobAD (= 2.1.5)
+  - mob_adsdk/MobAD (2.1.5)
+  - mob_adsdk/MobADPlat/BUD (2.1.5):
+    - mob_adsdk/MobAD
+  - mob_adsdk/MobADPlat/GDT (2.1.5):
+    - mob_adsdk/MobAD
+
+DEPENDENCIES:
+  - mob_adsdk (= 2.1.5)
+  - mob_adsdk/MobADPlat/BUD
+  - mob_adsdk/MobADPlat/GDT
+
+SPEC REPOS:
+  trunk:
+    - mob_adsdk
+
+SPEC CHECKSUMS:
+  mob_adsdk: f8a72ceeb58a6362dc088ee02141b564c3fa3d0f
+
+PODFILE CHECKSUM: bc2cdca6ea8c780bc1f8f54970e8f4663f5e9a99
+
+COCOAPODS: 1.9.1

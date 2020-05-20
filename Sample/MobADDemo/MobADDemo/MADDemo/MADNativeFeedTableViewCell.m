@@ -80,7 +80,7 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     _nativeAdData = model;
     
     // send log
-    [MobAD sendAdLogWithState:MADStateWillExposure adObject:model error:nil];
+   // [MobAD sendAdLogWithState:MADStateWillExposure adObject:model error:nil];
 }
 
 + (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width

@@ -12,6 +12,7 @@
 #import "Const.h"
 #import "HUDManager.h"
 
+
 @interface MADNativeExpressFeedViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic, strong) UITextField *pidField;
@@ -21,6 +22,20 @@
 @property (nonatomic, strong) UITextField *bottomField;
 @property (nonatomic, strong) UITextField *rightField;
 
+@property (nonatomic, strong) UITextField *backTextField;
+@property (nonatomic, strong) UITextField *titleColorField;
+@property (nonatomic, strong) UITextField *titleFontField;
+@property (nonatomic, strong) UITextField *contentColorField;
+@property (nonatomic, strong) UITextField *contentFontField;
+@property (nonatomic, strong) UITextField *logoColorField;
+@property (nonatomic, strong) UITextField *logoFontField;
+@property (nonatomic, strong) UITextField *logoImgWidthField;
+@property (nonatomic, strong) UITextField *logoImgHeightField;
+
+@property (nonatomic, strong) UISwitch *closeSiwtch;
+@property (nonatomic, strong) UITextField *radiusField;
+
+
 @property (strong, nonatomic) NSMutableArray<__kindof MOBADNativeExpressAdView *> *nativeExpressAdViews;
 
 @property (strong, nonatomic) UIView *nativeExpressView;
@@ -28,6 +43,7 @@
 @property (strong, nonatomic) UITableView *tableView;
 
 @property (nonatomic, strong) MobADNormalButton *loadButton;
+
 
 @end
 
@@ -197,7 +213,300 @@
     rightField.delegate = self;
     [self.view addSubview:rightField];
     
-    MobADNormalButton *loadBtn = [[MobADNormalButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(rightField.frame) + 15, 0, 0)];
+    
+    //backColor
+    UILabel *backColorLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(rightField.frame) + 15, 0, 0)];
+    backColorLabel.text = @"背景颜色:";
+    backColorLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            backColorLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    backColorLabel.textAlignment = NSTextAlignmentLeft;
+    [backColorLabel sizeToFit];
+    [self.view addSubview:backColorLabel];
+    
+    self.backTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(backColorLabel.frame) + 5, backColorLabel.frame.origin.y - 4 , 90, 30)];
+    self.backTextField.returnKeyType = UIReturnKeyDone;
+    self.backTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.backTextField.borderStyle = UITextBorderStyleRoundedRect;
+    self.backTextField.text = @"#FFFFFF";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.backTextField.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    self.backTextField.textColor = [UIColor blackColor];
+    self.backTextField.delegate = self;
+    [self.view addSubview:self.backTextField];
+    
+    
+    //colseButton
+    UILabel *closeBtnLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.backTextField.frame) + 15, CGRectGetMaxY(rightField.frame) + 15, 0, 0)];
+    closeBtnLabel.text = @"隐藏关闭按钮:";
+    closeBtnLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            closeBtnLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    closeBtnLabel.textAlignment = NSTextAlignmentLeft;
+    [closeBtnLabel sizeToFit];
+    [self.view addSubview:closeBtnLabel];
+    
+    self.closeSiwtch = [[UISwitch alloc] initWithFrame:CGRectMake(CGRectGetMaxX(closeBtnLabel.frame) + 5,closeBtnLabel.frame.origin.y - 4 ,60, 30)];
+    self.closeSiwtch.on = NO;
+    [self.view addSubview:self.closeSiwtch];
+    
+    
+    //title
+    UILabel *titleColorLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(backColorLabel.frame) + 15, 0, 0)];
+    titleColorLabel.text = @"标题颜色:";
+    titleColorLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            titleColorLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    titleColorLabel.textAlignment = NSTextAlignmentLeft;
+    [titleColorLabel sizeToFit];
+    [self.view addSubview:titleColorLabel];
+    
+    self.titleColorField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleColorLabel.frame) + 5, titleColorLabel.frame.origin.y - 4 , 90, 30)];
+    self.titleColorField.returnKeyType = UIReturnKeyDone;
+    self.titleColorField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.titleColorField.borderStyle = UITextBorderStyleRoundedRect;
+    self.titleColorField.text = @"#000000";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.titleColorField.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    self.titleColorField.textColor = [UIColor blackColor];
+    self.titleColorField.delegate = self;
+    [self.view addSubview:self.titleColorField];
+    
+    UILabel *titleFontLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.titleColorField.frame) + 15, CGRectGetMaxY(backColorLabel.frame) + 15, 0, 0)];
+    titleFontLabel.text = @"标题字体大小:";
+    titleFontLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            titleFontLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    titleFontLabel.textAlignment = NSTextAlignmentLeft;
+    [titleFontLabel sizeToFit];
+    [self.view addSubview:titleFontLabel];
+    
+    self.titleFontField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleFontLabel.frame) + 5, titleFontLabel.frame.origin.y - 4 , 40, 30)];
+    self.titleFontField.returnKeyType = UIReturnKeyDone;
+    self.titleFontField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.titleFontField.borderStyle = UITextBorderStyleRoundedRect;
+    self.titleFontField.text = @"14";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.titleFontField.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    self.titleFontField.textColor = [UIColor blackColor];
+    self.titleFontField.delegate = self;
+    [self.view addSubview:self.titleFontField];
+    
+    
+    //content
+    UILabel *contentColorLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(titleColorLabel.frame) + 15, 0, 0)];
+    contentColorLabel.text = @"详情颜色:";
+    contentColorLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            contentColorLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    contentColorLabel.textAlignment = NSTextAlignmentLeft;
+    [contentColorLabel sizeToFit];
+    [self.view addSubview:contentColorLabel];
+    
+    
+    self.contentColorField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(contentColorLabel.frame) + 5, contentColorLabel.frame.origin.y - 4 , 90, 30)];
+    self.contentColorField.returnKeyType = UIReturnKeyDone;
+    self.contentColorField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.contentColorField.borderStyle = UITextBorderStyleRoundedRect;
+    self.contentColorField.text = @"#000000";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.contentColorField.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    self.contentColorField.textColor = [UIColor blackColor];
+    self.contentColorField.delegate = self;
+    [self.view addSubview:self.contentColorField];
+    
+    UILabel *contentFontLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.contentColorField.frame) + 15, CGRectGetMaxY(titleColorLabel.frame) + 15, 0, 0)];
+    contentFontLabel.text = @"详情字体大小:";
+    contentFontLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            contentFontLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    contentFontLabel.textAlignment = NSTextAlignmentLeft;
+    [contentFontLabel sizeToFit];
+    [self.view addSubview:contentFontLabel];
+    
+    self.contentFontField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(contentFontLabel.frame) + 5, contentColorLabel.frame.origin.y - 4 , 40, 30)];
+    self.contentFontField.returnKeyType = UIReturnKeyDone;
+    self.contentFontField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.contentFontField.borderStyle = UITextBorderStyleRoundedRect;
+    self.contentFontField.text = @"14";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.contentFontField.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    self.contentFontField.textColor = [UIColor blackColor];
+    self.contentFontField.delegate = self;
+    [self.view addSubview:self.contentFontField];
+    
+    
+    //广告logo文字
+    UILabel *logoColorLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(contentColorLabel.frame) + 15, 0, 0)];
+    logoColorLabel.text = @"logo文字颜色:";
+    logoColorLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            logoColorLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    logoColorLabel.textAlignment = NSTextAlignmentLeft;
+    [logoColorLabel sizeToFit];
+    [self.view addSubview:logoColorLabel];
+    
+    
+    self.logoColorField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoColorLabel.frame) + 5, logoColorLabel.frame.origin.y - 4 , 90, 30)];
+    self.logoColorField.returnKeyType = UIReturnKeyDone;
+    self.logoColorField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.logoColorField.borderStyle = UITextBorderStyleRoundedRect;
+    self.logoColorField.text = @"#000000";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.logoColorField.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    self.logoColorField.textColor = [UIColor blackColor];
+    self.logoColorField.delegate = self;
+    [self.view addSubview:self.logoColorField];
+    
+    UILabel *logoFontLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.logoColorField.frame) + 15, CGRectGetMaxY(contentColorLabel.frame) + 15, 0, 0)];
+    logoFontLabel.text = @"logo文字大小:";
+    logoFontLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            logoFontLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    logoFontLabel.textAlignment = NSTextAlignmentLeft;
+    [logoFontLabel sizeToFit];
+    [self.view addSubview:logoFontLabel];
+    
+    self.logoFontField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoFontLabel.frame) + 5, logoFontLabel.frame.origin.y - 4 , 40, 30)];
+    self.logoFontField.returnKeyType = UIReturnKeyDone;
+    self.logoFontField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.logoFontField.borderStyle = UITextBorderStyleRoundedRect;
+    self.logoFontField.text = @"14";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.logoFontField.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    self.logoFontField.textColor = [UIColor blackColor];
+    self.logoFontField.delegate = self;
+    [self.view addSubview:self.logoFontField];
+    
+    //广告logo大小
+    UILabel *logoWidthLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(logoColorLabel.frame) + 15, 0, 0)];
+    logoWidthLabel.text = @"logo宽度:";
+    logoWidthLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            logoWidthLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    logoWidthLabel.textAlignment = NSTextAlignmentLeft;
+    [logoWidthLabel sizeToFit];
+    [self.view addSubview:logoWidthLabel];
+    
+    
+    self.logoImgWidthField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoWidthLabel.frame) + 5, logoWidthLabel.frame.origin.y - 4 , 90, 30)];
+    self.logoImgWidthField.returnKeyType = UIReturnKeyDone;
+    self.logoImgWidthField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.logoImgWidthField.borderStyle = UITextBorderStyleRoundedRect;
+    self.logoImgWidthField.text = @"38";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.logoColorField.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    self.logoImgWidthField.textColor = [UIColor blackColor];
+    self.logoImgWidthField.delegate = self;
+    [self.view addSubview:self.logoImgWidthField];
+    
+    UILabel *logoHeightLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.logoImgWidthField.frame) + 15, CGRectGetMaxY(logoColorLabel.frame) + 15, 0, 0)];
+    logoHeightLabel.text = @"logo高度:";
+    logoHeightLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            logoHeightLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    logoHeightLabel.textAlignment = NSTextAlignmentLeft;
+    [logoHeightLabel sizeToFit];
+    [self.view addSubview:logoHeightLabel];
+    
+    self.logoImgHeightField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(logoHeightLabel.frame) + 5, logoHeightLabel.frame.origin.y - 4 , 90, 30)];
+    self.logoImgHeightField.returnKeyType = UIReturnKeyDone;
+    self.logoImgHeightField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.logoImgHeightField.borderStyle = UITextBorderStyleRoundedRect;
+    self.logoImgHeightField.text = @"14";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.logoImgHeightField.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    self.logoImgHeightField.textColor = [UIColor blackColor];
+    self.logoImgHeightField.delegate = self;
+    [self.view addSubview:self.logoImgHeightField];
+    
+    //图片圆角
+    UILabel *radiusLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(logoWidthLabel.frame) + 15, 0, 0)];
+    radiusLabel.text = @"图片圆角:";
+    radiusLabel.textColor = [UIColor blackColor];
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            radiusLabel.textColor = [UIColor whiteColor];
+        }
+    }
+    radiusLabel.textAlignment = NSTextAlignmentLeft;
+    [radiusLabel sizeToFit];
+    [self.view addSubview:radiusLabel];
+    
+    self.radiusField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(radiusLabel.frame) + 5, radiusLabel.frame.origin.y - 4 , 90, 30)];
+    self.radiusField.returnKeyType = UIReturnKeyDone;
+    self.radiusField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    self.radiusField.borderStyle = UITextBorderStyleRoundedRect;
+    self.radiusField.text = @"0.0";
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.radiusField.backgroundColor = [UIColor whiteColor];
+        }
+    }
+    self.radiusField.textColor = [UIColor blackColor];
+    self.radiusField.delegate = self;
+    [self.view addSubview:self.radiusField];
+    
+    
+    //loadBtn
+    MobADNormalButton *loadBtn = [[MobADNormalButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.radiusField.frame) + 15, 0, 0)];
     self.loadButton = loadBtn;
     loadBtn.center = CGPointMake(self.view.center.x, loadBtn.center.y);
     loadBtn.showRefreshIncon = YES;
@@ -206,13 +515,8 @@
     [self.view addSubview:loadBtn];
     
     self.nativeExpressView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loadBtn.frame) + 5, ScreenWidth, ScreenHeight - (CGRectGetMaxY(loadBtn.frame) + 5))];
-    [self.view addSubview:self.nativeExpressView];
+    //[self.view addSubview:self.nativeExpressView];
     
-    UIButton *testButton = [[UIButton alloc] initWithFrame:CGRectMake(20, ScreenHeight - 200, 200, 50)];
-    [testButton setTitle:@"test" forState:UIControlStateNormal];
-    [testButton setBackgroundColor:[UIColor redColor]];
-    [testButton addTarget:self action:@selector(testAction) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:testButton];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(loadBtn.frame) + 5, ScreenWidth, ScreenHeight - (CGRectGetMaxY(loadBtn.frame) + 5)) style:UITableViewStylePlain];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"MOBNativeExpressCell"];
@@ -223,7 +527,7 @@
             self.tableView.backgroundColor = [UIColor grayColor];
         }
     }
-   // [self.view addSubview:self.tableView];
+    [self.view addSubview:self.tableView];
     
     if (@available(iOS 11.0, *)) {
         _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
@@ -232,6 +536,30 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
+}
+
+- (UIColor *)colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha {
+    hexString = [hexString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    hexString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
+    hexString = [hexString stringByReplacingOccurrencesOfString:@"0x" withString:@""];
+    NSRegularExpression *RegEx = [NSRegularExpression regularExpressionWithPattern:@"^[a-fA-F|0-9]{6}$" options:0 error:nil];
+    NSUInteger match = [RegEx numberOfMatchesInString:hexString options:NSMatchingReportCompletion range:NSMakeRange(0, hexString.length)];
+
+    if (match == 0) {return [UIColor clearColor];}
+
+    NSString *rString = [hexString substringWithRange:NSMakeRange(0, 2)];
+    NSString *gString = [hexString substringWithRange:NSMakeRange(2, 2)];
+    NSString *bString = [hexString substringWithRange:NSMakeRange(4, 2)];
+    unsigned int r, g, b;
+    BOOL rValue = [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    BOOL gValue = [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    BOOL bValue = [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    
+    if (rValue && gValue && bValue) {
+        return [UIColor colorWithRed:((float)r/255.0f) green:((float)g/255.0f) blue:((float)b/255.0f) alpha:alpha];
+    } else {
+        return [UIColor clearColor];
+    }
 }
 
 
@@ -246,6 +574,14 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
+}
+
+
+//判断字符串是否为浮点数
+- (BOOL)isPureFloat:(NSString*)string{
+    NSScanner* scan = [NSScanner scannerWithString:string];
+    float val;
+    return[scan scanFloat:&val] && [scan isAtEnd];
 }
 
 
@@ -278,65 +614,82 @@
     }
     
     __weak typeof(self) weakSelf = self;
-    [MobAD nativeExpressAdWithPlacementId:self.pidField.text
-                                   adSize:CGSizeMake(ScreenWidth, 0)
-                               edgeInsets:UIEdgeInsetsMake(top, left, bottom, right)
-                          adViewsCallback:^(NSArray<MOBADNativeExpressAdView *> *nativeExpressAdViews, NSError *error) {
-                              if (error) {
-                                  if(error.code == 233)
-                                  {
-                                      //[weakSelf _showErrorAlert:error];
-                                       [HUDManager showTextHud:error.localizedDescription afterDelay:1.5f];
-                                  }
-                                 //
-                                  return;
-                              }
-                              [weakSelf.nativeExpressAdViews removeAllObjects];
-                              if (nativeExpressAdViews.count > 0) {
-                                  [weakSelf.nativeExpressAdViews addObjectsFromArray:nativeExpressAdViews];
-                                  for (MOBADNativeExpressAdView *expressView in weakSelf.nativeExpressAdViews) {
-                                      expressView.controller = weakSelf;
-                                      [expressView render];
-                                  }
-                              }
-                              //[weakSelf.tableView reloadData];
-        MOBADNativeExpressAdView *expressView = weakSelf.nativeExpressAdViews[0];
-        [weakSelf.nativeExpressView addSubview:expressView.adView];
-                          }
-                             eCPMCallback:^(NSInteger eCPM) {
-                                 NSLog(@"---> eCPM: %ld", (long)eCPM);
-                             }
-                            stateCallback:^(id adObject, MADState state, NSError *error) {
-                                if(error)
-                                {
-                                    [HUDManager showTextHud:error.localizedDescription afterDelay:1.5f];
-                                     weakSelf.loadButton.enabled = YES;
-                                }
-                                if (state == MADStateDidClose) {
-                                    MOBADNativeExpressAdView *expressView = weakSelf.nativeExpressAdViews[0];
-                                    [expressView.adView removeFromSuperview];
+    
+    UIColor *backColor = [self colorWithHexString:self.backTextField.text alpha:1];
+    UIColor *titleColor = [self colorWithHexString:self.titleColorField.text alpha:1];
+    UIColor *contentColor = [self colorWithHexString:self.contentColorField.text alpha:1];
+    UIColor *logoColor = [self colorWithHexString:self.logoColorField.text alpha:1];
+    UIFont *titleFont = [UIFont systemFontOfSize:14.f];
+    if([self isPureFloat:self.titleFontField.text])
+    {
+        titleFont = [UIFont systemFontOfSize:[self.titleFontField.text floatValue]];
+    }
+    UIFont *contentFont = [UIFont systemFontOfSize:13.f];
+    if([self isPureFloat:self.contentFontField.text])
+    {
+        contentFont = [UIFont systemFontOfSize:[self.contentFontField.text floatValue]];
+    }
+    UIFont *logoFont = [UIFont systemFontOfSize:13.f];
+    if([self isPureFloat:self.logoFontField.text])
+    {
+        logoFont = [UIFont systemFontOfSize:[self.logoFontField.text floatValue]];
+    }
+    CGFloat logoWidth = 38;
+    CGFloat logoHeight = 14;
+    if([self isPureFloat:self.logoImgWidthField.text])
+    {
+        logoWidth = [self.logoImgWidthField.text floatValue];
+    }
+    if([self isPureFloat:self.logoImgHeightField.text])
+    {
+        logoHeight = [self.logoImgHeightField.text floatValue];
+    }
+    
+    
+    CGFloat radius = 0;
+    if([self isPureFloat:self.radiusField.text])
+    {
+        radius = [self.radiusField.text floatValue];
+    }
+    
+    [MobAD nativeExpressAdWithPlacementId:self.pidField.text adSize:CGSizeMake(ScreenWidth, 0) edgeInsets:UIEdgeInsetsMake(top, left, bottom, right) backgroundColor:backColor titleFont:titleFont titleColor:titleColor contentFont:contentFont contentColor:contentColor tipFont:logoFont tipColor:logoColor imageViewCornerRadius:radius hideCloseButton:self.closeSiwtch.isOn adIconSize:CGSizeMake(logoWidth, logoHeight) adViewsCallback:^(NSArray<MOBADNativeExpressAdView *> *nativeExpressAdViews, NSError *error) {
+        if (error) {
+            if(error.code == 233)
+            {
+                [HUDManager showTextHud:error.localizedDescription afterDelay:1.5f];
+            }
+            return;
+        }
+        [weakSelf.nativeExpressAdViews removeAllObjects];
+        if (nativeExpressAdViews.count > 0) {
+            [weakSelf.nativeExpressAdViews addObjectsFromArray:nativeExpressAdViews];
+            for (MOBADNativeExpressAdView *expressView in weakSelf.nativeExpressAdViews) {
+                expressView.controller = weakSelf;
+                [expressView render];
+            }
+        }
+        [weakSelf.tableView reloadData];
+    } eCPMCallback:^(NSInteger eCPM) {
+        NSLog(@"---> eCPM: %ld", (long)eCPM);
+    } stateCallback:^(id adObject, MADState state, NSError *error) {
+        if(error)
+        {
+            [HUDManager showTextHud:error.localizedDescription afterDelay:1.5f];
+             weakSelf.loadButton.enabled = YES;
+        }
+        if (state == MADStateDidClose) {
+            MOBADNativeExpressAdView *expressView = weakSelf.nativeExpressAdViews[0];
+            [expressView.adView removeFromSuperview];
 
-                                }
-                                if(state == MADStateDidExposure || state == MADStateDidVisible || state == MADStateWillVisible)
-                                {
-                                    weakSelf.loadButton.enabled = YES;
-                                }
-                            }
-                          dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
-                              DebugLog(@"%@",[reasons componentsJoinedByString:@","]);
+        }
+        if(state == MADStateDidExposure || state == MADStateDidVisible || state == MADStateWillVisible)
+        {
+            weakSelf.loadButton.enabled = YES;
+        }
+    } dislikeCallback:^(id adObject, NSArray<NSString *> *reasons) {
         MOBADNativeExpressAdView *expressView = weakSelf.nativeExpressAdViews[0];
         [expressView.adView removeFromSuperview];
-                              
-//                              for (int i = 0; i < weakSelf.nativeExpressAdViews.count; i++) {
-//                                  MOBADNativeExpressAdView *mbV = weakSelf.nativeExpressAdViews[i];
-//                                  if (mbV.adView == adObject) {
-//                                      [weakSelf.nativeExpressAdViews removeObject:mbV];
-//                                      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-//                                      [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//                                      break;
-//                                  }
-//                              }
-                          }];
+    }];
 }
 
 
@@ -366,7 +719,7 @@
     
     MOBADNativeExpressAdView *view = [self.nativeExpressAdViews objectAtIndex:indexPath.row];
     view.adView.tag = 1000;
-    cell.contentView.backgroundColor = [UIColor cyanColor];
+//    cell.contentView.backgroundColor = [UIColor cyanColor];
     if (@available(iOS 12.0, *)) {
         if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
             cell.contentView.backgroundColor = [UIColor grayColor];
