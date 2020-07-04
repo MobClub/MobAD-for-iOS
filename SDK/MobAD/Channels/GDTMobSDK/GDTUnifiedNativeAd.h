@@ -61,11 +61,19 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  构造方法
 
+ @param placementId 广告位ID
+ @return GDTUnifiedNativeAd 实例
+ */
+- (instancetype)initWithPlacementId:(NSString *)placementId;
+
+/**
+ 构造方法
+
  @param appId 媒体ID
  @param placementId 广告位ID
  @return GDTUnifiedNativeAd 实例
  */
-- (instancetype)initWithAppId:(NSString *)appId placementId:(NSString *)placementId;
+- (instancetype)initWithAppId:(NSString *)appId placementId:(NSString *)placementId GDT_DEPRECATED_MSG_ATTRIBUTE("接口即将废弃，请使用 initWithPlacementId:");
 
 /**
  加载广告

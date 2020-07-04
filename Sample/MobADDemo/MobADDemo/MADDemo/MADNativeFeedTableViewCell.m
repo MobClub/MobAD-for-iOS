@@ -64,6 +64,9 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     self.adImageView = [[UIImageView alloc] init];
     self.adImageView.userInteractionEnabled = YES;
     [self.contentView addSubview:self.adImageView];
+        
+    self.extraView = [[UIView alloc] init];
+    [self.contentView addSubview:self.extraView];
     
     self.appIconImageView = [[UIImageView alloc] init];
     [self.contentView addSubview:self.appIconImageView];
@@ -157,15 +160,29 @@ static UIEdgeInsets const padding = {10, 15, 10, 15};
     self.adDescLabel.frame = CGRectMake(x , y , maxInfoWidth, 30);
     self.adDescLabel.attributedText = [MADNativeFeedBaseTableViewCell subtitleAttributeText:model.adDesc];
     
+    if(urlStr.length > 0)
+    {
+        [self.extraView removeFromSuperview];
+        [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:urlStr] result:^(UIImage *image, NSError *error) {
+            self.adImageView.image = image;
+            // 绑定数据(一定要在子控件frame确认之后)
+            CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
+            UIImage *testImage = self.adImageView.image;
+            [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView,self.adTitleLabel,self.adDescLabel,self.appIconImageView]];
+        }];
+    }
     
-    [[FCMNImageGetter sharedInstance] getImageWithURL:[NSURL URLWithString:urlStr] result:^(UIImage *image, NSError *error) {
-        self.adImageView.image = image;
-        // 绑定数据(一定要在子控件frame确认之后)
-        CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
-        UIImage *testImage = self.adImageView.image;
-        [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adImageView,self.adTitleLabel,self.adDescLabel]];
-    }];
-   
+    if(model.extraContentView)
+    {
+        self.extraView.frame = self.adImageView.frame;
+        [self.adImageView removeFromSuperview];
+        model.extraContentView.frame = self.extraView.frame;
+        self.extraView = model.extraContentView;
+        
+         CGFloat height = [[self class] cellHeightWithModel:model width:[UIScreen mainScreen].bounds.size.width];
+        [model registerContainer:self.contentView containerFrame:CGRectMake(0, 0, ScreenWidth, height) withClickableViews:@[self.adTitleLabel,self.adDescLabel,self.appIconImageView,self.extraView]];
+    }
+
 }
 
 + (CGFloat)cellHeightWithModel:(MOBADNativeAdData *)model width:(CGFloat)width

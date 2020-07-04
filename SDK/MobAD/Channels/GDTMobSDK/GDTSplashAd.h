@@ -124,46 +124,16 @@
 
 /**
  *  构造方法
- *  详解：appId - 媒体 ID
- *       placementId - 广告位 ID
+ *  详解：placementId - 广告位 ID
  */
-- (instancetype)initWithAppId:(NSString *)appId placementId:(NSString *)placementId;
-
-/**
- *  广告发起请求并展示在Window中
- *  详解：[可选]发起拉取广告请求,并将获取的广告以全屏形式展示在传入的Window参数中
- *  提示: Splash广告只支持竖屏
- *  @param window 展示全屏开屏的容器
- */
-- (void)loadAdAndShowInWindow:(UIWindow *)window;
-
-/**
- *  广告发起请求并展示在Window中, 同时在屏幕底部设置应用自身的Logo页面或是自定义View
- *  详解：[可选]发起拉取广告请求,并将获取的广告以半屏形式展示在传入的Window的上半部，剩余部分展示传入的bottomView
- *       请注意1.bottomView需设置好宽高，所占的空间不能过大，并保证高度不超过屏幕高度的 25%。2.Splash广告只支持竖屏
- *  @param window 展示开屏的容器
- *         bottomView 自定义底部View，可以在此View中设置应用Logo
- */
-- (void)loadAdAndShowInWindow:(UIWindow *)window withBottomView:(UIView *)bottomView;
-
-/**
- *  广告发起请求并展示在Window中, 同时在屏幕底部设置应用自身的Logo页面或是自定义View,skipView是自定义的“跳过”样式
- *  详解：[可选]发起拉取广告请求,并将获取的广告以半屏形式展示在传入的Window的上半部，剩余部分展示传入的bottomView
- *       请注意1.bottomView需设置好宽高，所占的空间不能过大，并保证高度不超过屏幕高度的 25%。2.Splash广告只支持竖屏
- *  skipView
- *  @param window 展示开屏的容器
- *         bottomView 自定义底部View，可以在此View中设置应用Logo
-           skipView 自定义”跳过“View.
- */
-- (void)loadAdAndShowInWindow:(UIWindow *)window withBottomView:(UIView *)bottomView skipView:(UIView *)skipView;
+- (instancetype)initWithPlacementId:(NSString *)placementId;
 
 /**
  预加载闪屏广告接口
  
- @param appId 媒体ID
  @param placementId 广告位ID
  */
-+ (void)preloadSplashOrderWithAppId:(NSString *)appId placementId:(NSString *)placementId;
++ (void)preloadSplashOrderWithPlacementId:(NSString *)placementId;
 
 #pragma mark - Parallel method
 
@@ -185,5 +155,40 @@
  *  详解：广告展示成功时会回调splashAdSuccessPresentScreen方法，展示失败时会回调splashAdFailToPresent方法
  */
 - (void)showAdInWindow:(UIWindow *)window withBottomView:(UIView *)bottomView skipView:(UIView *)skipView;
+
+/**
+ *  构造方法
+ *  详解：appId - 媒体 ID
+ *       placementId - 广告位 ID
+ */
+- (instancetype)initWithAppId:(NSString *)appId placementId:(NSString *)placementId  GDT_DEPRECATED_MSG_ATTRIBUTE("接口即将废弃，请使用 initWithPlacementId:");
+
+/**
+ *  广告发起请求并展示在Window中
+ *  详解：[可选]发起拉取广告请求,并将获取的广告以全屏形式展示在传入的Window参数中
+ *  提示: Splash广告只支持竖屏
+ *  @param window 展示全屏开屏的容器
+ */
+- (void)loadAdAndShowInWindow:(UIWindow *)window  GDT_DEPRECATED_MSG_ATTRIBUTE("接口即将废弃，请分别使用loadAd 和 showAdInWindow:接口");
+
+/**
+ *  广告发起请求并展示在Window中, 同时在屏幕底部设置应用自身的Logo页面或是自定义View
+ *  详解：[可选]发起拉取广告请求,并将获取的广告以半屏形式展示在传入的Window的上半部，剩余部分展示传入的bottomView
+ *       请注意1.bottomView需设置好宽高，所占的空间不能过大，并保证高度不超过屏幕高度的 25%。2.Splash广告只支持竖屏
+ *  @param window 展示开屏的容器
+ *         bottomView 自定义底部View，可以在此View中设置应用Logo
+ */
+- (void)loadAdAndShowInWindow:(UIWindow *)window withBottomView:(UIView *)bottomView GDT_DEPRECATED_MSG_ATTRIBUTE("接口即将废弃，请分别使用loadAd 和 showAdInWindow:接口");
+
+/**
+ *  广告发起请求并展示在Window中, 同时在屏幕底部设置应用自身的Logo页面或是自定义View,skipView是自定义的“跳过”样式
+ *  详解：[可选]发起拉取广告请求,并将获取的广告以半屏形式展示在传入的Window的上半部，剩余部分展示传入的bottomView
+ *       请注意1.bottomView需设置好宽高，所占的空间不能过大，并保证高度不超过屏幕高度的 25%。2.Splash广告只支持竖屏
+ *  skipView
+ *  @param window 展示开屏的容器
+ *         bottomView 自定义底部View，可以在此View中设置应用Logo
+           skipView 自定义”跳过“View.
+ */
+- (void)loadAdAndShowInWindow:(UIWindow *)window withBottomView:(UIView *)bottomView skipView:(UIView *)skipView GDT_DEPRECATED_MSG_ATTRIBUTE("接口即将废弃，请分别使用loadAd 和 showAdInWindow:接口");
 
 @end

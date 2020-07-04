@@ -142,11 +142,21 @@
 
 /**
  *  构造方法
+ *  详解：placementId - 广告位 ID
+ *       adSize - 广告展示的宽高
+ */
+
+- (instancetype)initWithPlacementId:(NSString *)placementId adSize:(CGSize)size;
+
+/**
+ *  构造方法
  *  详解：appId - 媒体 ID
  *       placementId - 广告位 ID
  *       adSize - 广告展示的宽高
  */
-- (instancetype)initWithAppId:(NSString *)appId placementId:(NSString *)placementId adSize:(CGSize)size;
+- (instancetype)initWithAppId:(NSString *)appId placementId:(NSString *)placementId adSize:(CGSize)size GDT_DEPRECATED_MSG_ATTRIBUTE("接口即将废弃，请使用 initWithPlacementId:adSize:");
+
+
 
 - (void)loadAd:(NSInteger)count;
 

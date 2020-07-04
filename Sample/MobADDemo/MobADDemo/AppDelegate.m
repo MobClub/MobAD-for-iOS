@@ -12,8 +12,10 @@
 #import <MobAD/MobAD.h>
 #import "Const.h"
 #import "LaunchViewController.h"
-#import "MainViewController.h"
+//#import "MainViewController.h"
 #import "DebugViewController.h"
+#import "MobADTabBarController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -66,17 +68,20 @@
                                      if (state == MADStateDidLoad) {
                                          [launchVC dismissSplashHUD];
                                      }
+
                                      if (state == MADStateWillClose || state == MADStateDidClose) {
                                          // 替换window的rootVC
-                                         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[DebugViewController alloc] init]];
+                                        // UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[MobADTabBarController alloc] init]];
+                                         MobADTabBarController *tabVC = [[MobADTabBarController alloc] init];
 
 
-                                         window.rootViewController = nav;
+                                         window.rootViewController = tabVC;
                                      }
                                      if (error) {
                                          // 替换window的rootVC
-                                         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[DebugViewController alloc] init]];
-                                         window.rootViewController = nav;
+//                                         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[MobADTabBarController alloc] init]];
+                                          MobADTabBarController *tabVC = [[MobADTabBarController alloc] init];
+                                         window.rootViewController = tabVC;
                                  //        [weakSelf _showErrorAlert:error];
                                      }
                                  }];

@@ -116,7 +116,7 @@ extern NSString* const GDTNativeAdDataKeyImgHeight;
  *  详解：appId - 媒体 ID
  *       placementId - 广告位 ID
  */
-- (instancetype)initWithAppId:(NSString *)appId placementId:(NSString *)placementId;
+- (instancetype)initWithAppId:(NSString *)appId placementId:(NSString *)placementId GDT_DEPRECATED_MSG_ATTRIBUTE("即将废弃 请使用自渲染 2.0");
 
 /**
  *  广告发起请求方法
@@ -140,8 +140,5 @@ extern NSString* const GDTNativeAdDataKeyImgHeight;
  *      @param nativeAdData 用户点击的广告数据对象
  */
 - (void)clickAd:(GDTNativeAdData *)nativeAdData;
-
-#pragma mark - DEPRECATED
-- (instancetype)initWithAppkey:(NSString *)appkey placementId:(NSString *)placementId GDT_DEPRECATED_MSG_ATTRIBUTE("use initWithAppId:placementId: instead.");
 
 @end

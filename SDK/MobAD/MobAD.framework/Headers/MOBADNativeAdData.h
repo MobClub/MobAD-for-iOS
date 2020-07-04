@@ -30,6 +30,9 @@
  */
 @property (nonatomic, strong) NSArray *mediaUrls;
 
+//如果mediaUrls为空，则取该view添加到父视图
+@property (nonatomic, strong) UIView *extraContentView;
+
 /**
  图片宽度
  */

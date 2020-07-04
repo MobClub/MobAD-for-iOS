@@ -10,6 +10,15 @@
 #import "GDTSDKDefines.h"
 
 @interface GDTSDKConfig : NSObject
+
+/**
+ SDK 注册接口，请在 app 初始化时调用。
+ @param appId - 媒体ID
+ 
+ @return 注册是否成功。
+*/
++ (BOOL)registerAppId:(NSString *)appId;
+
 /**
  * 提供给聚合平台用来设定SDK 流量分类
  */
@@ -19,8 +28,6 @@
  * 查看SDK流量来源
  */
 + (NSString *)sdkSrc;
-
-
 
 /**
  * 获取 SDK 版本

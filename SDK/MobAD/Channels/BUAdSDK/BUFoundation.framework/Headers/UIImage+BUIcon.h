@@ -30,6 +30,7 @@ extern NSString *const kBU_voice;
 extern NSString *const kBU_voice_silent;
 extern NSString *const kBU_logo;
 extern NSString *const kBU_logoAd;
+extern NSString *const kBU_logoAd_oversea;
 extern NSString *const kBU_GDPRBack;
 extern NSString *const kBU_playableLoading;
 

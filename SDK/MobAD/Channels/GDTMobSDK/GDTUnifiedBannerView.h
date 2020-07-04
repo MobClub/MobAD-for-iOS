@@ -85,23 +85,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int autoSwitchInterval;
 /**
  *  构造方法
- *  详解：appId - 媒体 ID
- *       placementId - 广告位 ID
+ *  详解：placementId - 广告位 ID
  *       viewController - 视图控制器
  */
-- (instancetype)initWithAppId:(NSString *)appId
-                  placementId:(NSString *)placementId
-               viewController:(UIViewController *)viewController;
+- (instancetype)initWithPlacementId:(NSString *)placementId
+                     viewController:(UIViewController *)viewController;
 
 /**
  *  构造方法
  *  详解：frame - banner 展示的位置和大小
- *       appId - 媒体 ID
  *       placementId - 广告位 ID
  *       viewController - 视图控制器
  */
 - (instancetype)initWithFrame:(CGRect)frame
-                        appId:(NSString *)appId
                   placementId:(NSString *)placementId
                viewController:(UIViewController *)viewController;
 

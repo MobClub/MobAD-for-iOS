@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, MADPlat) {
     MADPlatBUD      = 5,
     MADPlatKS       = 6,
     MADPlatBQT      = 13,
+    MADPlatGOE      = 22,
 };
 
 //广告请求类型

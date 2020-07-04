@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *adTitleLabel;
 @property (nonatomic, strong) UILabel *adDescLabel;
 @property (nonatomic, strong) UIImageView *adImageView;
+@property (nonatomic, strong) UIView *extraView;
 @property (nonatomic, strong) UIImageView *appIconImageView;
 @property (nonatomic, strong) UIImageView *adLogoImageView;
 @property (nonatomic, strong) UIView *videoView;

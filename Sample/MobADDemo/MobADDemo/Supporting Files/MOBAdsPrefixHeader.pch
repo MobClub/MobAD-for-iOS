@@ -15,13 +15,16 @@
 
 //#import <MOBFoundation/MOBFoundation.h>
 #import <FCommon/FCommon.h>
-
+#import "Const.h"
 
 #define ScreenHeight ([UIScreen mainScreen].bounds.size.height)
 #define ScreenWidth  ([UIScreen mainScreen].bounds.size.width)
 
 #define MOB_RGB(a,b,c) [UIColor colorWithRed:(a/255.0) green:(b/255.0) blue:(c/255.0) alpha:1]
 #define mainColor MOB_RGB(0xff, 0x63, 0x5c)
+#define PingFangMediumFont(s) [UIFont fontWithName:@"PingFangSC-Medium" size:s];
+#define PingFangRegularFont(s) [UIFont fontWithName:@"PingFangSC-Regular" size:s];
+#define PingFangSemiboldFont(s) [UIFont fontWithName:@"PingFangSC-Semibold" size:s];
 
 /// iphone X、XR、XS、XS Max适配
 #ifndef MOBMINScreenSide
@@ -36,6 +39,8 @@
 #define NavigationBarHeight (MOBiPhoneX ? 88 : 64)      // 导航条高度
 #define TopMargin        (MOBiPhoneX? 24: 0)
 #define BottomMargin     (MOBiPhoneX? 40: 0)      // 状态栏高度
+#define TabBarHeight     (MOBiPhoneX? 49+34: 49)  //tabBar高度
+
 
 
 #ifdef DEBUG

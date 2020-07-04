@@ -32,7 +32,7 @@
     self.hudView = hudV;
     hudV.label.text = @"开屏广告加载中";
     hudV.detailsLabel.text = @"请耐心等待...";
-    [self.view addSubview:hudV];
+   // [self.view addSubview:hudV];
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -9,7 +9,7 @@
 #ifndef Const_h
 #define Const_h
 
-//#define AppRelease    // 注释此行则为测试环境
+#define AppRelease    // 注释此行则为测试环境
 
 #ifdef AppRelease
 
@@ -30,10 +30,10 @@ static NSString *kSDrawVideoFeedPID = @"1194166159697854465";
 static NSString *kSSplashPID = @"1233300399330377730"; //@"1233300399330377730" ;
 static NSString *kSBannerPID = @"1233300110194339842";//@"";
 static NSString *kSInterstitialPID = @"1233300232252780545";//@"";
-static NSString *kSNativeExpressPID = @"1253262293600239618";//@""; // 原生模版
-static NSString *kSNativePID = @"1242337705163939841";//@"";  // 原生自渲染
-static NSString *kSFullScreenVideoPID = @"1194192692676878337";
-static NSString *kSRewardVideoPID = @"1242270822066757633"; //@"";
+static NSString *kSNativeExpressPID = @"1233300796124119042";//@""; // 原生模版
+static NSString *kSNativePID = @"1253262388675059713";//@"";  // 原生自渲染
+static NSString *kSFullScreenVideoPID = @"1233300232252780545";
+static NSString *kSRewardVideoPID = @"1233300614250708993"; //@"";
 static NSString *kSDrawVideoFeedPID = @"1194192651434287105";
 
 #endif

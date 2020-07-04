@@ -1,15 +1,15 @@
 Pod::Spec.new do |s|
   s.name         = 'mob_adsdk'
-  s.version      = '2.1.5'
+  s.version      = '2.1.7'
   s.summary      = 'A powerful ad sdk from MobTech.'
   s.homepage     = 'http://www.mob.com/'
   s.license      = 'MIT'
   s.author       = { 'lishzh' => 'lishzh@yoozoo.com' }
   s.platform     = :ios
-  s.ios.deployment_target = '9.0'
-  s.source       = { :http => 'http://dev.ios.mob.com/files/download/mobad/MobAD_For_iOS_v2.1.5.zip' }
+  s.ios.deployment_target = '11.0'
+  s.source       = { :http => 'https://dev.ios.mob.com/files/download/mobad/MobAD_For_iOS_v2.1.7.zip' }
   
-  s.frameworks = 'WebKit','Security','QuartzCore','CoreData','ImageIO', 'MediaPlayer', 'CoreLocation', 'AdSupport', 'CoreMedia', 'AVFoundation', 'CoreTelephony', 'StoreKit', 'SystemConfiguration', 'MobileCoreServices', 'CoreMotion', 'Accelerate', 'MessageUI'
+  s.frameworks = 'WebKit','Security','QuartzCore','CoreData','ImageIO', 'MediaPlayer', 'CoreLocation', 'AdSupport', 'CoreMedia', 'AVFoundation', 'CoreTelephony', 'StoreKit', 'SystemConfiguration', 'MobileCoreServices', 'CoreMotion', 'Accelerate', 'MessageUI', 'SafariServices'
   s.libraries = 'xml2', 'c++', 'resolv', 'z', 'sqlite3'
   s.default_subspecs = 'MobAD'
   # s.dependency 'FCommon'
@@ -48,6 +48,13 @@ Pod::Spec.new do |s|
     sp.subspec 'BQT' do |spb|
       spb.vendored_frameworks = 'SDK/MobAD/Channels/BQTAdSDK/MDADConnector.framework', 'SDK/MobAD/Channels/BQTAdSDK/BaiduMobAdSDK.framework'
       spb.resources = 'SDK/MobAD/Channels/BQTAdSDK/baidumobadsdk.bundle'
+      spb.dependency 'mob_adsdk/MobAD'
+    end
+
+    # GOE
+    sp.subspec 'GOE' do |spb|
+      spb.vendored_frameworks = 'SDK/MobAD/Channels/GOEAdSDK/MOADConnector.framework', 'SDK/MobAD/Channels/GOEAdSDK/GoogleAppMeasurement.framework' , 'SDK/MobAD/Channels/GOEAdSDK/GoogleMobileAds.framework' ,'SDK/MobAD/Channels/GOEAdSDK/GoogleUtilities.xcframework' ,'SDK/MobAD/Channels/GOEAdSDK/nanopb.xcframework' ,  'SDK/MobAD/Channels/GOEAdSDK/PromisesObjC.xcframework' 
+     # spb.resources = 'SDK/MobAD/Channels/BQTAdSDK/baidumobadsdk.bundle'
       spb.dependency 'mob_adsdk/MobAD'
     end
 

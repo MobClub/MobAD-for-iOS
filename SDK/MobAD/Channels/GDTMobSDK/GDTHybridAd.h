@@ -51,11 +51,10 @@ typedef NS_OPTIONS(NSInteger, GDTHybridAdOptions) {
 /**
  构造方法
 
- @param appId - 媒体 ID
  @param adOptions - 支持的广告类型 Options，激励视频请传 GDTHybridAdOptionRewardVideo
  @return GDTHybrid 实例
  */
-- (instancetype)initWithAppId:(NSString *)appId type:(GDTHybridAdOptions)adOptions;
+- (instancetype)initWithType:(GDTHybridAdOptions)adOptions;
 
 
 /**
